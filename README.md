@@ -57,10 +57,13 @@ service at a time (`set()`, which wins). A contract asked and not filled throws
 clock; `find()` answers null for a caller that can do without. A different
 container forgets what the previous one gave; what was set by hand stays.
 
-A contract is the same whatever name it is asked by: a former name kept by
-`class_alias` is resolved to the interface's own, so a service set or bound under
-either is the same object (the container is asked by the own name first, then by
-the name asked).
+A contract is the same whatever name it is asked by. A family keeps a former name
+with `Runtime::alias($contract, $former)` (a `class_alias`, and the registry told),
+declared when Composer's autoloader is loaded: a service set or bound under either
+name is the same object, and the container is asked by the own name, then by the
+name asked, then by the former names - a host that still binds only a former name
+is found by the new one. `formerNames()` lists them; a missing contract's exception
+names them.
 
 The registry is not final: an application family adds its own contracts'
 accessors in a class of its own over the same state, as omniscient/omnibase's
@@ -85,8 +88,9 @@ The contracts that describe omnibase's own models, not a host, stay
 ## Former names
 
 Until omnibase 4's final pass, each moved class stays reachable under its former
-name by `class_alias` (an alias, not a subclass: one interface, one reflection
-name), declared by the package that owned the name, eagerly (Composer's `files`):
+name by `Runtime::alias()` (a `class_alias`: an alias, not a subclass - one
+interface, one reflection name), declared by the package that owned the name,
+eagerly (Composer's `files`):
 
 | Here | Former names |
 |---|---|

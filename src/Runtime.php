@@ -31,10 +31,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  *   (omnibridge/laravel);
  * - or one service at a time (set()), which wins over the container's.
  *
- * A contract is one interface whatever name it is asked by: an alias kept for
- * a former name (Base\Contract\Urls, Omnibridge\Twig\Contract\Urls) is the
+ * A contract is one interface whatever name it is asked by: a former name
+ * kept by alias() (Base\Contract\Urls, Omnibridge\Twig\Contract\Urls) is the
  * same contract, the same service. The container is asked by the interface's
- * own name first, then by the name asked.
+ * own name first, then by the name asked, then by its former names - a host
+ * that still binds a former name only is found by the new one.
  *
  * A contract asked and not filled throws MissingContractException, except the
  * clock, which is the machine's (SystemClock) when none was given; find()
@@ -60,6 +61,42 @@ class Runtime
 
     /** @var array<string, string> a name asked => the contract's own name (an alias resolved) */
     private static array $names = [];
+
+    /** @var array<string, list<string>> a contract's own name => its former names, declared by alias() */
+    private static array $formers = [];
+
+    /**
+     * Keeps a contract (or any class of a family) reachable under a former
+     * name: class_alias() - an alternate name, not a subclass - and the
+     * registry told, so that a service bound under the former name is found
+     * by the new one. Declared by the package that owned the name, when
+     * Composer's autoloader is loaded (its autoload.files), never on demand:
+     * PHP autoloads nothing for a parameter's type or an instanceof.
+     *
+     * @param class-string $contract
+     */
+    public static function alias(string $contract, string $former): void
+    {
+        if (!interface_exists($former, false) && !class_exists($former, false)) {
+            class_alias($contract, $former);
+        }
+        $name = self::name($contract);
+        if (!\in_array($former, self::$formers[$name] ?? [], true)) {
+            self::$formers[$name][] = $former;
+        }
+    }
+
+    /**
+     * The former names a contract is still reachable by.
+     *
+     * @param class-string $contract
+     *
+     * @return list<string>
+     */
+    public static function formerNames(string $contract): array
+    {
+        return self::$formers[self::name($contract)] ?? [];
+    }
 
     public static function setContainer(?ContainerInterface $container): void
     {
@@ -139,10 +176,10 @@ class Runtime
      */
     public static function get(string $contract): object
     {
-        return self::find($contract) ?? throw MissingContractException::for($contract);
+        return self::find($contract) ?? throw MissingContractException::for(self::name($contract), self::formerNames($contract));
     }
 
-    /** Everything forgotten: no container, nothing set (a test's tearDown). */
+    /** Everything forgotten: no container, nothing set (a test's tearDown); the former names stay, being declarations. */
     public static function reset(): void
     {
         self::$container = null;
@@ -217,16 +254,18 @@ class Runtime
             : $contract;
     }
 
-    /** The container's id for the contract, by its own name first, then by the name asked; null when it has neither. */
+    /** The container's id for the contract: its own name, the name asked, then its former names; null when it has none. */
     private static function id(string $name, string $asked): ?string
     {
         if (null === self::$container) {
             return null;
         }
-        if (self::$container->has($name)) {
-            return $name;
+        foreach (array_unique([$name, $asked, ...self::$formers[$name] ?? []]) as $id) {
+            if (self::$container->has($id)) {
+                return $id;
+            }
         }
 
-        return $asked !== $name && self::$container->has($asked) ? $asked : null;
+        return null;
     }
 }

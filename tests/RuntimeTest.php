@@ -166,11 +166,14 @@ final class RuntimeTest extends TestCase
         Runtime::set(Urls::class, null);
         self::assertFalse(Runtime::has($former), 'taken back by its own name, gone under the former');
 
+        self::assertSame([$former], Runtime::formerNames(Urls::class));
+        self::assertSame([$former], Runtime::formerNames($former));
+
         $byFormer = self::container([$former => self::urls('/former')]);
         Runtime::setContainer($byFormer);
-        self::assertTrue(Runtime::has($former));
-        self::assertSame('/former/x', Runtime::get($former)->path('x'), 'a container that binds only the former name, asked by it');
-        self::assertSame(Runtime::get($former), Runtime::urls(), 'then known by its own name too: one service');
+        self::assertTrue(Runtime::has(Urls::class));
+        self::assertSame('/former/x', Runtime::urls()->path('x'), 'a host that binds only the former name, found by the new one');
+        self::assertSame(Runtime::urls(), Runtime::get($former));
         self::assertSame(1, $byFormer->gets);
 
         $byBoth = self::container([Urls::class => self::urls('/own'), $former => self::urls('/former')]);
@@ -178,6 +181,15 @@ final class RuntimeTest extends TestCase
         self::assertSame('/own/x', Runtime::get($former)->path('x'), 'the own name first');
         self::assertSame(Runtime::get($former), Runtime::urls());
         self::assertSame(1, $byBoth->gets);
+    }
+
+    public function testAMissingContractIsNamedWithItsFormerNames(): void
+    {
+        class_exists(Fixtures\FormerNames::class);
+
+        $this->expectException(MissingContractException::class);
+        $this->expectExceptionMessage('No Omnibridge\Contract\Urls (formerly '.Fixtures\FormerNames::URLS.') in the runtime');
+        Runtime::get(Fixtures\FormerNames::URLS);
     }
 
     public function testResetForgetsEverything(): void

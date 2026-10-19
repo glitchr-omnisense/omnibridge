@@ -11,8 +11,13 @@ namespace Omnibridge\Exception;
  */
 final class MissingContractException extends \LogicException
 {
-    public static function for(string $contract): self
+    /** @param list<string> $formerNames */
+    public static function for(string $contract, array $formerNames = []): self
     {
+        if ([] !== $formerNames) {
+            $contract .= ' (formerly '.implode(', ', $formerNames).')';
+        }
+
         return new self(sprintf('No %s in the runtime: the host fills it at boot (its omnibridge bridge, omniscient/omnibase\'s bundle under Symfony), or Omnibridge\Runtime::set() / setContainer() before it is asked.', $contract));
     }
 
