@@ -10,9 +10,21 @@ use PHPUnit\Framework\TestCase;
  * its own (this one has loaded PHPUnit) loads every class of src/ with
  * Composer's autoloader and reports every class and file loaded on the way.
  * Nothing may come from outside src/ but the PSR interfaces it declares.
+ *
+ * Measured on this package's own vendor (its install, docker compose run --rm
+ * test): an application that runs this suite from its vendor/ has a vendor of
+ * its own, whose autoloader loads its framework's files first; the case says
+ * so and is skipped there.
  */
 final class BareTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        if ('omniscient/omnibridge' !== \Composer\InstalledVersions::getRootPackage()['name']) {
+            self::markTestSkipped('Measured on omniscient/omnibridge\'s own vendor, not on '.\Composer\InstalledVersions::getRootPackage()['name'].'\'s.');
+        }
+    }
+
     public function testEveryClassLoadsWithThePsrInterfacesAlone(): void
     {
         $report = self::bare();

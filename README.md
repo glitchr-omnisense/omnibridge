@@ -113,7 +113,9 @@ PHPUnit on PHP 8.2, the lowest this package declares: the registry (a contract
 missing, set, resolved once from a container, forgotten with the container, the
 clock, each accessor, a former name, a family's registry over the same state) and
 `BareTest` (every class of `src/` loaded in a PHP process of its own, nothing
-loaded but the PSR interfaces).
+loaded but the PSR interfaces). An application that runs `vendor/*/tests` (lesringostars
+does) runs them too: the registry's cases hold there, and `BareTest`, which needs this
+package's own vendor, says so and is skipped.
 
 ## Licence
 

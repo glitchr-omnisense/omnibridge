@@ -27,6 +27,13 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  */
 final class RuntimeTest extends TestCase
 {
+    public static function setUpBeforeClass(): void
+    {
+        // The fixtures are autoload-dev here; an application that runs this suite from its vendor/ has not that autoloader.
+        require_once __DIR__.'/Fixtures/FormerNames.php';
+        require_once __DIR__.'/Fixtures/FamilyRuntime.php';
+    }
+
     protected function setUp(): void
     {
         Runtime::reset();
@@ -166,8 +173,8 @@ final class RuntimeTest extends TestCase
         Runtime::set(Urls::class, null);
         self::assertFalse(Runtime::has($former), 'taken back by its own name, gone under the former');
 
-        self::assertSame([$former], Runtime::formerNames(Urls::class));
-        self::assertSame([$former], Runtime::formerNames($former));
+        self::assertContains($former, Runtime::formerNames(Urls::class));
+        self::assertSame(Runtime::formerNames(Urls::class), Runtime::formerNames($former));
 
         $byFormer = self::container([$former => self::urls('/former')]);
         Runtime::setContainer($byFormer);
@@ -187,9 +194,13 @@ final class RuntimeTest extends TestCase
     {
         class_exists(Fixtures\FormerNames::class);
 
-        $this->expectException(MissingContractException::class);
-        $this->expectExceptionMessage('No Omnibridge\Contract\Urls (formerly '.Fixtures\FormerNames::URLS.') in the runtime');
-        Runtime::get(Fixtures\FormerNames::URLS);
+        try {
+            Runtime::get(Fixtures\FormerNames::URLS);
+            self::fail('no Urls in an empty registry');
+        } catch (MissingContractException $e) {
+            self::assertStringStartsWith('No Omnibridge\Contract\Urls (formerly ', $e->getMessage());
+            self::assertStringContainsString(Fixtures\FormerNames::URLS, $e->getMessage(), 'the former names, those of the families installed with it among them');
+        }
     }
 
     public function testResetForgetsEverything(): void
