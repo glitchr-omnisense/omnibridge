@@ -1,0 +1,116 @@
+# omniscient/omnibridge
+
+The core of the omnibridge family: the contracts any host answers for an
+application that runs on more than one framework, and the registry the
+application reaches them through. No framework, no ORM, no template engine: the
+package requires PHP and three PSR interfaces (container, clock, event
+dispatcher), and its `BareTest` proves that every class loads with nothing else.
+
+```sh
+composer require omniscient/omnibridge:1.x-dev
+```
+
+The bridges, `omnibridge/<host>`, answer these contracts with their host's
+services and fill the registry at boot: `omnibridge/laravel` (Laravel),
+`omnibridge/twig` (the contract a Twig page asks of its host),
+`omnibridge/doctrine`, `omnibridge/react`; under Symfony, omniscient/omnibase's
+bundle for now (`omnibridge/symfony` next). A bridge is only the adapter of the
+contracts for one technique: it chooses no versions, and an application that
+speaks only to the contracts changes host by changing bridge and configuration.
+
+```php
+use Omnibridge\Runtime;
+
+Runtime::urls()->path('article', ['slug' => 'le-fuji']);   // the host's router
+Runtime::translations()->trans('menu.home');                // the host's catalogues
+Runtime::access()->isGranted('ROLE_ADMIN');                 // the host's security
+Runtime::clock()->now();                                    // the host's clock, else the machine's
+```
+
+## The contracts
+
+`Omnibridge\Contract\*`, each generic to any host:
+
+| Contract | What it answers | Why it is generic |
+|---|---|---|
+| `Urls` | a route's path and whole URL by its name, a public file's address | every host has named routes and serves public files |
+| `Translations` | a message from the catalogues (ICU), whether a key exists | every host has message catalogues and can tell whether one holds a key |
+| `Locales` | the current, default and available locales (`fr-FR`) | every host has a current and a default locale |
+| `Access` | whether the visitor holds an attribute, on a subject; the user | Symfony's authorization checker, Laravel's gate: the same two questions |
+| `Sessions` | a user signed out when it is the one signed in | every host with sign-in has a sign-out |
+| `Tokens` | a form's token for an intent (CSRF) | every host protects its forms; the token is checked by the host that made it |
+| `Files` | a stored file's public path and URL, its local path, whether its storage is remote | storages named by the application's configuration, mapped by each bridge to its host's (Flysystem, disks) |
+| `Routes` | a route's declared path, the route of an address, its icons | every router knows a route's pattern and matches an address; icons are metadata, null where the host keeps none |
+| `Environment` | the environment's name, debug, the secret | every host runs in an environment with a secret |
+
+Also here: PSR-20's clock (`Runtime::clock()`, `SystemClock` when the host gave
+none) and PSR-14's event dispatcher (`Runtime::events()`), which need no contract
+of their own.
+
+## The registry
+
+`Omnibridge\Runtime` holds one service per contract, asked by the interface's
+name. A host fills it once, at boot: with a PSR-11 container whose ids are those
+names (`setContainer()`: Laravel's application, a Symfony service locator), or one
+service at a time (`set()`, which wins). A contract asked and not filled throws
+`Omnibridge\Exception\MissingContractException` (never a silent null), but the
+clock; `find()` answers null for a caller that can do without. A different
+container forgets what the previous one gave; what was set by hand stays.
+
+A contract is the same whatever name it is asked by: a former name kept by
+`class_alias` is resolved to the interface's own, so a service set or bound under
+either is the same object (the container is asked by the own name first, then by
+the name asked).
+
+The registry is not final: an application family adds its own contracts'
+accessors in a class of its own over the same state, as omniscient/omnibase's
+`Base\Contract\Runtime` does.
+
+## What stays with omniscient/omnibase
+
+The contracts that describe omnibase's own models, not a host, stay
+`Base\Contract\*` in omniscient/omnibase:
+
+| Contract | Why it is omnibase's |
+|---|---|
+| `Nouns` | what an omnibase entity is called, by omnibase's rule over its "entities" catalogues (namespaces, politeness, gender) |
+| `Media` | omnibase's image route (`ux_image`) and its obfuscated `data` |
+| `Pictures` | omnibase's `\|picture` filter: a stored image at a size, by omnibase's thumbnails |
+| `Texts` | omnibase's stored texts (Editor.js, Quill) and their `\|wysiwyg` rendering |
+| `Base\Screen\ContextProvider` | the frame of omnibase's screens (site, links, viewer, theme) |
+| `SecurityUser`, `TwoFactorUser`, `Framework` | what omnibase's `User` declares to a framework's security, and the rule that decides it |
+| `Link` | a helper over `Urls` with Symfony's reference types, for omnibase's entities' `__toLink()` |
+| `Runtime::parameters()`, `::mailer()` | omnibase's parameter bag (database settings over the configuration), symfony/mailer's interface |
+
+## Former names
+
+Until omnibase 4's final pass, each moved class stays reachable under its former
+name by `class_alias` (an alias, not a subclass: one interface, one reflection
+name), declared by the package that owned the name, eagerly (Composer's `files`):
+
+| Here | Former names |
+|---|---|
+| `Omnibridge\Contract\Urls` | `Base\Contract\Urls`, `Omnibridge\Twig\Contract\Urls` |
+| `Omnibridge\Contract\Translations` | `Base\Contract\Translations`, `Omnibridge\Twig\Contract\Translations` (which asked `trans()` alone) |
+| `Omnibridge\Contract\{Locales, Access, Sessions, Tokens, Files, Routes, Environment}` | `Base\Contract\{...}` |
+| `Omnibridge\SystemClock` | `Base\Contract\SystemClock` |
+| `Omnibridge\Exception\MissingContractException` | `Base\Exception\MissingContractException` |
+
+`Base\Contract\Runtime` is not an alias: it is omnibase's registry over this one,
+with omnibase's own accessors.
+
+## Tests
+
+```sh
+docker compose run --rm test
+```
+
+PHPUnit on PHP 8.2, the lowest this package declares: the registry (a contract
+missing, set, resolved once from a container, forgotten with the container, the
+clock, each accessor, a former name, a family's registry over the same state) and
+`BareTest` (every class of `src/` loaded in a PHP process of its own, nothing
+loaded but the PSR interfaces).
+
+## Licence
+
+MIT.

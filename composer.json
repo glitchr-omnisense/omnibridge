@@ -1,0 +1,49 @@
+{
+    "name": "omniscient/omnibridge",
+    "description": "The core of the omnibridge family: the contracts any host answers for an application that runs on more than one framework (addresses, translations, languages, access, sessions, tokens, stored files, routes, environment) and the registry the application reaches them through. No framework, no ORM: each omnibridge/<host> bridge answers them with its host's services.",
+    "type": "library",
+    "keywords": [
+        "omnibridge",
+        "contracts",
+        "framework-agnostic",
+        "symfony",
+        "laravel"
+    ],
+    "homepage": "https://github.com/glitchr-studio/omnibridge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "psr/clock": "^1.0",
+        "psr/container": "^1.1|^2.0",
+        "psr/event-dispatcher": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnibridge\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnibridge\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
