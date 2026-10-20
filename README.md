@@ -38,7 +38,7 @@ Runtime::clock()->now();                                    // the host's clock,
 | `Locales` | the current, default and available locales (`fr-FR`) | every host has a current and a default locale |
 | `Access` | whether the visitor holds an attribute, on a subject; the user | Symfony's authorization checker, Laravel's gate: the same two questions |
 | `Sessions` | a user signed out when it is the one signed in | every host with sign-in has a sign-out |
-| `Tokens` | a form's token for an intent (CSRF) | every host protects its forms; the token is checked by the host that made it |
+| `Tokens` | a form's token for an intent (CSRF), and whether a token sent back is valid | every host protects its forms; the token is checked by the host that made it |
 | `Files` | a stored file's public path and URL, its local path, whether its storage is remote | storages named by the application's configuration, mapped by each bridge to its host's (Flysystem, disks) |
 | `Routes` | a route's declared path, the route of an address, its icons | every router knows a route's pattern and matches an address; icons are metadata, null where the host keeps none |
 | `Environment` | the environment's name, debug, the secret | every host runs in an environment with a secret |
