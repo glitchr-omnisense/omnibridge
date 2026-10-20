@@ -1,0 +1,115 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot call method get\(\) on Psr\\Container\\ContainerInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Runtime.php
+
+		-
+			message: '#^Method Omnibridge\\Runtime\:\:find\(\) should return \(T of object\)\|null but returns object\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Runtime.php
+
+		-
+			message: '#^Parameter \#2 \$service of static method Omnibridge\\Exception\\MissingContractException\:\:notAn\(\) expects object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Runtime.php
+
+		-
+			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/BareTest.php
+
+		-
+			message: '#^Method Omnibridge\\Tests\\BareTest\:\:bare\(\) should return array\{loaded\: list\<string\>, symbols\: list\<string\>, files\: list\<string\>\} but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: tests/BareTest.php
+
+		-
+			message: '#^Method Omnibridge\\Tests\\BareTest\:\:sources\(\) should return list\<string\> but returns list\.$#'
+			identifier: return.type
+			count: 1
+			path: tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array, array\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/BareTest.php
+
+		-
+			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Fixtures/bare.php
+
+		-
+			message: '#^Parameter \#1 \$string of function substr expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Fixtures/bare.php
+
+		-
+			message: '#^Access to an undefined property Psr\\Container\\ContainerInterface\:\:\$gets\.$#'
+			identifier: property.notFound
+			count: 3
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Call to method path\(\) on an unknown class Omnibridge\\Tests\\Fixtures\\Former\\Urls\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Cannot call method format\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Dead catch \- Omnibridge\\Exception\\MissingContractException is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Parameter \#1 \$contract of static method Omnibridge\\Runtime\:\:formerNames\(\) expects class\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Parameter \#1 \$contract of static method Omnibridge\\Runtime\:\:get\(\) expects class\-string\<Omnibridge\\Tests\\Fixtures\\Former\\Urls\>, string given\.$#'
+			identifier: argument.type
+			count: 5
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Parameter \#1 \$contract of static method Omnibridge\\Runtime\:\:has\(\) expects class\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Parameter \#1 \$contract of static method Omnibridge\\Runtime\:\:set\(\) expects class\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<Omnibridge\\Tests\\Fixtures\\Former\\Urls\>\|Omnibridge\\Tests\\Fixtures\\Former\\Urls, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: tests/RuntimeTest.php
