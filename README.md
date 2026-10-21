@@ -69,6 +69,64 @@ The registry is not final: an application family adds its own contracts'
 accessors in a class of its own over the same state, as omniscient/omnibase's
 `Base\Contract\Runtime` does.
 
+## The data structure: `Omnibridge\Schema`
+
+The structure of an application's data - tables, columns and their types,
+indexes and unique constraints, relations and their join columns, hierarchies
+and their discriminators, the names the naming gives - described once, outside
+any ORM (Marco's bridge principle, 2026-10-19: several persistence techniques,
+the same tables), so that Doctrine reads it today and another persistence
+(Eloquent or other) maps the same tables from it tomorrow.
+
+- `Schema\Declaration\*`: what the entity classes declare, read from their
+  attributes by reflection and **without instantiating them** - the attributes
+  are `Doctrine\ORM\Mapping`'s, the vocabulary omnibase's entities are written
+  in, but their classes need not exist: `Vocabulary` holds each attribute's
+  parameters and defaults as data (omnibridge/doctrine's `VocabularyTest` keeps
+  it equal to doctrine/orm's constructors). `AttributeReader` reads a class into
+  a `ClassDeclaration` (its attributes, its properties with the class that
+  declares each, its lifecycle methods); `DeclarationSet` keeps declarations as
+  data (a JSON file, `toArray()`/`fromArray()`). A persistence bridge maps the
+  classes from a `Declarations` source and never reads the attributes itself.
+- `Schema\Description`: the neutral description - `Entity` (table, kind,
+  parent and root, `Inheritance`, identifier, `Field`s, `Relation`s with their
+  `JoinColumn`s or `JoinTable`), and the `Table`s they make (`Column`s with
+  their portable type, primary key, `Index`es, `ForeignKey`s). Plain data too
+  (`toJson()`/`fromJson()`).
+- `Schema\Builder`: builds the description from the declarations alone, the way
+  Doctrine completes its metadata (a parent's fields inherited, a type guessed
+  from the property's, default join columns and join tables, default
+  discriminator maps) and the way its SchemaTool makes the tables (one table
+  per joined class, one for a single-table hierarchy, a join table per owning
+  many-to-many, the implicit indexes behind foreign keys, DBAL's generated
+  names). `Builder\Rule` is an application's own convention, applied at the
+  three moments an ORM gives its listeners (before the declaration is read,
+  once read, once the class is whole): omnibase's translations, discriminator
+  entries, vaults and order columns are rules in omniscient/omnibase.
+- `Schema\Naming` / `CamelCaseNaming`: how the unnamed is named (omnibase's
+  camel case: `App\Entity\Thread\Tag` is `threadTag`, `Thread::$tags` the join
+  table `thread_tags (thread_id, threadTag_id)`), and a generated index or
+  foreign key name as DBAL generates it. omnibridge/doctrine's `NamingStrategy`
+  answers Doctrine with it.
+- `Schema\Database\MySqlSchema`: a MySQL schema read from `information_schema`
+  (PDO, read-only) and compared with a description, column by column - the
+  independent proof that the description is the database.
+
+```php
+use Omnibridge\Schema\Builder;
+
+$description = (new Builder(rules: $applicationRules))->build($entityClasses);
+$description->table('thread')->column('slug');          // string(255), not null
+$description->entity(Thread::class)->relation('tags');   // many_to_many, join table thread_tags
+file_put_contents('schema.json', $description->toJson());
+```
+
+omnibridge/doctrine reads the same declarations into Doctrine's metadata
+(`DeclarationDriver`) and writes an entity manager's metadata back in this form
+(`MetadataDescription`): the two descriptions are compared in its tests and on
+each site (omnibase's harness, lesringostars), and the site's with its
+database's `information_schema`.
+
 ## What stays with omniscient/omnibase
 
 The contracts that describe omnibase's own models, not a host, stay
@@ -111,8 +169,11 @@ docker compose run --rm test
 
 PHPUnit on PHP 8.2, the lowest this package declares: the registry (a contract
 missing, set, resolved once from a container, forgotten with the container, the
-clock, each accessor, a former name, a family's registry over the same state) and
-`BareTest` (every class of `src/` loaded in a PHP process of its own, nothing
+clock, each accessor, a former name, a family's registry over the same state),
+the schema (the declarations read without doctrine/orm installed, the
+description of a joined and a single-table hierarchy, relations, rules, the
+tables as Doctrine's SchemaTool makes them, the naming, a MySQL schema compared)
+and `BareTest` (every class of `src/` loaded in a PHP process of its own, nothing
 loaded but the PSR interfaces). An application that runs `vendor/*/tests` (lesringostars
 does) runs them too: the registry's cases hold there, and `BareTest`, which needs this
 package's own vendor, says so and is skipped.

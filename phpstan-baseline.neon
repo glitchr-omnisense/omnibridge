@@ -19,6 +19,1536 @@ parameters:
 			path: src/Runtime.php
 
 		-
+			message: '#^Cannot access offset ''inverseJoinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Cannot access offset ''joinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 2
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\:\:joinColumn\(\) should return array\{name\: string\|null, referencedColumnName\: string\|null, nullable\: bool\|null, unique\: bool, onDelete\: string\|null\} but returns array\{name\: mixed, referencedColumnName\: mixed, nullable\: mixed, unique\: bool, onDelete\: mixed\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\:\:load\(\) has parameter \$nonSuperclassParents with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(Omnibridge\\Schema\\Declaration\\Attribute\)\: array\{name\: string\|null, referencedColumnName\: string\|null, nullable\: bool\|null, unique\: bool, onDelete\: string\|null\} given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: Omnibridge\\Schema\\JoinColumn given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$map of method Omnibridge\\Schema\\Builder\\Draft\:\:setDiscriminatorMap\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\JoinColumn constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\JoinTable constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#10 \$indexBy of class Omnibridge\\Schema\\Relation constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#12 \$enum of class Omnibridge\\Schema\\Field constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#12 \$inheritedFrom of class Omnibridge\\Schema\\Relation constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#13 \$declaredIn of class Omnibridge\\Schema\\Relation constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#13 \$inheritedFrom of class Omnibridge\\Schema\\Field constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#14 \$declaredIn of class Omnibridge\\Schema\\Field constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#2 \$column of class Omnibridge\\Schema\\Field constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#2 \$joinColumns of class Omnibridge\\Schema\\JoinTable constructor expects list\<Omnibridge\\Schema\\JoinColumn\>, array\<Omnibridge\\Schema\\JoinColumn\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#2 \$kind of class Omnibridge\\Schema\\Relation constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#2 \$referencedColumn of class Omnibridge\\Schema\\JoinColumn constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#3 \$inverseJoinColumns of class Omnibridge\\Schema\\JoinTable constructor expects list\<Omnibridge\\Schema\\JoinColumn\>, array\<Omnibridge\\Schema\\JoinColumn\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#3 \$target of class Omnibridge\\Schema\\Relation constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#3 \$type of class Omnibridge\\Schema\\Field constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#4 \$owning of class Omnibridge\\Schema\\Relation constructor expects bool, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#5 \$length of class Omnibridge\\Schema\\Field constructor expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#5 \$mappedBy of class Omnibridge\\Schema\\Relation constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#5 \$onDelete of class Omnibridge\\Schema\\JoinColumn constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#6 \$inversedBy of class Omnibridge\\Schema\\Relation constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#6 \$precision of class Omnibridge\\Schema\\Field constructor expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#7 \$joinColumns of class Omnibridge\\Schema\\Relation constructor expects list\<Omnibridge\\Schema\\JoinColumn\>, array\<Omnibridge\\Schema\\JoinColumn\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#7 \$scale of class Omnibridge\\Schema\\Field constructor expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#9 \$options of class Omnibridge\\Schema\\Field constructor expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Parameter \#9 \$orderBy of class Omnibridge\\Schema\\Relation constructor expects array\<string, string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 2
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$discriminatorColumn \(array\{name\: string, type\: string, length\: int\|null\}\|null\) does not accept array\{name\: mixed, type\: mixed, length\: mixed\}\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$fieldNames \(array\<string, string\>\) does not accept array\<string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$parentClasses \(list\<string\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$rootEntityName \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$table \(array\{name\: string, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\?\: array\<string, mixed\>\}\) does not accept array\{name\: mixed, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\?\: array\<string, mixed\>\}\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$table \(array\{name\: string, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\?\: array\<string, mixed\>\}\) does not accept array\{name\: string, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\: mixed\}\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''inverseJoinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''joinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 5
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''nullable'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''onDelete'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''referencedColumnName'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset ''unique'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:joinColumns\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:joinColumns\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:joinTable\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:joinTable\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:mapField\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:mapRelation\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:setDiscriminatorMap\(\) has parameter \$map with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:setIdentifier\(\) has parameter \$identifier with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:setIdentifier\(\) has parameter \$positions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:typedField\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Draft\:\:typedField\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_intersect_key expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$class of class ReflectionProperty constructor expects class\-string\|object, string given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$entityName of method Omnibridge\\Schema\\Naming\:\:joinKeyColumnName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$joinColumns of closure expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$property of method Omnibridge\\Schema\\Builder\\Draft\:\:isTypedProperty\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$property of method Omnibridge\\Schema\\Builder\\Draft\:\:registerIdentifier\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$propertyName of method Omnibridge\\Schema\\Naming\:\:joinColumnName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$propertyName of method Omnibridge\\Schema\\Naming\:\:propertyToColumnName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$sourceEntity of method Omnibridge\\Schema\\Naming\:\:joinTableName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$string of function ltrim expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \$entity of closure expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \$position of method Omnibridge\\Schema\\Builder\\Draft\:\:registerIdentifier\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \$property of class ReflectionProperty constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \$referencedColumnName of method Omnibridge\\Schema\\Naming\:\:joinKeyColumnName\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \$targetEntity of method Omnibridge\\Schema\\Naming\:\:joinTableName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#3 \$propertyName of method Omnibridge\\Schema\\Naming\:\:joinTableName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 5
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$associationMappings \(array\<string, array\<string, mixed\>\>\) does not accept array\<array\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$fieldMappings \(array\<string, array\<string, mixed\>\>\) does not accept array\<array\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$fieldNames \(array\<string, string\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Draft.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 4
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Cannot access offset ''inverseJoinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Cannot access offset ''joinColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 5
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Cannot access offset ''referencedColumnName'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) has parameter \$foreignColumns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:addIndex\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:addIndex\(\) has parameter \$flags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:column\(\) has parameter \$mapping with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:indexColumns\(\) has parameter \$index with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:indexColumns\(\) should return list\<string\> but returns list\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:indexColumns\(\) should return list\<string\> but returns list\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:isFulfilledBy\(\) has parameter \$index with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:isFulfilledBy\(\) has parameter \$other with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:joinColumns\(\) should return list\<string\> but returns list\<mixed\>\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:spans\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Builder\\Tables\:\:spans\(\) has parameter \$other with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Offset ''indexes'' might not exist on array\{foreignKeys\: non\-empty\-array\<string, array\<string, mixed\>\>\}\|array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: non\-empty\-array\<string, array\<string, mixed\>\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Offset ''name'' might not exist on array\{name\: string, type\: string, length\: int\|null\}\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Offset ''type'' might not exist on array\{name\: string, type\: string, length\: int\|null\}\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_diff expects an array of values castable to string, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_diff expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, ''strtolower'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$className of method Omnibridge\\Schema\\Builder\:\:draft\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$columns of static method Omnibridge\\Schema\\Builder\\Tables\:\:spans\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$joinColumns of method Omnibridge\\Schema\\Builder\\Tables\:\:joinColumns\(\) expects list\<array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\Column constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$name of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strtolower expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strtoupper expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Omnibridge\\Schema\\Builder\\Tables\:\:addIndex\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Omnibridge\\Schema\\Builder\\Tables\:\:create\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$arrays of function array_diff expects an array of values castable to string, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$column of method Omnibridge\\Schema\\Builder\\Tables\:\:definingClass\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$columns of class Omnibridge\\Schema\\ForeignKey constructor expects list\<string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$columns of method Omnibridge\\Schema\\Naming\:\:generatedName\(\) expects list\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$foreignTable of method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$other of static method Omnibridge\\Schema\\Builder\\Tables\:\:spans\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$table of method Omnibridge\\Schema\\Builder\\Tables\:\:joinColumns\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \$type of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$arrays of function array_diff expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#3 \$columns of method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#3 \$table of class Omnibridge\\Schema\\ForeignKey constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#4 \$foreignColumns of method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#4 \$length of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#4 \$referencedColumns of class Omnibridge\\Schema\\ForeignKey constructor expects list\<string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#5 \$onDelete of method Omnibridge\\Schema\\Builder\\Tables\:\:addForeignKey\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#5 \$precision of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#6 \$scale of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Parameter \#7 \$options of static method Omnibridge\\Schema\\Builder\\Tables\:\:definition\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 8
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Tables\:\:\$tables \(array\<string, array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\) does not accept non\-empty\-array\<string, array\{name\: string, columns\: array\<array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Tables\:\:\$tables \(array\<string, array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\) does not accept non\-empty\-array\<string, array\{name\: string, columns\: array\<array\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Tables\:\:\$tables \(array\<string, array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\) does not accept non\-empty\-array\<string, array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: array, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Builder\\Tables\:\:\$tables \(array\<string, array\{name\: string, columns\: array\<string, array\<string, mixed\>\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\) does not accept non\-empty\-array\<string, array\{name\: string, columns\: array\<string, array\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, primary\: bool, flags\: list\<string\>\}\>, implicit\: array\<string, true\>, foreignKeys\: array\<string, array\<string, mixed\>\>\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Builder/Tables.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\CamelCaseNaming\:\:classToTableName\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/CamelCaseNaming.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\CamelCaseNaming\:\:lstrip\(\) has parameter \$prefixes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/CamelCaseNaming.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/CamelCaseNaming.php
+
+		-
+			message: '#^Parameter \#2 \$needle of function str_starts_with expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/CamelCaseNaming.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/CamelCaseNaming.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Column\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Column.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\Column constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Column.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''COLUMN_DEFAULT'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''COLUMN_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''COLUMN_TYPE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''CONSTRAINT_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''DELETE_RULE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''EXTRA'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''INDEX_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''INDEX_TYPE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''IS_NULLABLE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''NON_UNIQUE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''REFERENCED_COLUMN_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''REFERENCED_TABLE_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''TABLE_NAME'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 6
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''UPDATE_RULE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''autoincrement''\|''default''\|''nullable''\|''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''columns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset ''referencedColumns'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot call method fetchColumn\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\MySqlSchema\:\:__construct\(\) has parameter \$tables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\MySqlSchema\:\:tableDifferences\(\) has parameter \$actual with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#1 \$rule of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:rule\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#2 \$actual of method Omnibridge\\Schema\\Database\\MySqlSchema\:\:tableDifferences\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$arrays of function array_intersect_key expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#4 \$actual of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:named\(\) expects array\<string, array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 17
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Database\\MySqlSchema\:\:\$tables \(array\<string, array\{columns\: array\<string, array\{type\: string, nullable\: bool, default\: string\|null, autoincrement\: bool\}\>, primaryKey\: list\<string\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, flags\: list\<string\>\}\>, foreignKeys\: array\<string, array\{columns\: list\<string\>, table\: string, referencedColumns\: list\<string\>, onDelete\: string\|null, onUpdate\: string\|null\}\>\}\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Declaration\\Attribute\:\:fromArray\(\) expects array\{name\: string, arguments\?\: array\<string, mixed\>\}, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Attribute.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Declaration\\AttributeReader\:\:declare\(\) has parameter \$reflection with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Schema/Declaration/AttributeReader.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Declaration\\AttributeReader\:\:read\(\) has parameter \$class with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Schema/Declaration/AttributeReader.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/AttributeReader.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(Omnibridge\\Schema\\Declaration\\Attribute\|Omnibridge\\Schema\\Declaration\\Member\)\: array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Declaration\\Member given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\{name\: string, arguments\?\: array\<string, mixed\>\}\)\: Omnibridge\\Schema\\Declaration\\Attribute given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#1 \$class of class Omnibridge\\Schema\\Declaration\\ClassDeclaration constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#2 \$attributes of class Omnibridge\\Schema\\Declaration\\ClassDeclaration constructor expects list\<Omnibridge\\Schema\\Declaration\\Attribute\>, array\<Omnibridge\\Schema\\Declaration\\Attribute\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#3 \$properties of class Omnibridge\\Schema\\Declaration\\ClassDeclaration constructor expects list\<Omnibridge\\Schema\\Declaration\\Member\>, array\<Omnibridge\\Schema\\Declaration\\Member\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Parameter \#4 \$methods of class Omnibridge\\Schema\\Declaration\\ClassDeclaration constructor expects list\<Omnibridge\\Schema\\Declaration\\Member\>, array\<Omnibridge\\Schema\\Declaration\\Member\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/ClassDeclaration.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Declaration\\DeclarationSet\:\:of\(\) has parameter \$classes with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Declaration/DeclarationSet.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Declaration\\DeclarationSet\:\:read\(\) has parameter \$class with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Schema/Declaration/DeclarationSet.php
+
+		-
+			message: '#^Parameter \#1 \$class of method Omnibridge\\Schema\\Declaration\\Declarations\:\:read\(\) expects ReflectionClass\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/DeclarationSet.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Declaration\\Declarations\:\:read\(\) has parameter \$class with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Schema/Declaration/Declarations.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\{name\: string, arguments\?\: array\<string, mixed\>\}\)\: Omnibridge\\Schema\\Declaration\\Attribute given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Member.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\Declaration\\Member constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Member.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Member.php
+
+		-
+			message: '#^Parameter \#2 \$class of class Omnibridge\\Schema\\Declaration\\Member constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Member.php
+
+		-
+			message: '#^Parameter \#3 \$attributes of class Omnibridge\\Schema\\Declaration\\Member constructor expects list\<Omnibridge\\Schema\\Declaration\\Attribute\>, array\<Omnibridge\\Schema\\Declaration\\Attribute\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Declaration/Member.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Description\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Entity given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Table given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Description\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#1 \$entities of class Omnibridge\\Schema\\Description constructor expects array\<string, Omnibridge\\Schema\\Entity\>, array\<Omnibridge\\Schema\\Entity\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Parameter \#2 \$tables of class Omnibridge\\Schema\\Description constructor expects array\<string, Omnibridge\\Schema\\Table\>, array\<Omnibridge\\Schema\\Table\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Description.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Entity\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Field given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Relation given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Parameter \#1 \$class of class Omnibridge\\Schema\\Entity constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Inheritance\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Entity.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Field\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Field.php
+
+		-
+			message: '#^Parameter \#1 \$property of class Omnibridge\\Schema\\Field constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Field.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\ForeignKey\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/ForeignKey.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\ForeignKey constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/ForeignKey.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Index\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Index.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\Index constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Index.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Inheritance\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Inheritance.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Column\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Inheritance.php
+
+		-
+			message: '#^Parameter \#1 \$type of class Omnibridge\\Schema\\Inheritance constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Inheritance.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\JoinColumn\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/JoinColumn.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\JoinColumn constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/JoinColumn.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\JoinTable\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\JoinColumn given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\JoinTable constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Parameter \#2 \$joinColumns of class Omnibridge\\Schema\\JoinTable constructor expects list\<Omnibridge\\Schema\\JoinColumn\>, array\<Omnibridge\\Schema\\JoinColumn\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Parameter \#3 \$inverseJoinColumns of class Omnibridge\\Schema\\JoinTable constructor expects list\<Omnibridge\\Schema\\JoinColumn\>, array\<Omnibridge\\Schema\\JoinColumn\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/JoinTable.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Relation\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Relation.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\JoinColumn given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Relation.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\JoinTable\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Relation.php
+
+		-
+			message: '#^Parameter \#1 \$property of class Omnibridge\\Schema\\Relation constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Relation.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Relation.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Table\:\:toArray\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Column given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\ForeignKey given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\<string, mixed\>\)\: Omnibridge\\Schema\\Index given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#1 \$name of class Omnibridge\\Schema\\Table constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#2 \$columns of class Omnibridge\\Schema\\Table constructor expects array\<string, Omnibridge\\Schema\\Column\>, array\<Omnibridge\\Schema\\Column\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#3 \$primaryKey of class Omnibridge\\Schema\\Table constructor expects list\<string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#4 \$indexes of class Omnibridge\\Schema\\Table constructor expects array\<string, Omnibridge\\Schema\\Index\>, array\<Omnibridge\\Schema\\Index\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
+			message: '#^Parameter \#5 \$foreignKeys of class Omnibridge\\Schema\\Table constructor expects array\<string, Omnibridge\\Schema\\ForeignKey\>, array\<Omnibridge\\Schema\\ForeignKey\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Table.php
+
+		-
 			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -41,6 +1571,258 @@ parameters:
 			identifier: argument.type
 			count: 2
 			path: tests/BareTest.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Alert.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Alert.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Article.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Article.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\JoinColumn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Article.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\ManyToMany does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Article.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\ManyToOne does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Article.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 2
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\DiscriminatorColumn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\DiscriminatorMap does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\InheritanceType does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Notice.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 2
+			path: tests/Fixtures/Schema/Entity/Profile.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Profile.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Profile.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Profile.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\OneToOne does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Profile.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 2
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\ManyToMany does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Table does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\UniqueConstraint does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Tag.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 3
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\DiscriminatorColumn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\InheritanceType does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\ManyToMany does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Thread.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Timestamps.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Index does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Timestamps.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\MappedSuperclass does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/Timestamps.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 4
+			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Index does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\OneToOne does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Entity/User.php
 
 		-
 			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
@@ -113,3 +1895,231 @@ parameters:
 			identifier: deadCode.unreachable
 			count: 1
 			path: tests/RuntimeTest.php
+
+		-
+			message: '#^Cannot access property \$arguments on Omnibridge\\Schema\\Declaration\\Attribute\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$attributes on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$attributes on Omnibridge\\Schema\\Declaration\\Member\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$class on Omnibridge\\Schema\\Declaration\\Member\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$methods on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$properties on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method attribute\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 8
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method attribute\(\) on Omnibridge\\Schema\\Declaration\\Member\|null\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method attributes\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method attributes\(\) on Omnibridge\\Schema\\Declaration\\Member\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method get\(\) on Omnibridge\\Schema\\Declaration\\Attribute\|null\.$#'
+			identifier: method.nonObject
+			count: 7
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method has\(\) on Omnibridge\\Schema\\Declaration\\Attribute\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method kind\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method property\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 10
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot call method toArray\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Declaration\\ClassDeclaration\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/AttributeReaderTest.php
+
+		-
+			message: '#^Cannot access property \$column on Omnibridge\\Schema\\Inheritance\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$inverseJoinColumns on Omnibridge\\Schema\\JoinTable\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$joinColumns on Omnibridge\\Schema\\JoinTable\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$map on Omnibridge\\Schema\\Inheritance\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$name on Omnibridge\\Schema\\JoinTable\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$type on Omnibridge\\Schema\\Inheritance\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access property \$value on Omnibridge\\Schema\\Inheritance\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot call method attribute\(\) on Omnibridge\\Schema\\Declaration\\ClassDeclaration\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot call method get\(\) on Omnibridge\\Schema\\Declaration\\Attribute\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Method Omnibridge\\Tests\\Schema\\BuilderTest\:\:sorted\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Declaration\\DeclarationSet\:\:fromArray\(\) expects array\<string, array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Static property Omnibridge\\Tests\\Schema\\BuilderTest\:\:\$classes \(list\<class\-string\>\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Schema/BuilderTest.php
+
+		-
+			message: '#^Cannot access offset ''FK_T'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''IDX_MORE'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''IDX_T'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''default'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''extra'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''hidden'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''onDelete'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''score'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''slug'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Schema/MySqlSchemaTest.php
