@@ -13,6 +13,10 @@ class Profile
     #[ORM\Column(length: 30)]
     protected string $nick = '';
 
+    /** A quoted name: a reserved word as a column. */
+    #[ORM\Column(name: '`order`', nullable: true)]
+    protected ?int $order = null;
+
     #[ORM\OneToOne(mappedBy: 'profile')]
     protected ?User $user = null;
 }

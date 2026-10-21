@@ -45,11 +45,11 @@ parameters:
 		-
 			message: '#^Cannot cast mixed to string\.$#'
 			identifier: cast.string
-			count: 3
+			count: 8
 			path: src/Schema/Builder.php
 
 		-
-			message: '#^Method Omnibridge\\Schema\\Builder\:\:joinColumn\(\) should return array\{name\: string\|null, referencedColumnName\: string\|null, nullable\: bool\|null, unique\: bool, onDelete\: string\|null\} but returns array\{name\: mixed, referencedColumnName\: mixed, nullable\: mixed, unique\: bool, onDelete\: mixed\}\.$#'
+			message: '#^Method Omnibridge\\Schema\\Builder\:\:joinColumn\(\) should return array\{name\: string\|null, referencedColumnName\: string\|null, nullable\: bool\|null, unique\: bool, onDelete\: string\|null\} but returns array\{name\: string\|null, referencedColumnName\: string\|null, nullable\: mixed, unique\: bool, onDelete\: mixed\}\.$#'
 			identifier: return.type
 			count: 1
 			path: src/Schema/Builder.php
@@ -266,12 +266,6 @@ parameters:
 
 		-
 			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$rootEntityName \(string\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: src/Schema/Builder.php
-
-		-
-			message: '#^Property Omnibridge\\Schema\\Builder\\Draft\:\:\$table \(array\{name\: string, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\?\: array\<string, mixed\>\}\) does not accept array\{name\: mixed, indexes\?\: array\<int\|string, array\<string, mixed\>\>, uniqueConstraints\?\: array\<int\|string, array\<string, mixed\>\>, options\?\: array\<string, mixed\>\}\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: src/Schema/Builder.php
@@ -1659,7 +1653,7 @@ parameters:
 		-
 			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
 			identifier: attribute.notFound
-			count: 2
+			count: 3
 			path: tests/Fixtures/Schema/Entity/Profile.php
 
 		-

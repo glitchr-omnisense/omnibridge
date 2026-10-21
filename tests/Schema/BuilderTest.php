@@ -191,6 +191,9 @@ final class BuilderTest extends TestCase
         self::assertSame(['FK_8D93D649CCFA12B8' => ['profile_id', 'profile', null]], array_map(fn ($key) => [$key->columns[0], $key->table, $key->onDelete], $user->foreignKeys));
 
         self::assertSame(['uniq_tag_label' => [['label'], true]], array_map(fn ($index) => [$index->columns, $index->unique], $description->table('threadTag')->indexes), 'the table the class names, the constraint it names');
+
+        self::assertSame(['id', 'nick', 'order'], array_keys($description->table('profile')->columns), 'a quoted column name (`order`) unquoted, as Doctrine keeps it');
+        self::assertSame('order', $description->entity(Profile::class)->field('order')->column);
     }
 
     public function testTheSameDescriptionFromDeclarationsKeptAsData(): void

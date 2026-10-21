@@ -216,7 +216,7 @@ final class Builder
 
         if (null !== ($table = $declaration->attribute('Table'))) {
             if (null !== $table->get('name')) {
-                $class->table['name'] = $table->get('name');
+                $class->table['name'] = trim((string) $table->get('name'), '`');
             }
             if ($table->get('options')) {
                 $class->table['options'] = $table->get('options');
@@ -286,7 +286,7 @@ final class Builder
         if (null !== ($column = $find('Column'))) {
             $mapping = ['fieldName' => $property, 'type' => $column->get('type'), 'length' => $column->get('length'), 'precision' => $column->get('precision'), 'scale' => $column->get('scale'), 'unique' => (bool) $column->get('unique'), 'nullable' => (bool) $column->get('nullable'), 'index' => (bool) $column->get('index'), 'options' => $column->get('options') ?? []];
             if (null !== $column->get('name')) {
-                $mapping['columnName'] = $column->get('name');
+                $mapping['columnName'] = trim((string) $column->get('name'), '`'); // a quoted name (`lines`), as Doctrine strips it
             }
             if (null !== $column->get('enumType')) {
                 $mapping['enumType'] = $column->get('enumType');
@@ -317,12 +317,12 @@ final class Builder
                 $mapping['idPosition'] = (int) $id->get('position');
             }
             if (null !== ($orderBy = $find('OrderBy'))) {
-                $mapping['orderBy'] = array_map(static fn ($direction) => strtoupper($direction instanceof \UnitEnum ? $direction->name : (string) $direction), $orderBy->get('value'));
+                $mapping['orderBy'] = array_map(self::direction(...), $orderBy->get('value'));
             }
             if ('ManyToMany' === $name) {
                 $joinTable = $find('JoinTable');
                 $mapping['joinTable'] = null === $joinTable ? [] : array_filter([
-                    'name' => $joinTable->get('name'),
+                    'name' => null === $joinTable->get('name') ? null : trim((string) $joinTable->get('name'), '`'),
                     'joinColumns' => array_map(self::joinColumn(...), $joinTable->get('joinColumns') ?? []),
                     'inverseJoinColumns' => array_map(self::joinColumn(...), $joinTable->get('inverseJoinColumns') ?? []),
                 ]);
@@ -343,12 +343,22 @@ final class Builder
         }
     }
 
+    /** ASC or DESC, as written or as an enumeration names it (Doctrine's Order::Ascending, a Criteria constant). */
+    private static function direction(mixed $direction): string
+    {
+        return match (true) {
+            $direction instanceof \BackedEnum => strtoupper((string) $direction->value),
+            $direction instanceof \UnitEnum => ['Ascending' => 'ASC', 'Descending' => 'DESC'][$direction->name] ?? $direction->name,
+            default => strtoupper((string) $direction),
+        };
+    }
+
     /** @return array{name: ?string, referencedColumnName: ?string, nullable: ?bool, unique: bool, onDelete: ?string} */
     private static function joinColumn(Attribute $attribute): array
     {
         return [
-            'name' => $attribute->get('name'),
-            'referencedColumnName' => $attribute->get('referencedColumnName'),
+            'name' => null === $attribute->get('name') ? null : trim((string) $attribute->get('name'), '`'),
+            'referencedColumnName' => null === $attribute->get('referencedColumnName') ? null : trim((string) $attribute->get('referencedColumnName'), '`'),
             'nullable' => $attribute->get('nullable'),
             'unique' => (bool) $attribute->get('unique'),
             'onDelete' => $attribute->get('onDelete'),
