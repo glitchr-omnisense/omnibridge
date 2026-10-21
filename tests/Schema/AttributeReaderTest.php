@@ -23,6 +23,12 @@ final class AttributeReaderTest extends TestCase
 
     public function testTheVocabularyIsNotInstalled(): void
     {
+        // An application that runs this suite from its vendor/ installs the ORM:
+        // the absence is measured on this package's own vendor only (as BareTest).
+        if ('omniscient/omnibridge' !== \Composer\InstalledVersions::getRootPackage()['name']) {
+            self::markTestSkipped('Measured on omniscient/omnibridge\'s own vendor, not on '.\Composer\InstalledVersions::getRootPackage()['name'].'\'s.');
+        }
+
         self::assertFalse(class_exists(Vocabulary::NAMESPACE.'Column'), 'the declarations are read without the ORM');
     }
 
