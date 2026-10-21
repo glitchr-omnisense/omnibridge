@@ -71,6 +71,18 @@ final class MySqlSchemaTest extends TestCase
         self::assertSame([], MySqlSchema::of(self::database(), self::types())->differences(self::description()));
     }
 
+    public function testTheDisplayWidthOfAnIntegerIsNoDifference(): void
+    {
+        $database = self::database();
+        $database['thread']['columns']['hidden']['type'] = 'tinyint';       // made on MySQL 8.0.19 or later
+        $database['thread']['columns']['id']['type'] = 'int(11)';           // made before
+
+        self::assertSame([], MySqlSchema::of($database, self::types())->differences(self::description()));
+        self::assertTrue(MySqlSchema::sameType('tinyint(1)', 'tinyint'));
+        self::assertFalse(MySqlSchema::sameType('tinyint(1)', 'smallint'));
+        self::assertFalse(MySqlSchema::sameType('varchar(255)', 'varchar(191)'));
+    }
+
     public function testEveryDifferenceIsNamed(): void
     {
         $database = self::database();

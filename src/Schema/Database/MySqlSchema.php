@@ -154,6 +154,9 @@ final class MySqlSchema
                 'autoincrement' => $column->autoincrement,
             ];
             foreach ($expected as $key => $value) {
+                if ('type' === $key && self::sameType((string) $value, (string) $actual['columns'][$columnName]['type'])) {
+                    continue;
+                }
                 if ($value !== $actual['columns'][$columnName][$key]) {
                     $differences[] = $name.'.'.$columnName.': '.$key.' '.json_encode($value).' / '.json_encode($actual['columns'][$columnName][$key]);
                 }
@@ -199,6 +202,17 @@ final class MySqlSchema
         }
 
         return $differences;
+    }
+
+    /**
+     * Two SQL types that are one: the display width of an integer (tinyint(1), int(11)) is no type - MySQL 8.0.19
+     * dropped it, and a column made before shows it still - so tinyint(1) and tinyint are the same boolean.
+     */
+    public static function sameType(string $expected, string $actual): bool
+    {
+        $width = static fn (string $type) => preg_replace('/^(tinyint|smallint|mediumint|int|bigint)\(\d+\)/', '$1', strtolower($type));
+
+        return $width($expected) === $width($actual);
     }
 
     /** The SQL type MySQL 8 writes for a column of the description (information_schema's COLUMN_TYPE). */
