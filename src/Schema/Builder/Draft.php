@@ -140,7 +140,11 @@ final class Draft
             }
         }
 
-        $mapping['targetEntity'] = ltrim((string) ($mapping['targetEntity'] ?? throw new \LogicException(\sprintf('No target for %s::$%s.', $this->name, $property))), '\\');
+        $target = $mapping['targetEntity'] ?? null;
+        if (!\is_string($target)) {
+            throw new \LogicException(\sprintf('No target for %s::$%s.', $this->name, $property));
+        }
+        $mapping['targetEntity'] = ltrim($target, '\\');
         if (!str_contains($mapping['targetEntity'], '\\') && str_contains($this->name, '\\')) {
             $mapping['targetEntity'] = substr($this->name, 0, strrpos($this->name, '\\') + 1).$mapping['targetEntity'];
         }
@@ -271,12 +275,12 @@ final class Draft
 
         $name = $type->getName();
         if (!$type->isBuiltin() && enum_exists($name) && !isset($mapping['type'])) {
-            $enum = new \ReflectionEnum($name);
-            if (!$enum->isBacked()) {
+            $backing = (new \ReflectionEnum($name))->getBackingType();
+            if (!$backing instanceof \ReflectionNamedType) {
                 throw new \LogicException(\sprintf('%s::$%s: a backed enumeration is required.', $property->class, $property->getName()));
             }
             $mapping['enumType'] = $name;
-            $name = (string) $enum->getBackingType();
+            $name = $backing->getName();
         }
 
         if (!isset($mapping['type'])) {
