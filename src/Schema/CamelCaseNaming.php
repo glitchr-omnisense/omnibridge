@@ -15,7 +15,7 @@ use Omnibridge\Schema\Declaration\Vocabulary;
  * table and columns, upper case, at most 64 characters (MySQL's limit) - so
  * that the description finds the names of the existing tables.
  *
- * omnibridge/doctrine's NamingStrategy (Doctrine's) and omniscient/omnibase's
+ * omnibridge/doctrine's NamingStrategy (Doctrine's) and omnisense/omnibase's
  * answer with this class: one place says how a class becomes a table.
  */
 class CamelCaseNaming implements Naming

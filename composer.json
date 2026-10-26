@@ -1,5 +1,5 @@
 {
-    "name": "omniscient/omnibridge",
+    "name": "omnisense/omnibridge",
     "description": "The core of the omnibridge family: the contracts any host answers for an application that runs on more than one framework (addresses, translations, languages, access, sessions, tokens, stored files, routes, environment) and the registry the application reaches them through. No framework, no ORM: each omnibridge/<host> bridge answers them with its host's services.",
     "type": "library",
     "keywords": [
@@ -9,7 +9,7 @@
         "symfony",
         "laravel"
     ],
-    "homepage": "https://github.com/glitchr-studio/omnibridge",
+    "homepage": "https://github.com/glitchr-omnisense/omnibridge",
     "license": "MIT",
     "authors": [
         {
@@ -24,6 +24,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
+    },
+    "replace": {
+        "omniscient/omnibridge": "self.version"
     },
     "autoload": {
         "psr-4": {

@@ -11,7 +11,7 @@ namespace Omnibridge\Contract;
  * Generic: every host has message catalogues and can tell whether one holds a
  * key (Symfony's catalogue, Laravel's Translator::has()). omnibridge/laravel's
  * CatalogueTranslations reads the ICU catalogues with symfony/translation;
- * omniscient/omnibase's Base\Bridge\Symfony\TranslatorTranslations is its
+ * omnisense/omnibase's Base\Bridge\Symfony\TranslatorTranslations is its
  * translator.
  *
  * Formerly Omnibridge\Twig\Contract\Translations (trans() alone) and

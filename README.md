@@ -1,4 +1,4 @@
-# omniscient/omnibridge
+# omnisense/omnibridge
 
 The core of the omnibridge family: the contracts any host answers for an
 application that runs on more than one framework, and the registry the
@@ -7,13 +7,13 @@ package requires PHP and three PSR interfaces (container, clock, event
 dispatcher), and its `BareTest` proves that every class loads with nothing else.
 
 ```sh
-composer require omniscient/omnibridge:1.x-dev
+composer require omnisense/omnibridge:1.x-dev
 ```
 
 The bridges, `omnibridge/<host>`, answer these contracts with their host's
 services and fill the registry at boot: `omnibridge/laravel` (Laravel),
 `omnibridge/twig` (the contract a Twig page asks of its host),
-`omnibridge/doctrine`, `omnibridge/react`; under Symfony, omniscient/omnibase's
+`omnibridge/doctrine`, `omnibridge/react`; under Symfony, omnisense/omnibase's
 bundle for now (`omnibridge/symfony` next). A bridge is only the adapter of the
 contracts for one technique: it chooses no versions, and an application that
 speaks only to the contracts changes host by changing bridge and configuration.
@@ -66,7 +66,7 @@ is found by the new one. `formerNames()` lists them; a missing contract's except
 names them.
 
 The registry is not final: an application family adds its own contracts'
-accessors in a class of its own over the same state, as omniscient/omnibase's
+accessors in a class of its own over the same state, as omnisense/omnibase's
 `Base\Contract\Runtime` does.
 
 ## The data structure: `Omnibridge\Schema`
@@ -102,7 +102,7 @@ the same tables), so that Doctrine reads it today and another persistence
   names). `Builder\Rule` is an application's own convention, applied at the
   three moments an ORM gives its listeners (before the declaration is read,
   once read, once the class is whole): omnibase's translations, discriminator
-  entries, vaults and order columns are rules in omniscient/omnibase.
+  entries, vaults and order columns are rules in omnisense/omnibase.
 - `Schema\Naming` / `CamelCaseNaming`: how the unnamed is named (omnibase's
   camel case: `App\Entity\Thread\Tag` is `threadTag`, `Thread::$tags` the join
   table `thread_tags (thread_id, threadTag_id)`), and a generated index or
@@ -127,10 +127,10 @@ omnibridge/doctrine reads the same declarations into Doctrine's metadata
 each site (omnibase's harness, lesringostars), and the site's with its
 database's `information_schema`.
 
-## What stays with omniscient/omnibase
+## What stays with omnisense/omnibase
 
 The contracts that describe omnibase's own models, not a host, stay
-`Base\Contract\*` in omniscient/omnibase:
+`Base\Contract\*` in omnisense/omnibase:
 
 | Contract | Why it is omnibase's |
 |---|---|

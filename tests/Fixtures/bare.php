@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Loads every class of omniscient/omnibridge with Composer's autoloader alone,
+ * Loads every class of omnisense/omnibridge with Composer's autoloader alone,
  * in a PHP process of its own, and prints what was loaded (BareTest).
  *
  *   php tests/Fixtures/bare.php <vendor/autoload.php>

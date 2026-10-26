@@ -9,7 +9,7 @@ namespace Omnibridge\Contract;
  *
  * Generic: every host has routes with names and serves public files. Each
  * bridge answers with its own router and asset packages (omnibridge/laravel's
- * RouterUrls, omniscient/omnibase's Base\Bridge\Symfony\RouterUrls); a page
+ * RouterUrls, omnisense/omnibase's Base\Bridge\Symfony\RouterUrls); a page
  * rendered by Twig asks the same object (omnibridge/twig's ContractExtension).
  *
  * Formerly Omnibridge\Twig\Contract\Urls and Base\Contract\Urls, which remain

@@ -26,7 +26,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  * once, at boot:
  *
  * - with a PSR-11 container whose ids are those names (setContainer()): under
- *   Symfony, a service locator (omniscient/omnibase's `base.contracts`); under
+ *   Symfony, a service locator (omnisense/omnibase's `base.contracts`); under
  *   Laravel, the application itself, its bindings named by the interfaces
  *   (omnibridge/laravel);
  * - or one service at a time (set()), which wins over the container's.
@@ -45,7 +45,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  * previous one is forgotten, the services set by hand are kept.
  *
  * Not final: an application family adds its own contracts' accessors in a
- * class of its own over the same registry (omniscient/omnibase's
+ * class of its own over the same registry (omnisense/omnibase's
  * Base\Contract\Runtime: its parameters, nouns, media, pictures, texts and
  * mailer). The state is this class's, shared by any such class.
  */

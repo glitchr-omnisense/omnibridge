@@ -18,7 +18,7 @@ final class MissingContractException extends \LogicException
             $contract .= ' (formerly '.implode(', ', $formerNames).')';
         }
 
-        return new self(sprintf('No %s in the runtime: the host fills it at boot (its omnibridge bridge, omniscient/omnibase\'s bundle under Symfony), or Omnibridge\Runtime::set() / setContainer() before it is asked.', $contract));
+        return new self(sprintf('No %s in the runtime: the host fills it at boot (its omnibridge bridge, omnisense/omnibase\'s bundle under Symfony), or Omnibridge\Runtime::set() / setContainer() before it is asked.', $contract));
     }
 
     public static function notAn(string $contract, object $service): self

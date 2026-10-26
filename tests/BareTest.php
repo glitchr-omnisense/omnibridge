@@ -6,7 +6,7 @@ use Omnibridge\Runtime;
 use PHPUnit\Framework\TestCase;
 
 /**
- * omniscient/omnibridge loads without any framework or ORM: a PHP process of
+ * omnisense/omnibridge loads without any framework or ORM: a PHP process of
  * its own (this one has loaded PHPUnit) loads every class of src/ with
  * Composer's autoloader and reports every class and file loaded on the way.
  * Nothing may come from outside src/ but the PSR interfaces it declares.
@@ -20,8 +20,8 @@ final class BareTest extends TestCase
 {
     protected function setUp(): void
     {
-        if ('omniscient/omnibridge' !== \Composer\InstalledVersions::getRootPackage()['name']) {
-            self::markTestSkipped('Measured on omniscient/omnibridge\'s own vendor, not on '.\Composer\InstalledVersions::getRootPackage()['name'].'\'s.');
+        if ('omnisense/omnibridge' !== \Composer\InstalledVersions::getRootPackage()['name']) {
+            self::markTestSkipped('Measured on omnisense/omnibridge\'s own vendor, not on '.\Composer\InstalledVersions::getRootPackage()['name'].'\'s.');
         }
     }
 
