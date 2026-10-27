@@ -11,8 +11,7 @@ message that names what is wrong.
 ## `MissingContractException`
 
 `Omnibridge\Exception\MissingContractException`, final, extends `\LogicException`. Formerly
-`Base\Exception\MissingContractException`, which omnisense/omnibase keeps as its alias until omnibase
-4's final pass. Two factories:
+`Base\Exception\MissingContractException`, an alias removed at omnibase 4's final pass. Two factories:
 
 | Factory | Thrown by | Message |
 |---|---|---|

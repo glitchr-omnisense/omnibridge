@@ -8,7 +8,7 @@ order: 20
 Nine interfaces under `Omnibridge\Contract\`. Each says what an application asks of its host, never
 how the host answers: a bridge implements it over its framework's services
 ([which bridge answers which](index.md#the-contracts)). Every one of them was
-`Base\Contract\<Name>` in omnisense/omnibase before; the former names stay aliases until omnibase 4's
+`Base\Contract\<Name>` in omnisense/omnibase before; those former names were removed at omnibase 4's
 final pass ([Former names](index.md#former-names)).
 
 The application reaches a contract through the registry (`Runtime::urls()`...,
@@ -43,7 +43,7 @@ The application's texts: a message in the page's language, from its catalogues (
 
 `exists()` is for code that tries several keys in turn (an entity's name in a namespace, then in
 its parent's). Formerly two interfaces: `Omnibridge\Twig\Contract\Translations` (with `trans()`
-alone) and `Base\Contract\Translations` (with `exists()`); now one, so one object answers a page and
+alone) and `Base\Contract\Translations` (with `exists()`), both removed since; now one, so one object answers a page and
 the application's code alike. Answered by `Omnibridge\Symfony\TranslatorTranslations` and
 `Omnibridge\Laravel\CatalogueTranslations` (which reads ICU catalogues with symfony/translation).
 

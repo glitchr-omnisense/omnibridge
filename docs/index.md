@@ -171,9 +171,10 @@ omnisense/omnibase:
 
 ## Former names
 
-Until omnibase 4's final pass, each moved class stays reachable under its former name by
-`Runtime::alias()` (a `class_alias`: an alias, not a subclass - one interface, one reflection name),
-declared by the package that owned the name, eagerly (Composer's `files`):
+Each contract and class here was moved from another package, and kept reachable under its former
+name by `Runtime::alias()` (a `class_alias`: an alias, not a subclass - one interface, one
+reflection name), declared by the package that owned the name, eagerly (Composer's `files`),
+until omnibase 4's final pass:
 
 | Here | Former names |
 |---|---|
@@ -183,9 +184,18 @@ declared by the package that owned the name, eagerly (Composer's `files`):
 | `Omnibridge\SystemClock` | `Base\Contract\SystemClock` |
 | `Omnibridge\Exception\MissingContractException` | `Base\Exception\MissingContractException` |
 
-`Base\Contract\Runtime` is not an alias: it is omnibase's registry over this one, with omnibase's
-own accessors. This package declares none of these aliases itself: `Omnibridge\Twig\Contract\*` are
-declared by omnibridge/twig, `Base\*` by omnisense/omnibase.
+That pass is done: omnisense/omnibase removed its aliases (commit 02682623, its
+`src/Resources/Aliases.php`) and omnibridge/twig its own (commit 976de23), once no site and no
+package named them. Name the classes of the left column. No package declares a former name today;
+the mechanism stays, for the next move ([The registry](registry.md#former-names)).
+
+`Base\Contract\Runtime` was never an alias: it is omnibase's registry over this one, with omnibase's
+own accessors.
+
+> [!NOTE]
+> The README's "Former names" section still says the aliases live "until omnibase 4's final pass",
+> and `SystemClock`'s and `MissingContractException`'s docblocks that the former name "remains its
+> alias": both were written before the pass.
 
 ## How this manual is organised
 
