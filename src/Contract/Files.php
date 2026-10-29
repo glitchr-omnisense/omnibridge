@@ -11,7 +11,7 @@ namespace Omnibridge\Contract;
  * ("local.uploads", "s3.private"...), null for the default one; each bridge
  * maps those names to its host's storages (Flysystem's, Laravel's disks).
  *
- * Formerly Base\Contract\Files, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Files, an alias removed at omnibase 4's
  * final pass.
  */
 interface Files

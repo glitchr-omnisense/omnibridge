@@ -10,7 +10,7 @@ namespace Omnibridge\Contract;
  * Generic: Symfony's authorization checker and token storage, Laravel's gate
  * and guard answer the same two questions.
  *
- * Formerly Base\Contract\Access, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Access, an alias removed at omnibase 4's
  * final pass.
  */
 interface Access

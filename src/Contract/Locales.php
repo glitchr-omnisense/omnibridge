@@ -10,7 +10,7 @@ namespace Omnibridge\Contract;
  * them otherwise (Laravel's `fr`) gives them in this form. Named in the
  * plural so as not to shadow PHP's \Locale where it is imported.
  *
- * Formerly Base\Contract\Locales, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Locales, an alias removed at omnibase 4's
  * final pass.
  */
 interface Locales

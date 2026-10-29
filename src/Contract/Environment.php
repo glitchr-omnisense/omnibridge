@@ -10,8 +10,8 @@ namespace Omnibridge\Contract;
  * Generic: Symfony's kernel.environment, kernel.debug and kernel.secret;
  * Laravel's APP_ENV, app.debug and app.key.
  *
- * Formerly Base\Contract\Environment, which remains its alias until omnibase
- * 4's final pass.
+ * Formerly Base\Contract\Environment, an alias removed at omnibase 4's
+ * final pass.
  */
 interface Environment
 {

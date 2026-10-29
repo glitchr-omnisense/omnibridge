@@ -11,7 +11,7 @@ namespace Omnibridge\Contract;
  * are a route's metadata where the host keeps some (omnibase's #[Iconize]
  * under Symfony); a host without answers null.
  *
- * Formerly Base\Contract\Routes, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Routes, an alias removed at omnibase 4's
  * final pass.
  */
 interface Routes

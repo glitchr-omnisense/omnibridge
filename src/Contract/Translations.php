@@ -15,8 +15,8 @@ namespace Omnibridge\Contract;
  * translator.
  *
  * Formerly Omnibridge\Twig\Contract\Translations (trans() alone) and
- * Base\Contract\Translations (with exists()), which remain its aliases until
- * omnibase 4's final pass: one interface, so one object answers a page and the
+ * Base\Contract\Translations (with exists()), aliases removed at omnibase 4's
+ * final pass: one interface, so one object answers a page and the
  * application's code alike.
  */
 interface Translations

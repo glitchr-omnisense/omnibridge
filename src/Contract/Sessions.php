@@ -9,7 +9,7 @@ namespace Omnibridge\Contract;
  *
  * Generic: Symfony's token storage, Laravel's guard logout().
  *
- * Formerly Base\Contract\Sessions, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Sessions, an alias removed at omnibase 4's
  * final pass.
  */
 interface Sessions

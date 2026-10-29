@@ -192,11 +192,6 @@ the mechanism stays, for the next move ([The registry](registry.md#former-names)
 `Base\Contract\Runtime` was never an alias: it is omnibase's registry over this one, with omnibase's
 own accessors.
 
-> [!NOTE]
-> The README's "Former names" section still says the aliases live "until omnibase 4's final pass",
-> and `SystemClock`'s and `MissingContractException`'s docblocks that the former name "remains its
-> alias": both were written before the pass.
-
 ## How this manual is organised
 
 - [Installation](installation.md): requirements, a plain PHP script and its output, the hosts.

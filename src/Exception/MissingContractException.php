@@ -6,8 +6,8 @@ namespace Omnibridge\Exception;
  * A contract asked of Omnibridge\Runtime when no host filled it: loud, where a
  * code that found no service would return null in silence.
  *
- * Formerly Base\Exception\MissingContractException, which remains its alias
- * until omnibase 4's final pass.
+ * Formerly Base\Exception\MissingContractException, an alias removed at
+ * omnibase 4's final pass.
  */
 final class MissingContractException extends \LogicException
 {

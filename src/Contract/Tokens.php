@@ -10,7 +10,7 @@ namespace Omnibridge\Contract;
  * session token (one for every intent). A token made by one host is checked
  * by that host only.
  *
- * Formerly Base\Contract\Tokens, which remains its alias until omnibase 4's
+ * Formerly Base\Contract\Tokens, an alias removed at omnibase 4's
  * final pass.
  */
 interface Tokens

@@ -12,8 +12,8 @@ namespace Omnibridge\Contract;
  * RouterUrls, omnisense/omnibase's Base\Bridge\Symfony\RouterUrls); a page
  * rendered by Twig asks the same object (omnibridge/twig's ContractExtension).
  *
- * Formerly Omnibridge\Twig\Contract\Urls and Base\Contract\Urls, which remain
- * its aliases until omnibase 4's final pass.
+ * Formerly Omnibridge\Twig\Contract\Urls and Base\Contract\Urls, aliases removed
+ * at omnibase 4's final pass.
  */
 interface Urls
 {

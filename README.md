@@ -13,8 +13,9 @@ composer require omnisense/omnibridge:1.x-dev
 The bridges, `omnibridge/<host>`, answer these contracts with their host's
 services and fill the registry at boot: `omnibridge/laravel` (Laravel),
 `omnibridge/twig` (the contract a Twig page asks of its host),
-`omnibridge/doctrine`, `omnibridge/react`; under Symfony, omnisense/omnibase's
-bundle for now (`omnibridge/symfony` next). A bridge is only the adapter of the
+`omnibridge/doctrine`, `omnibridge/react`, and under Symfony `omnibridge/symfony`
+(the six contracts that adapt Symfony's own services; omnisense/omnibase's bundle
+binds the ones that read omnibase's). A bridge is only the adapter of the
 contracts for one technique: it chooses no versions, and an application that
 speaks only to the contracts changes host by changing bridge and configuration.
 
@@ -145,10 +146,12 @@ The contracts that describe omnibase's own models, not a host, stay
 
 ## Former names
 
-Until omnibase 4's final pass, each moved class stays reachable under its former
-name by `Runtime::alias()` (a `class_alias`: an alias, not a subclass - one
-interface, one reflection name), declared by the package that owned the name,
-eagerly (Composer's `files`):
+Each moved class was kept reachable under its former name by `Runtime::alias()`
+(a `class_alias`: an alias, not a subclass - one interface, one reflection name),
+declared by the package that owned the name, until omnibase 4's final pass
+removed them (omnibase 02682623, omnibridge/twig 976de23): no package declares a
+former name today, and the mechanism stays for the next move. Name the classes of
+the left column:
 
 | Here | Former names |
 |---|---|

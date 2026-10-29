@@ -9,8 +9,8 @@ use Psr\Clock\ClockInterface;
  * (Runtime::clock()). A host gives its own, which a test can freeze
  * (symfony/clock's, Laravel's dates).
  *
- * Formerly Base\Contract\SystemClock, which remains its alias until omnibase
- * 4's final pass.
+ * Formerly Base\Contract\SystemClock, an alias removed at omnibase 4's
+ * final pass.
  */
 final class SystemClock implements ClockInterface
 {
