@@ -43,6 +43,6 @@ rule ([The schema](schema.md#a-complete-example)), the naming examples, the MySQ
 - The builder's behaviour for what omnibase's entities do not use: embedded classes, attribute and
   association overrides, sequence and custom generators, `Table`'s `indexes`/`uniqueConstraints`
   arguments ([The schema](schema.md#what-the-builder-reads) lists what is not described).
-- A PHP without `ext-mbstring`: not tried; `CamelCaseNaming` would fail
-  ([Installation](installation.md#requirements)).
+- A PHP without `ext-mbstring`: composer refuses to install the package (it requires it, for
+  `CamelCaseNaming`; [Installation](installation.md#requirements)).
 - A third host (other than Symfony and Laravel): no bridge exists to try the contracts against.

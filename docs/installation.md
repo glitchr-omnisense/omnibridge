@@ -21,11 +21,6 @@ optional needs:
   in the application).
 - `Schema\CamelCaseNaming` calls `mb_strtolower()`, `mb_substr()` and `mb_strtoupper()`.
 
-> [!WARNING]
-> Known defect: `CamelCaseNaming` calls the `mb_*` functions while composer.json requires neither
-> `ext-mbstring` nor a polyfill, where a requirement of the package should be declared. Every PHP
-> image of the family has mbstring; a PHP built without it fails on the first table name.
-
 ```sh
 composer require omnisense/omnibridge:1.x-dev
 ```
