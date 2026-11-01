@@ -11,7 +11,11 @@ use Omnibridge\Contract\Sessions;
 use Omnibridge\Contract\Tokens;
 use Omnibridge\Contract\Translations;
 use Omnibridge\Contract\Urls;
+use Omnibridge\Contract\Validation;
+use Omnibridge\Contract\Views;
 use Omnibridge\Exception\MissingContractException;
+use Omnibridge\Persistence\Backend;
+use Omnibridge\Persistence\UnitOfWork;
 use Psr\Clock\ClockInterface;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -244,6 +248,30 @@ class Runtime
     public static function events(): EventDispatcherInterface
     {
         return self::get(EventDispatcherInterface::class);
+    }
+
+    /** The views by their name, in the view technology the application chose. */
+    public static function views(): Views
+    {
+        return self::get(Views::class);
+    }
+
+    /** A value checked against constraints by the host's validator. */
+    public static function validation(): Validation
+    {
+        return self::get(Validation::class);
+    }
+
+    /** The persistence installed: its name, its features, its scopes. */
+    public static function backend(): Backend
+    {
+        return self::get(Backend::class);
+    }
+
+    /** The entities kept by the persistence installed. */
+    public static function unitOfWork(): UnitOfWork
+    {
+        return self::get(UnitOfWork::class);
     }
 
     /** The contract's own name: an alias's original, the name itself for anything else. */

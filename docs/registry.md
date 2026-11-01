@@ -56,7 +56,7 @@ container, asked by the contract's own name, then by the name asked, then by eac
 (the first id the container `has()` is used). A service the container gives that does not implement
 the contract throws `MissingContractException::notAn()`.
 
-Any interface name can be asked: `get()` is not limited to the nine contracts. A family keeps its
+Any interface name can be asked: `get()` is not limited to the contracts. A family keeps its
 own contracts in the same registry (omnibase's `Base\Contract\Nouns`...).
 
 ### The accessors

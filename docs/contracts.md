@@ -5,7 +5,7 @@ order: 20
 
 # Contracts
 
-Nine interfaces under `Omnibridge\Contract\`. Each says what an application asks of its host, never
+Eleven interfaces under `Omnibridge\Contract\` (and the persistence's under `Omnibridge\Persistence\`, [Persistence](persistence.md)). Each says what an application asks of its host, never
 how the host answers: a bridge implements it over its framework's services
 ([which bridge answers which](index.md#the-contracts)). Every one of them was
 `Base\Contract\<Name>` in omnisense/omnibase before; those former names were removed at omnibase 4's
@@ -157,6 +157,35 @@ No contract of their own: the PSR interfaces are already generic.
 - `Psr\EventDispatcher\EventDispatcherInterface`, asked by `Runtime::events()`: Symfony's
   `event_dispatcher`, omnibridge/laravel's `DispatcherEvents` over Laravel's dispatcher. There is no
   fallback: asked and not given, it throws `MissingContractException`.
+
+## Views
+
+A view rendered by its name, in whatever view technology the application chose (Twig, Blade, a
+React page's server side): a mail's body, a screen, a fragment. Since omnibase's step F1
+(2026-11-01); no bridge answers it yet (omnibridge/twig's `Environment` and Laravel's view factory
+are the first planned).
+
+| Method | Returns | Meaning |
+|---|---|---|
+| `render(string $name, array $context = [])` | `string` | the view rendered with that context |
+| `exists(string $name)` | `bool` | whether the host's engine knows a view of that name |
+
+`Runtime::views()`.
+
+## Validation
+
+A value checked against constraints, by the host's validator: a form's processing, an import, an
+action, before anything is kept. Since omnibase's step F1 (2026-11-01); answered later by
+symfony/validator (omnibridge/symfony), Laravel's validator (omnibridge/laravel) and a small
+validator of the kept constraints for plain PHP.
+
+| Method | Returns | Meaning |
+|---|---|---|
+| `validate(mixed $value, array $constraints = [], ?array $groups = null)` | `list<Violation>` | an object against the constraints it declares plus those given, a scalar or an array against those given; empty when valid |
+
+A `Omnibridge\Contract\Violation` has the `path` (`""` for the value itself), the `message` (the
+host's translation), the constraint's `code` and the message's `parameters`.
+`Runtime::validation()`.
 
 ## Writing an adapter
 

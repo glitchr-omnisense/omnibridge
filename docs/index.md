@@ -65,6 +65,12 @@ container too.
 | `Files` | a stored file's public path and URL, its local path, whether its storage is remote | storages named by the application's configuration, mapped by each bridge to its host's (Flysystem, disks) |
 | `Routes` | a route's declared path, the route of an address, its icons | every router knows a route's pattern and matches an address; icons are metadata, null where the host keeps none |
 | `Environment` | the environment's name, debug, the secret | every host runs in an environment with a secret |
+| `Views` | a view rendered by its name | every view technology renders a named view with a context; the application chooses the technology |
+| `Validation` | the violations of a value against constraints | every host has a validator; the constraints are the application's |
+
+The persistence's, `Omnibridge\Persistence\*` ([Persistence](persistence.md)): `UnitOfWork`, the
+`Lifecycle` events, `Scope`, `Backend` - what an application asks of omnibridge/doctrine or
+omnibridge/eloquent, whichever is installed (since 2026-11-01; no backend answers them yet).
 
 Also here: PSR-20's clock (`Runtime::clock()`, `SystemClock` when the host gave none) and PSR-14's
 event dispatcher (`Runtime::events()`), which need no contract of their own.
@@ -80,6 +86,7 @@ Which bridge answers which contract:
 | `Sessions` | `Omnibridge\Symfony\Contract\SecuritySessions` | `Omnibridge\Laravel\Contract\GuardSessions` |
 | `Tokens` | `Omnibridge\Symfony\Contract\CsrfTokens` | `Omnibridge\Laravel\Contract\SessionTokens` |
 | `Locales`, `Files`, `Routes` | not bound: omnisense/omnibase binds them (`Base\Bridge\Symfony\*`) | `AppLocales`, `DiskFiles`, `RouterRoutes` |
+| `Views`, `Validation`, the persistence's | not yet (plan "omnibase agnostic", steps F2-F7) | not yet |
 | PSR-20 clock, PSR-14 events | the framework's own services, when the container has them | `DateClock`, `DispatcherEvents` |
 
 ## The registry

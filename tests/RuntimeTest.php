@@ -11,7 +11,11 @@ use Omnibridge\Contract\Sessions;
 use Omnibridge\Contract\Tokens;
 use Omnibridge\Contract\Translations;
 use Omnibridge\Contract\Urls;
+use Omnibridge\Contract\Validation;
+use Omnibridge\Contract\Views;
 use Omnibridge\Exception\MissingContractException;
+use Omnibridge\Persistence\Backend;
+use Omnibridge\Persistence\UnitOfWork;
 use Omnibridge\Runtime;
 use Omnibridge\SystemClock;
 use PHPUnit\Framework\TestCase;
@@ -148,10 +152,14 @@ final class RuntimeTest extends TestCase
             Routes::class => $this->createMock(Routes::class),
             Environment::class => $this->createMock(Environment::class),
             EventDispatcherInterface::class => $this->createMock(EventDispatcherInterface::class),
+            Views::class => $this->createMock(Views::class),
+            Validation::class => $this->createMock(Validation::class),
+            Backend::class => $this->createMock(Backend::class),
+            UnitOfWork::class => $this->createMock(UnitOfWork::class),
         ];
         Runtime::setContainer(self::container($services));
 
-        foreach (['urls' => Urls::class, 'translations' => Translations::class, 'locales' => Locales::class, 'access' => Access::class, 'sessions' => Sessions::class, 'tokens' => Tokens::class, 'files' => Files::class, 'routes' => Routes::class, 'environment' => Environment::class, 'events' => EventDispatcherInterface::class] as $accessor => $contract) {
+        foreach (['urls' => Urls::class, 'translations' => Translations::class, 'locales' => Locales::class, 'access' => Access::class, 'sessions' => Sessions::class, 'tokens' => Tokens::class, 'files' => Files::class, 'routes' => Routes::class, 'environment' => Environment::class, 'events' => EventDispatcherInterface::class, 'views' => Views::class, 'validation' => Validation::class, 'backend' => Backend::class, 'unitOfWork' => UnitOfWork::class] as $accessor => $contract) {
             self::assertSame($services[$contract], Runtime::$accessor(), $accessor.'()');
         }
     }
