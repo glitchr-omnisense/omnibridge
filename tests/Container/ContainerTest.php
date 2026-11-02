@@ -91,6 +91,12 @@ final class ContainerTest extends TestCase
         $container->getParameter('nope');
     }
 
+    public function testAUnionTakesTheTypeSomethingAnswersWhereverItIs(): void
+    {
+        $container = (new Container())->alias(Clock::class, FixedClock::class);
+        self::assertInstanceOf(FixedClock::class, $container->get(Clocked::class)->clock);
+    }
+
     public function testEnvironmentParameters(): void
     {
         putenv('OMNIBRIDGE_CONTAINER_TEST=yes');

@@ -25,8 +25,8 @@ use Psr\Container\ContainerInterface;
  * 2. a #[Autowire] attribute (Symfony's, read by its name, never loaded:
  *    its value, param, service or env argument), so a class written for
  *    Symfony needs nothing more;
- * 3. its type, each class or interface of a union in turn, when the
- *    container has it;
+ * 3. its type: first a class or interface of a union that something answers,
+ *    then, for a parameter that is not optional, a class that can be built;
  * 4. its default value, else null when it allows null.
  * Anything else is refused aloud (ContainerException), naming the service and
  * the parameter; a cycle too.
@@ -278,20 +278,26 @@ final class Container implements ContainerInterface
 
         $type = $parameter->getType();
         $types = $type instanceof \ReflectionUnionType ? $type->getTypes() : (null === $type ? [] : [$type]);
+        $names = [];
         foreach ($types as $named) {
-            if (!$named instanceof \ReflectionNamedType || $named->isBuiltin()) {
-                continue;
+            if ($named instanceof \ReflectionNamedType && !$named->isBuiltin() && !\in_array($named->getName(), ['self', 'static'], true)) {
+                $names[] = $named->getName();
             }
-            $name = $named->getName();
-            if ('self' === $name || 'static' === $name) {
-                continue;
-            }
-            // An interface or abstract class only when something answers it; a class when it can be built,
-            // unless the parameter has a default or allows null (an optional service left out, as Symfony does).
+        }
+        // First a type something answers, whichever its place in the union (a contract before the framework's
+        // class it replaces: nothing of a type not asked for is autoloaded); then a class that can be built,
+        // unless the parameter has a default or allows null (an optional service left out, as Symfony does).
+        foreach ($names as $name) {
             $target = $this->target($name);
-            $known = isset($this->services[$target]) || isset($this->factories[$target]) || isset($this->definitions[$target]);
-            if ($known || (!$parameter->isDefaultValueAvailable() && !$parameter->allowsNull() && $this->has($name))) {
+            if (isset($this->services[$target]) || isset($this->factories[$target]) || isset($this->definitions[$target])) {
                 return [true, $this->get($name)];
+            }
+        }
+        if (!$parameter->isDefaultValueAvailable() && !$parameter->allowsNull()) {
+            foreach ($names as $name) {
+                if ($this->has($name)) {
+                    return [true, $this->get($name)];
+                }
             }
         }
 

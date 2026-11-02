@@ -58,3 +58,14 @@ final class Egg
     {
     }
 }
+
+final class Clocked
+{
+    public function __construct(public readonly NotAnswered|Clock $clock)
+    {
+    }
+}
+
+interface NotAnswered
+{
+}
