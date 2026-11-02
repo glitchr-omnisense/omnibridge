@@ -87,6 +87,31 @@ The visitor's session, as the application ends it.
 omnisense/omnibase's `User::logout()` asks it first, and kicks the user out of its sessions elsewhere when it answers false. Symfony's token storage
 (`SecuritySessions`), Laravel's guard `logout()` (`GuardSessions`).
 
+## Requests
+
+The request being answered, read without the framework's request object (`Runtime::requests()`).
+
+| Method | Returns | Meaning |
+|---|---|---|
+| `has()` | `bool` | whether a request is being answered (false in a command, a worker, plain PHP) |
+| `ip()` | `?string` | the visitor's address, as the host's trusted proxies give it |
+| `header(string $name)` | `?string` | a header's first value, the name case-insensitive |
+| `uri()` | `?string` | the address asked, whole |
+| `host()` | `?string` | its scheme and host, no trailing slash (`https://example.org`) |
+| `route()` | `?string` | the name of the route answering, once the router has found it |
+| `attribute(string $name, mixed $default = null)` | `mixed` | an attribute set on the request (the route's parameters among them) |
+| `session(string $key, mixed $default = null)` | `mixed` | a value the session holds |
+| `remember(string $key, mixed $value)` | `void` | a value kept in the session; null forgets it |
+| `forget(string $key)` | `void` | a value forgotten |
+| `flash(string $type, string $message)` | `void` | a message shown once on the next page, under its type (success, warning...) |
+| `flashes()` | `array<string, list<string>>` | the messages waiting, left where they are |
+| `request()` | `?object` | the host's own request (Symfony's, or Laravel's, a subclass of it), for code that still reads it |
+
+The session is the main request's, the rest the current one's. Outside a request the readers answer
+null and the writers do nothing. Symfony's request stack (`StackRequests`, omnibridge/symfony),
+Laravel's request and session (`LaravelRequests`, omnibridge/laravel: the flashes where its pages read
+omnibase's flash bag).
+
 ## Tokens
 
 The token a form carries for an intent, against cross-site requests: what a page's POST (or a
@@ -157,6 +182,10 @@ No contract of their own: the PSR interfaces are already generic.
 - `Psr\EventDispatcher\EventDispatcherInterface`, asked by `Runtime::events()`: Symfony's
   `event_dispatcher`, omnibridge/laravel's `DispatcherEvents` over Laravel's dispatcher. There is no
   fallback: asked and not given, it throws `MissingContractException`.
+- An event known by a name as well (omnibase's `user.register`) implements `Omnibridge\Event\NamedEvent`
+  and is dispatched by `Omnibridge\Event\Events::dispatch($dispatcher, $event, $name)`: a dispatcher whose
+  `dispatch()` takes a second argument (Symfony's) is given the name, any other the event alone;
+  omnibridge/laravel's `DispatcherEvents` gives a NamedEvent to the listeners of its name as well.
 
 ## Views
 

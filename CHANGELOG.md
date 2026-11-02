@@ -4,6 +4,14 @@
 
 ### Added
 
+- **`Contract\Requests`** (plan "omnibase agnostic", step F5c): the request being answered, read without the framework's
+  request object - the visitor's address, a header, the address asked, its host, the route, an attribute, the session's values
+  (`session()`, `remember()`, `forget()`) and its flash messages (`flash()`, `flashes()`); `request()` hands the host's own object
+  to code that still reads it. `Runtime::requests()`. Symfony's is omnibridge/symfony's StackRequests, Laravel's omnibridge/laravel's
+  LaravelRequests; outside a request `has()` is false and nothing is read or written.
+- **`Event\NamedEvent`, `Event\Events::dispatch()`**: an event known by a name as well as its class (omnibase's user.register),
+  dispatched through any PSR-14 dispatcher - Symfony's is given the name, any other the event alone, which carries it.
+
 - **`Omnibridge\Validation\AttributeConstraints`**: the rules a class declares read as kept constraints whichever attributes name them, by the
   attribute's name, its class never loaded: omnibridge's own, symfony/validator's (NotBlank, Length, Email, Regex, Choice, Range, Count, its
   UniqueEntity), an application's (`register()`). One rule on one line of a model, every host's Validation answers it. `Constraint\Count`.

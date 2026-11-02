@@ -6,6 +6,7 @@ use Omnibridge\Contract\Access;
 use Omnibridge\Contract\Environment;
 use Omnibridge\Contract\Files;
 use Omnibridge\Contract\Locales;
+use Omnibridge\Contract\Requests;
 use Omnibridge\Contract\Routes;
 use Omnibridge\Contract\Sessions;
 use Omnibridge\Contract\Tokens;
@@ -215,6 +216,12 @@ class Runtime
     public static function sessions(): Sessions
     {
         return self::get(Sessions::class);
+    }
+
+    /** The request being answered: the visitor's address and headers, the page, the session's values and flashes. */
+    public static function requests(): Requests
+    {
+        return self::get(Requests::class);
     }
 
     public static function tokens(): Tokens

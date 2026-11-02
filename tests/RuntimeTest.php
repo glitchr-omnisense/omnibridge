@@ -7,6 +7,7 @@ use Omnibridge\Contract\Environment;
 use Omnibridge\Contract\Files;
 use Omnibridge\Contract\Locales;
 use Omnibridge\Contract\Routes;
+use Omnibridge\Contract\Requests;
 use Omnibridge\Contract\Sessions;
 use Omnibridge\Contract\Tokens;
 use Omnibridge\Contract\Translations;
@@ -60,7 +61,7 @@ final class RuntimeTest extends TestCase
 
     public function testEveryTypedAccessorThrowsWhenEmptyButTheClock(): void
     {
-        foreach (['urls', 'translations', 'locales', 'access', 'sessions', 'tokens', 'files', 'routes', 'environment', 'events'] as $accessor) {
+        foreach (['urls', 'translations', 'locales', 'access', 'sessions', 'requests', 'tokens', 'files', 'routes', 'environment', 'events'] as $accessor) {
             try {
                 Runtime::$accessor();
                 self::fail($accessor.'() answered with nothing filled');
@@ -147,6 +148,7 @@ final class RuntimeTest extends TestCase
             Locales::class => $this->createMock(Locales::class),
             Access::class => $this->createMock(Access::class),
             Sessions::class => $this->createMock(Sessions::class),
+            Requests::class => $this->createMock(Requests::class),
             Tokens::class => $this->createMock(Tokens::class),
             Files::class => $this->createMock(Files::class),
             Routes::class => $this->createMock(Routes::class),
@@ -159,7 +161,7 @@ final class RuntimeTest extends TestCase
         ];
         Runtime::setContainer(self::container($services));
 
-        foreach (['urls' => Urls::class, 'translations' => Translations::class, 'locales' => Locales::class, 'access' => Access::class, 'sessions' => Sessions::class, 'tokens' => Tokens::class, 'files' => Files::class, 'routes' => Routes::class, 'environment' => Environment::class, 'events' => EventDispatcherInterface::class, 'views' => Views::class, 'validation' => Validation::class, 'backend' => Backend::class, 'unitOfWork' => UnitOfWork::class] as $accessor => $contract) {
+        foreach (['urls' => Urls::class, 'translations' => Translations::class, 'locales' => Locales::class, 'access' => Access::class, 'sessions' => Sessions::class, 'requests' => Requests::class, 'tokens' => Tokens::class, 'files' => Files::class, 'routes' => Routes::class, 'environment' => Environment::class, 'events' => EventDispatcherInterface::class, 'views' => Views::class, 'validation' => Validation::class, 'backend' => Backend::class, 'unitOfWork' => UnitOfWork::class] as $accessor => $contract) {
             self::assertSame($services[$contract], Runtime::$accessor(), $accessor.'()');
         }
     }
