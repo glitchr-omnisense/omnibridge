@@ -4,6 +4,10 @@
 
 ### Added
 
+- **`Contract\Roles`** (plan "omnibase agnostic", step F5c, item 3): the roles some roles reach in the host's hierarchy,
+  `reachable(array $roles)`; `Runtime::roles()`. Symfony's role hierarchy (omnibridge/symfony's HierarchyRoles), Laravel's
+  `role_hierarchy` (omnibridge/laravel's Auth\Roles); omnisense/omnibase's SecurityPolicy reads it without Security's
+  RoleHierarchyInterface.
 - **`Contract\Requests`** (plan "omnibase agnostic", step F5c): the request being answered, read without the framework's
   request object - the visitor's address, a header, the address asked, its host, the route, an attribute, the session's values
   (`session()`, `remember()`, `forget()`) and its flash messages (`flash()`, `flashes()`); `request()` hands the host's own object

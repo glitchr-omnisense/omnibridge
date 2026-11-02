@@ -112,6 +112,18 @@ null and the writers do nothing. Symfony's request stack (`StackRequests`, omnib
 Laravel's request and session (`LaravelRequests`, omnibridge/laravel: the flashes where its pages read
 omnibase's flash bag).
 
+## Roles
+
+The roles some roles reach in the host's hierarchy (`Runtime::roles()`).
+
+| Method | Returns | Meaning |
+|---|---|---|
+| `reachable(array $roles)` | `list<string>` | the roles given and every role below them (`ROLE_ADMIN` reaching `ROLE_STAFF`, `ROLE_USER`) |
+
+Symfony's role hierarchy (`HierarchyRoles`, omnibridge/symfony), Laravel's `config/omniauth.php`'s `role_hierarchy`
+(`Auth\Roles`, omnibridge/laravel). omnisense/omnibase's `SecurityPolicy` asks it for the roles a second factor is
+required of, and the administration's.
+
 ## Tokens
 
 The token a form carries for an intent, against cross-site requests: what a page's POST (or a
