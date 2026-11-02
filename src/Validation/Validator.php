@@ -50,8 +50,49 @@ final class Validator implements Validation
         if (\is_object($value) && !$value instanceof \DateTimeInterface && !$this->isFile($value)) {
             array_push($violations, ...$this->validateObject($value, $groups));
         }
+        array_push($violations, ...$this->only($value, $constraints, $groups));
+
+        return $violations;
+    }
+
+    /**
+     * The value against the constraints given, nothing of what an object declares: for a host
+     * whose validator reads the rest (omnibridge/symfony's, which leaves Unique to this one).
+     *
+     * @param list<object>      $constraints
+     * @param list<string>|null $groups
+     *
+     * @return list<Violation>
+     */
+    public function only(mixed $value, array $constraints, ?array $groups = null): array
+    {
+        $violations = [];
         foreach ($constraints as $constraint) {
             array_push($violations, ...$this->check($value, $constraint, '', $groups, null));
+        }
+
+        return $violations;
+    }
+
+    /**
+     * The Unique constraints a record declares, on its class and its properties.
+     *
+     * @param list<string>|null $groups
+     *
+     * @return list<Violation>
+     */
+    public function uniques(object $record, ?array $groups = null): array
+    {
+        $violations = [];
+        $class = new \ReflectionClass($record);
+        foreach ($class->getAttributes(Unique::class) as $attribute) {
+            array_push($violations, ...$this->check($record, $attribute->newInstance(), '', $groups, $record));
+        }
+        foreach ($this->properties($class) as $property) {
+            foreach ($property->getAttributes(Unique::class) as $attribute) {
+                $value = $property->isInitialized($record) ? $property->getValue($record) : null;
+                array_push($violations, ...$this->check($value, $attribute->newInstance(), $property->getName(), $groups, $record));
+            }
         }
 
         return $violations;

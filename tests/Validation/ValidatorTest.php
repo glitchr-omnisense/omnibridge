@@ -86,6 +86,9 @@ final class ValidatorTest extends TestCase
         $this->assertSame(['username: This value is already used.'], self::messages($validator->validate($record)));
         $this->assertSame([[SignUp::class, ['username' => 'ringo'], true]], $asked);
 
+        $this->assertSame(['username: This value is already used.'], self::messages($validator->uniques($record)));
+        $this->assertSame([], self::messages($validator->only($record, [])));
+
         $this->expectException(\LogicException::class);
         (new Validator())->validate($record);
     }

@@ -210,7 +210,8 @@ says the same everywhere; each has its `groups` (`Default` by default).
 class's and its properties', parents included), a value against those given; a constraint it does
 not know is refused aloud (`InvalidArgumentException`). Messages: Symfony's templates, the parameters
 replaced, the plural form chosen by `{{ limit }}`; a `$translate` callable (template, parameters)
-translates them instead. `Unique` asks the `$exists` callable - `(string $class, array $criteria,
+translates them instead. `only()` validates against the constraints given alone, `uniques()` runs what a
+record declares of `Unique`, for a host whose own validator reads the rest. `Unique` asks the `$exists` callable - `(string $class, array $criteria,
 ?object $record): bool`, whether another record has those values - and is refused without it.
 
 ```php
@@ -218,8 +219,8 @@ $validator = new Validator(exists: fn (string $class, array $criteria, ?object $
 $validator->validate('ab', [new Length(min: 3)]);   // [Violation('', 'This value is too short. It should have 3 characters or more.', Length::TOO_SHORT, [...])]
 ```
 
-symfony/validator (omnibridge/symfony) and Laravel's validator (omnibridge/laravel) read the same
-constraints.
+symfony/validator (omnibridge/symfony's `SymfonyValidation`, `Unique` left to this validator) and
+Laravel's validator (omnibridge/laravel) read the same constraints.
 
 ## Writing an adapter
 
