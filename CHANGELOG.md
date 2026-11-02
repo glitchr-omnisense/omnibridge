@@ -4,6 +4,11 @@
 
 ### Added
 
+- **`Omnibridge\Validation\AttributeConstraints`**: the rules a class declares read as kept constraints whichever attributes name them, by the
+  attribute's name, its class never loaded: omnibridge's own, symfony/validator's (NotBlank, Length, Email, Regex, Choice, Range, Count, its
+  UniqueEntity), an application's (`register()`). One rule on one line of a model, every host's Validation answers it. `Constraint\Count`.
+  `Unique` on the values a form holds (an array, its class named).
+
 - **The kept constraints and a plain-PHP validator** (plan "omnibase agnostic", step F5b, Marco's answer 4:
   forms everywhere): `Omnibridge\Validation\Constraint\{NotBlank, Length, Email, Regex, Choice, Range, File,
   Unique}`, plain objects and attributes with Symfony's messages and codes, and

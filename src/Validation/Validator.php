@@ -6,6 +6,7 @@ use Omnibridge\Contract\Validation;
 use Omnibridge\Contract\Violation;
 use Omnibridge\Validation\Constraint\Choice;
 use Omnibridge\Validation\Constraint\Constraint;
+use Omnibridge\Validation\Constraint\Count;
 use Omnibridge\Validation\Constraint\Email;
 use Omnibridge\Validation\Constraint\File;
 use Omnibridge\Validation\Constraint\Length;
@@ -16,10 +17,11 @@ use Omnibridge\Validation\Constraint\Unique;
 
 /**
  * Validation in plain PHP, for the kept constraints (Constraint\*): NotBlank,
- * Length, Email, Regex, Choice, Range, File, Unique. An object is validated
- * against the constraints its properties and its class declare as
- * attributes, a value against the constraints given; a constraint this
- * validator does not know (a host's own) is refused aloud.
+ * Length, Email, Regex, Choice, Range, Count, File, Unique. An object is
+ * validated against the constraints its properties and its class declare as
+ * attributes (AttributeConstraints: a validator's own attributes it can read
+ * too), a value against the constraints given; a constraint this validator
+ * does not know (a host's own) is refused aloud.
  *
  * The messages are Symfony's, their parameters replaced, a plural form chosen
  * by {{ limit }} ("1 character" / "2 characters"); $translate, when given,
@@ -107,13 +109,13 @@ final class Validator implements Validation
             array_push($violations, ...$this->check($record, $attribute->newInstance(), '', $groups, $record));
         }
         foreach ($this->properties($class) as $property) {
-            $attributes = $property->getAttributes(Constraint::class, \ReflectionAttribute::IS_INSTANCEOF);
-            if ([] === $attributes) {
+            $constraints = AttributeConstraints::ofProperty($property);
+            if ([] === $constraints) {
                 continue;
             }
             $value = $property->isInitialized($record) ? $property->getValue($record) : null;
-            foreach ($attributes as $attribute) {
-                array_push($violations, ...$this->check($value, $attribute->newInstance(), $property->getName(), $groups, $record));
+            foreach ($constraints as $constraint) {
+                array_push($violations, ...$this->check($value, $constraint, $property->getName(), $groups, $record));
             }
         }
 
@@ -152,6 +154,7 @@ final class Validator implements Validation
             $constraint instanceof Regex => $this->regex($value, $constraint, $path),
             $constraint instanceof Choice => $this->choice($value, $constraint, $path),
             $constraint instanceof Range => $this->range($value, $constraint, $path),
+            $constraint instanceof Count => $this->count($value, $constraint, $path),
             $constraint instanceof File => $this->file($value, $constraint, $path),
             $constraint instanceof Unique => $this->unique($value, $constraint, $path, $record),
             default => throw new \InvalidArgumentException(sprintf('%s does not know the constraint %s.', self::class, $constraint::class)),
@@ -263,6 +266,26 @@ final class Validator implements Validation
     }
 
     /** @return list<Violation> */
+    private function count(mixed $value, Count $constraint, string $path): array
+    {
+        if (null === $value) {
+            return [];
+        }
+        if (!is_countable($value)) {
+            throw new \InvalidArgumentException('Count validates a list.');
+        }
+        $count = \count($value);
+        if (null !== $constraint->max && $count > $constraint->max) {
+            return [$this->violation($path, $constraint->maxMessage, Count::TOO_MANY, ['{{ count }}' => (string) $count, '{{ limit }}' => (string) $constraint->max], $constraint->max)];
+        }
+        if (null !== $constraint->min && $count < $constraint->min) {
+            return [$this->violation($path, $constraint->minMessage, Count::TOO_FEW, ['{{ count }}' => (string) $count, '{{ limit }}' => (string) $constraint->min], $constraint->min)];
+        }
+
+        return [];
+    }
+
+    /** @return list<Violation> */
     private function file(mixed $value, File $constraint, string $path): array
     {
         if (null === $value || '' === $value) {
@@ -302,7 +325,11 @@ final class Validator implements Validation
         if (null === $this->exists) {
             throw new \LogicException(sprintf('%s checks Unique with a lookup of the records ($exists) only.', self::class));
         }
-        if ('' !== $path) {
+        if (\is_array($value)) {
+            // On the values a form holds, by field: its class named, nothing kept yet.
+            $criteria = array_intersect_key($value, array_flip($constraint->fields));
+            $class = $constraint->entityClass;
+        } elseif ('' !== $path) {
             // On a property: that field, the record its holder.
             $fields = [] !== $constraint->fields ? $constraint->fields : [$path];
             $criteria = array_fill_keys($fields, $value);
