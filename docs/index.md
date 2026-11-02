@@ -207,6 +207,8 @@ own accessors.
   a family's own registry.
 - [The schema](schema.md): declarations, vocabulary, the builder and its rules, the description's
   classes field by field, the naming, the MySQL comparison.
+- [The container](container.md): `Omnibridge\Container`, the plain-PHP autowiring container,
+  and the definitions as data that Symfony, Laravel and it read alike.
 - [Errors](errors.md): every exception and when it is thrown.
 - [Testing](testing.md): testing code that asks the registry, the package's own suite and its
   Docker harness.

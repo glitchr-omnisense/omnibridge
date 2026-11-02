@@ -4,6 +4,16 @@
 
 ### Added
 
+- **`Omnibridge\Container`** (plan "omnibase agnostic", step F5a, Marco's answer 3: the services stay
+  available everywhere): a small PSR-11 container for plain PHP - shared services, objects given,
+  factories, aliases, classes defined with their arguments by name or autowired from their
+  constructors (an argument given, Symfony's `#[Autowire]` read by its name and never loaded, the type,
+  the default, null), parameters (`%name%`, `%env(NAME)%`); `fromDefinitions()` builds it from a list of
+  definitions as data (class, contracts, arguments), the list omnisense/omnibase's `Base\Services`
+  gives, so Symfony, Laravel and plain PHP read the same. Refused aloud: `ContainerException`,
+  `ServiceNotFoundException` (PSR-11's interfaces). Docs: `docs/container.md`.
+- **`Contract\ViewSources`**: where a view engine finds a file by its name (an e-mail's inline
+  picture), beside `Views`, optional.
 - **The persistence's contracts** (`Omnibridge\Persistence\`, plan "omnibase agnostic", 2026-11-01,
   step F1): `UnitOfWork` (persist, remove, flush, refresh, contains, reference, transactional, isNew,
   identifier, className, changes, recompute), the `Lifecycle\*` events (PrePersist, PostPersist,

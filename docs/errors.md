@@ -27,6 +27,19 @@ Under Symfony a contract whose framework service is absent is removed from the l
 time (omnibridge/symfony's `ContractsPass`): with no SecurityBundle, `Runtime::access()` throws this
 exception rather than a container error.
 
+## The container's exceptions
+
+`Omnibridge\Container` (see [the container](container.md)):
+
+- `Omnibridge\Exception\ContainerException` (a `LogicException`, PSR-11's
+  `ContainerExceptionInterface`): a constructor parameter that has no argument given, no
+  `#[Autowire]`, no service of its type, no default and does not allow null (the message names the
+  service, the class and the parameter); a cycle of services or of aliases; a class that cannot be
+  instantiated; a parameter that is not a scalar written inside a string.
+- `Omnibridge\Exception\ServiceNotFoundException` (a `ContainerException`, PSR-11's
+  `NotFoundExceptionInterface`): no service of that id and nothing to autowire (an interface nobody
+  answers), or no parameter of that name.
+
 ## The schema's exceptions
 
 | Exception | Thrown by | When |

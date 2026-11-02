@@ -162,8 +162,9 @@ No contract of their own: the PSR interfaces are already generic.
 
 A view rendered by its name, in whatever view technology the application chose (Twig, Blade, a
 React page's server side): a mail's body, a screen, a fragment. Since omnibase's step F1
-(2026-11-01); no bridge answers it yet (omnibridge/twig's `Environment` and Laravel's view factory
-are the first planned).
+(2026-11-01). Answered by omnibridge/twig's `TwigViews` over Twig's `Environment` (omnibase's step
+F5a, 2026-11-02: omnibase's notifier, mails, sitemap, QR sheet, sharing buttons and media tags
+render through it under Symfony and Laravel alike); Laravel's view factory (Blade) is planned.
 
 | Method | Returns | Meaning |
 |---|---|---|
@@ -171,6 +172,17 @@ are the first planned).
 | `exists(string $name)` | `bool` | whether the host's engine knows a view of that name |
 
 `Runtime::views()`.
+
+### ViewSources
+
+Beside `Views`, optional: where the engine finds a file by its name - what an e-mail embeds as an
+inline picture (`email.image('@Public/logo.png')`). A caller checks `$views instanceof ViewSources`
+and does without when it is not.
+
+| Method | Returns | Meaning |
+|---|---|---|
+| `sourcePath(string $name)` | `?string` | the file's path on disk, null when the engine holds it in memory |
+| `sourceCode(string $name)` | `string` | the file's contents |
 
 ## Validation
 
