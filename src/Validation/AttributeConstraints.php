@@ -29,6 +29,8 @@ final class AttributeConstraints
     /** @var array<string, \Closure(array<int|string, mixed>): ?Constraint> */
     private static array $readers = [];
 
+    private static bool $defaults = false;
+
     private function __construct()
     {
     }
@@ -91,11 +93,12 @@ final class AttributeConstraints
 
     private static function defaults(): void
     {
-        if ([] !== self::$readers) {
+        if (self::$defaults) {
             return;
         }
+        self::$defaults = true;
         $symfony = 'Symfony\Component\Validator\Constraints\\';
-        self::$readers = [
+        self::$readers += [
             $symfony.'NotBlank' => self::keep(NotBlank::class, ['message', 'allowNull', 'groups']),
             $symfony.'Length' => self::keep(Length::class, ['min', 'max', 'minMessage', 'maxMessage', 'groups'], 'max'),
             $symfony.'Email' => self::keep(Email::class, ['message', 'groups']),

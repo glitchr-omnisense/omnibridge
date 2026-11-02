@@ -17,6 +17,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 final class AttributeConstraintsTest extends TestCase
 {
+    public function testARegisteredReaderDoesNotHideTheKnownOnes(): void
+    {
+        $readers = new \ReflectionClass(AttributeConstraints::class);
+        $readers->setStaticPropertyValue('readers', []);
+        $readers->setStaticPropertyValue('defaults', false);
+        AttributeConstraints::register(HostUnique::class, static fn (): ?Unique => null);
+
+        self::assertCount(2, AttributeConstraints::ofProperty(new \ReflectionProperty(Rules::class, 'email')));
+    }
+
     public function testAValidatorsAttributeIsReadWithoutItsClass(): void
     {
         $constraints = AttributeConstraints::ofProperty(new \ReflectionProperty(Rules::class, 'email'));
