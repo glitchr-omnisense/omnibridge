@@ -15,6 +15,7 @@ final class ContainerTest extends TestCase
 {
     public function testAServiceIsAutowiredFromItsConstructor(): void
     {
+        $attributeLoaded = class_exists(Container::AUTOWIRE_ATTRIBUTE, false);
         $container = (new Container(['app.name' => 'Les Ringo Stars']))->alias(Clock::class, FixedClock::class);
 
         $greeter = $container->get(Greeter::class);
@@ -23,7 +24,7 @@ final class ContainerTest extends TestCase
         self::assertSame('Hello', $greeter->greeting, 'the default value');
         self::assertNull($greeter->missing, 'an optional service nobody answers');
         self::assertSame($greeter, $container->get(Greeter::class), 'shared');
-        self::assertFalse(class_exists(Container::AUTOWIRE_ATTRIBUTE, false));
+        self::assertSame($attributeLoaded, class_exists(Container::AUTOWIRE_ATTRIBUTE, false), 'the attribute\'s class is not loaded by the container (an application\'s suite may have loaded it before)');
     }
 
     public function testDefinitionsAsDataGiveArgumentsByName(): void
