@@ -4,6 +4,12 @@
 
 ### Added
 
+- **The kept constraints and a plain-PHP validator** (plan "omnibase agnostic", step F5b, Marco's answer 4:
+  forms everywhere): `Omnibridge\Validation\Constraint\{NotBlank, Length, Email, Regex, Choice, Range, File,
+  Unique}`, plain objects and attributes with Symfony's messages and codes, and
+  `Omnibridge\Validation\Validator`, the `Contract\Validation` of plain PHP for them (an object against its
+  attributes, groups, plural forms, a translator callable, `Unique` through an `$exists` lookup; an unknown
+  constraint refused aloud). Docs: `docs/contracts.md`.
 - **`Omnibridge\Container`** (plan "omnibase agnostic", step F5a, Marco's answer 3: the services stay
   available everywhere): a small PSR-11 container for plain PHP - shared services, objects given,
   factories, aliases, classes defined with their arguments by name or autowired from their

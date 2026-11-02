@@ -187,9 +187,9 @@ and does without when it is not.
 ## Validation
 
 A value checked against constraints, by the host's validator: a form's processing, an import, an
-action, before anything is kept. Since omnibase's step F1 (2026-11-01); answered later by
-symfony/validator (omnibridge/symfony), Laravel's validator (omnibridge/laravel) and a small
-validator of the kept constraints for plain PHP.
+action, before anything is kept. Since omnibase's step F1 (2026-11-01); answered by
+symfony/validator (omnibridge/symfony), Laravel's validator (omnibridge/laravel) and, in plain PHP,
+`Omnibridge\Validation\Validator` for the kept constraints (below).
 
 | Method | Returns | Meaning |
 |---|---|---|
@@ -198,6 +198,28 @@ validator of the kept constraints for plain PHP.
 A `Omnibridge\Contract\Violation` has the `path` (`""` for the value itself), the `message` (the
 host's translation), the constraint's `code` and the message's `parameters`.
 `Runtime::validation()`.
+
+### The kept constraints and the plain-PHP validator
+
+`Omnibridge\Validation\Constraint\*` are the constraints every host validates (omnibase's plan, step
+F5b): `NotBlank`, `Length`, `Email`, `Regex`, `Choice`, `Range`, `File`, `Unique`. Plain objects, and
+attributes on a property (`Unique` on a class too), with Symfony's own messages and codes, so a form
+says the same everywhere; each has its `groups` (`Default` by default).
+
+`Omnibridge\Validation\Validator` validates them in plain PHP: an object against its attributes (its
+class's and its properties', parents included), a value against those given; a constraint it does
+not know is refused aloud (`InvalidArgumentException`). Messages: Symfony's templates, the parameters
+replaced, the plural form chosen by `{{ limit }}`; a `$translate` callable (template, parameters)
+translates them instead. `Unique` asks the `$exists` callable - `(string $class, array $criteria,
+?object $record): bool`, whether another record has those values - and is refused without it.
+
+```php
+$validator = new Validator(exists: fn (string $class, array $criteria, ?object $record): bool => ...);
+$validator->validate('ab', [new Length(min: 3)]);   // [Violation('', 'This value is too short. It should have 3 characters or more.', Length::TOO_SHORT, [...])]
+```
+
+symfony/validator (omnibridge/symfony) and Laravel's validator (omnibridge/laravel) read the same
+constraints.
 
 ## Writing an adapter
 
