@@ -4,6 +4,11 @@
 
 ### Added
 
+- **`Form\{FieldBehaviour, FieldAssets, Endpoint, Coverage, UnsupportedKind}`** (omnisense/omnibase's plan "omnibase agnostic", step
+  F5d): the contract one field behaviour answers on every host - its options and defaults, its widget's vars, the value shown and
+  read back, its front end, the host's routes it calls - and a host's coverage, every kind implemented or unsupported with the
+  reason (`Coverage::verify()`); a renderer refuses a kind it does not draw (`UnsupportedKind`) instead of a plain input.
+  omnisense/omnibase's `Base\Field\Behaviour\*` implement the behaviours. Docs: docs/forms.md.
 - **`Persistence\Snapshots`** (plan "omnibase agnostic", step F5c, item 3): what a unit of work remembers of an entity,
   `original(object $entity)` - its fields and to-one associations as read or last flushed, `[]` for an entity it does not
   manage. Implemented beside a backend's UnitOfWork (omnibridge/doctrine's DoctrineUnitOfWork); omnisense/omnibase's

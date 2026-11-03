@@ -203,6 +203,7 @@ own accessors.
 
 - [Installation](installation.md): requirements, a plain PHP script and its output, the hosts.
 - [Contracts](contracts.md): each interface, every method, what a bridge must answer.
+- [Field behaviours and their coverage](forms.md): `Form\FieldBehaviour`, `Endpoint`, `FieldAssets`, `Coverage`, `UnsupportedKind`.
 - [The registry](registry.md): `Runtime` method by method - filling it, asking it, former names,
   a family's own registry.
 - [The schema](schema.md): declarations, vocabulary, the builder and its rules, the description's
