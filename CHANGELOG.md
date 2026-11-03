@@ -4,6 +4,10 @@
 
 ### Added
 
+- **`Persistence\Snapshots`** (plan "omnibase agnostic", step F5c, item 3): what a unit of work remembers of an entity,
+  `original(object $entity)` - its fields and to-one associations as read or last flushed, `[]` for an entity it does not
+  manage. Implemented beside a backend's UnitOfWork (omnibridge/doctrine's DoctrineUnitOfWork); omnisense/omnibase's
+  EntityHydrator reads it in place of Doctrine's unit of work.
 - **`Contract\Roles`** (plan "omnibase agnostic", step F5c, item 3): the roles some roles reach in the host's hierarchy,
   `reachable(array $roles)`; `Runtime::roles()`. Symfony's role hierarchy (omnibridge/symfony's HierarchyRoles), Laravel's
   `role_hierarchy` (omnibridge/laravel's Auth\Roles); omnisense/omnibase's SecurityPolicy reads it without Security's

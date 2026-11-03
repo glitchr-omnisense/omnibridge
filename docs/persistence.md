@@ -33,6 +33,12 @@ manager. `Runtime::unitOfWork()`.
 | `changes(object $entity)` | `array` | field => [before, after] since it was read or flushed |
 | `recompute(object $entity)` | `void` | its changes computed again, for a listener that changed it during a flush |
 
+A backend's UnitOfWork may also implement **`Snapshots`**: `original(object $entity)` gives the values
+the entity held when it was read or last flushed, by property (its fields and to-one associations),
+`[]` for an entity it does not manage. omnisense/omnibase's EntityHydrator reads it to rebuild an
+entity as it was (`getOriginalEntity()`: a user approved since the last flush). Doctrine's is its
+unit of work's original entity data (omnibridge/doctrine's DoctrineUnitOfWork).
+
 ## Lifecycle
 
 The moments a backend dispatches through the host's PSR-14 dispatcher, at the moments Doctrine
