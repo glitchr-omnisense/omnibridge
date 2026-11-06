@@ -6,6 +6,7 @@ use Omnibridge\Container\Declarations;
 use Omnibridge\Container\Discovery;
 use Omnibridge\Exception\ContainerException;
 use Omnibridge\Exception\ServiceNotFoundException;
+use Omnibridge\Persistence\Persistences;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -77,13 +78,28 @@ final class Container implements ContainerInterface
      * omnisense/omnibase's Base\Discovery::registries()) adds the tags autoconfiguration gives, the calls handing each
      * collection to its collecting service, and the services no one else binds.
      *
+     * The persistence (omnisense/omnibase's plan "omnibase agnostic", step F7d) is found as every host finds it
+     * (Persistence\Persistences::choose()): the parameter `persistence` names it (doctrine, eloquent), required when
+     * several are installed, else the only one installed is it. Its own definitions come first (omnibridge/eloquent's:
+     * its unit of work, backend, repositories and the repository interfaces), so that its contracts are answered by
+     * it; the parameter `persistence` is then the name chosen. A persistence declaring none (omnibridge/doctrine) is
+     * the application's to give: its unit of work as a service.
+     *
      * @param iterable<array<string, mixed>> $definitions
      * @param array<string, mixed>           $parameters
      * @param array<string, object>          $services    objects given (the host's contracts, a logger...)
      * @param array<string, mixed>           $discovery   what is discovered among them (Container\Discovery's kinds)
+     *
+     * @throws \Omnibridge\Exception\PersistenceException the parameter `persistence` names none installed, or several are installed and it names none
      */
     public static function fromDefinitions(iterable $definitions, array $parameters = [], array $services = [], array $discovery = []): self
     {
+        $configured = $parameters['persistence'] ?? null;
+        $persistence = Persistences::choose(\is_string($configured) ? $configured : null, 'the container\'s parameter "persistence"');
+        if (null !== $persistence) {
+            $parameters['persistence'] = $persistence;
+            $definitions = [...Persistences::definitions($persistence), ...(\is_array($definitions) ? array_values($definitions) : iterator_to_array($definitions, false))];
+        }
         $container = new self($parameters);
         $environment = $parameters['kernel.environment'] ?? null;
         $resolved = Declarations::resolve($definitions, \is_string($environment) ? $environment : null);

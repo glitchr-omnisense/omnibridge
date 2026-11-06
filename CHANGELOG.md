@@ -4,6 +4,17 @@
 
 ### Added
 
+- **`Persistence\Persistences` and `Exception\PersistenceException`** (omnisense/omnibase's plan "omnibase agnostic",
+  step F7d; risk R8): the persistence found by what is installed - one bridge installed is used, both need the host's
+  option (`base.persistence` under Symfony and Laravel, the parameter `persistence` in plain PHP) and are refused
+  aloud without it; a name no persistence has, or one not installed, is refused naming the package to require.
+  With both installed and the option naming none, the environment variable `OMNIBRIDGE_PERSISTENCE` may (a harness
+  loading both).
+  `installed()`, `isInstalled()`, `choose()`, `definitions()`, `register()` for another package's.
+  **`Omnibridge\Container::fromDefinitions()`** chooses it the same way and adds its definitions first (omnibridge/
+  eloquent's: unit of work, backend, repositories, omnibase's repository interfaces); the parameter `persistence` is
+  then the name chosen. Docs: docs/persistence.md.
+
 - **`Schema\Database\{Statements, MySqlStatements, SqliteStatements, ColumnTypes, SchemaCreator, SchemaNotEmpty,
   SqliteSchema, Cli}` and `bin/omnibridge-schema-create`** (omnisense/omnibase's plan "omnibase agnostic", step F7a: a
   new site's schema comes from its description, whatever the persistence): a description's tables created in an empty

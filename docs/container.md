@@ -61,6 +61,10 @@ A definition whose class does not exist (a suggested package not installed) is l
 contracts. omnibridge/laravel binds the same list in Laravel's container, and omnisense/omnibase's
 Symfony configuration aliases its contracts from it.
 
+The persistence is chosen there too ([Persistence](persistence.md#which-persistence-persistences)): the
+parameter `persistence` names it (required when omnibridge/doctrine and omnibridge/eloquent are both installed),
+and its own definitions come before the list.
+
 ## The declaration's format
 
 `Omnibridge\Container\Declarations` reads a list of definitions the way every host does (omnisense/omnibase's
