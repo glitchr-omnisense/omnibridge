@@ -4,6 +4,17 @@
 
 ### Added
 
+- **`Container\Declarations`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4a): services declared as
+  data, read the way every host reads them - `applies()` (requires, environment), `id()`, `contracts()` (a list item or
+  an alias with its options), `position()`, `resolve()` (parents inherited as Symfony resolves a child definition, the
+  abstract ones left out, no class loaded), `loadable()`, `tagged()`. **`Omnibridge\Container`** reads it:
+  `fromDefinitions()` takes arguments by position, bindings, calls (one naming a service that may be ignored dropped),
+  factories, tags (`tagged()`, `['!tagged_iterator' => tag]`), decorations (`'@.inner'`), `['!service_closure' =>
+  '@id']`, `['!closure' => ...]`, `['!new' => ...]`, `%env(bool:NAME)%` and an `env(NAME)` default; a class not
+  installed (or abstract) is not a service, asked only when the service is; a service Symfony's #[Autowire] names that
+  the container lacks leaves the parameter to its type; `ids()`. omnisense/omnibase's whole declaration (192
+  definitions) builds with it alone (its BareTest). Docs: docs/container.md.
+
 - **`Form\{FieldBehaviour, FieldAssets, Endpoint, Coverage, UnsupportedKind}`** (omnisense/omnibase's plan "omnibase agnostic", step
   F5d): the contract one field behaviour answers on every host - its options and defaults, its widget's vars, the value shown and
   read back, its front end, the host's routes it calls - and a host's coverage, every kind implemented or unsupported with the

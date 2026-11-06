@@ -60,3 +60,27 @@ whose items are:
 A definition whose class does not exist (a suggested package not installed) is left out with its
 contracts. omnibridge/laravel binds the same list in Laravel's container, and omnisense/omnibase's
 Symfony configuration aliases its contracts from it.
+
+## The declaration's format
+
+`Omnibridge\Container\Declarations` reads a list of definitions the way every host does (omnisense/omnibase's
+`Base\Services` is one, 192 definitions; omnibridge/symfony compiles the same data into Symfony's container itself):
+
+| Key | What it is |
+|---|---|
+| `class`, `id` | the class built (a child's parent's when left out: its id's when the id is a class), the service's id (the class by default) |
+| `parent`, `abstract` | another definition whose class, arguments, bindings, calls and factory it inherits (the child's own over them); an abstract one is a parent only |
+| `requires`, `environment` | classes or interfaces that must exist; the one environment it is registered in (`kernel.environment`) |
+| `arguments` | by position (`0`, `1`, `index_N` over a parent's) or by name (`$name`) |
+| `bind` | values by parameter name, for what the arguments leave out |
+| `factory`, `calls` | `[class, method]` or `['@id', method]`; `[method, [arguments]]` (a call whose argument is `'@??id'` or `'@!id'` and not there is dropped) |
+| `decorates` | `id`, `on_invalid` (`ignore`: dropped when the decorated service is not there); the decorator is given it as `'@.inner'` |
+| `tags` | a name, or `['name' => ..., attributes...]`; `['!tagged_iterator' => name]` gives the services of a tag, in order |
+| `contracts` | aliases: a list item, or `alias => ['public' => ..., 'target' => ...]` |
+| `symfony`, `public`, `shared`, `lazy`, `autowire`, `autoconfigure` | read by omnibridge/symfony only |
+
+Values: `'@id'`, `'@?id'` (null when absent), `'%name%'` (and inside a string), `'%env(bool:NAME)%'`, `'@@'`/`'%%'`
+escapes, `['!service_closure' => '@id']`, `['!closure' => callable]`, `['!new' => ['class' => ..., 'arguments' => [...]]]`,
+`['!iterator' => [...]]`. No class is loaded while the list is read: a class that does not exist (or is abstract) is not a
+service, which `has()` answers when asked. A service Symfony's `#[Autowire]` names and the container lacks
+(`advanced_router`) leaves the parameter to its type.

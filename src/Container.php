@@ -2,6 +2,7 @@
 
 namespace Omnibridge;
 
+use Omnibridge\Container\Declarations;
 use Omnibridge\Exception\ContainerException;
 use Omnibridge\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerInterface;
@@ -15,24 +16,28 @@ use Psr\Container\ContainerInterface;
  * Every service is shared (built once, on its first get()). A service is:
  * - an object given (set()), or a factory (factory(): fn (Container): object);
  * - an alias of another (alias(): an interface answered by a class);
- * - a class, defined (define(): its arguments by name) or not: a class
- *   that can be instantiated is autowired when asked, has() answers true.
+ * - a class, defined (define(), or a definition as data: its arguments by
+ *   name or position, its bindings, factory, calls, tags and decoration) or
+ *   not: a class that can be instantiated is autowired when asked, has()
+ *   answers true.
  *
  * Autowiring reads each constructor parameter, in this order:
- * 1. an argument given by its name (`$name` or `name`): '@id' is a service,
- *    '%name%' a parameter, a string with '%name%' inside has it replaced,
- *    '@@' and '%%' escape them, any other value is given as it is;
+ * 1. an argument given by its name (`$name` or `name`) or its position (0, 1...):
+ *    see value() for what it may be;
  * 2. a #[Autowire] attribute (Symfony's, read by its name, never loaded:
  *    its value, param, service or env argument), so a class written for
- *    Symfony needs nothing more;
- * 3. its type: first a class or interface of a union that something answers,
+ *    Symfony needs nothing more - a service it names that the container
+ *    does not have leaves the parameter to its type;
+ * 3. a value bound to its name (a definition's `bind`);
+ * 4. its type: first a class or interface of a union that something answers,
  *    then, for a parameter that is not optional, a class that can be built;
- * 4. its default value, else null when it allows null.
+ * 5. its default value, else null when it allows null.
  * Anything else is refused aloud (ContainerException), naming the service and
  * the parameter; a cycle too.
  *
  * Parameters are plain values by name ('base.images.formats'...), given at
- * construction or by setParameter(); '%env(NAME)%' reads the environment.
+ * construction or by setParameter(); '%env(NAME)%' reads the environment
+ * ('%env(bool:NAME)%', 'int:', 'default::' as Symfony reads them).
  */
 final class Container implements ContainerInterface
 {
@@ -45,8 +50,10 @@ final class Container implements ContainerInterface
     private array $factories = [];
     /** @var array<string, string> */
     private array $aliases = [];
-    /** @var array<string, array{class: class-string, arguments: array<string, mixed>}> */
+    /** @var array<string, array{class: class-string, arguments: array<int|string, mixed>, bind?: array<string, mixed>, calls?: list<array<mixed>>, factory?: mixed, inner?: string|null}> */
     private array $definitions = [];
+    /** @var array<string, list<string>> services by tag, in their order */
+    private array $tags = [];
     /** @var array<string, true> */
     private array $resolving = [];
 
@@ -58,32 +65,72 @@ final class Container implements ContainerInterface
     }
 
     /**
-     * A container built from a list of definitions, as data: each a class,
-     * the contracts (interfaces, former ids) it answers, its arguments by
-     * name. A definition whose class does not exist (a suggested package not
-     * installed) is left out, as are its contracts.
+     * A container built from a list of definitions, as data (Omnibridge\Container\Declarations: each a
+     * class, the contracts it answers, its arguments, bindings, factory, calls, tags and decoration). A
+     * definition whose requirements are not installed or whose environment is not this one (the parameter
+     * `kernel.environment`) is left out, as are its contracts; one whose class does not exist is not a
+     * service (has() answers false, its class asked only then); what only Symfony reads (a definition's
+     * `symfony` part) is not read here.
      *
-     * @param iterable<array{class: class-string, id?: string, contracts?: list<string>, arguments?: array<string, mixed>}> $definitions
-     * @param array<string, mixed>                                                                                         $parameters
-     * @param array<string, object>                                                                                        $services   objects given (the host's contracts, a logger...)
+     * @param iterable<array<string, mixed>> $definitions
+     * @param array<string, mixed>           $parameters
+     * @param array<string, object>          $services    objects given (the host's contracts, a logger...)
      */
     public static function fromDefinitions(iterable $definitions, array $parameters = [], array $services = []): self
     {
         $container = new self($parameters);
-        foreach ($definitions as $definition) {
-            if (!class_exists($definition['class'])) {
-                continue;
-            }
-            $id = $definition['id'] ?? $definition['class'];
-            $container->define($id, $definition['class'], $definition['arguments'] ?? []);
-            foreach ($definition['contracts'] ?? [] as $contract) {
+        $environment = $parameters['kernel.environment'] ?? null;
+        $resolved = Declarations::resolve($definitions, \is_string($environment) ? $environment : null);
+        foreach ($resolved as $id => $definition) {
+            $container->definitions[$id] = [
+                'class' => $definition['class'],
+                'arguments' => $definition['arguments'],
+                'bind' => $definition['bind'],
+                'calls' => $definition['calls'],
+                'factory' => $definition['factory'],
+            ];
+            foreach (array_keys($definition['contracts']) as $contract) {
                 if ($contract !== $id && !isset($container->aliases[$contract])) {
-                    $container->alias($contract, $id);
+                    $container->aliases[$contract] = $id;
                 }
+            }
+            foreach ($definition['tags'] as $tag) {
+                $container->tags[\is_string($tag) ? $tag : $tag['name']][] = $id;
             }
         }
         foreach ($services as $id => $service) {
             $container->set($id, $service);
+        }
+        // Decorations last, once every service is known: the decorated id answers the decorator, which is given the
+        // former service as '@.inner'; a decoration of a service that is not there is dropped (`on_invalid: ignore`)
+        // or given null (`null`), else the decorator asks for it and fails aloud when built.
+        foreach ($resolved as $id => $definition) {
+            if (null === $decorates = $definition['decorates']) {
+                continue;
+            }
+            $decorated = $decorates['id'];
+            $target = $container->target($decorated);
+            $there = isset($container->services[$target]) || isset($container->factories[$target]) || isset($container->definitions[$target]);
+            if (!$there || $target === $id) {
+                if ('ignore' === ($decorates['on_invalid'] ?? null)) {
+                    unset($container->definitions[$id]);
+                    continue;
+                }
+                $container->definitions[$id]['inner'] = 'null' === ($decorates['on_invalid'] ?? null) ? null : $decorated;
+                continue;
+            }
+            $inner = $id.'.inner';
+            foreach (['services', 'factories', 'definitions'] as $kind) {
+                if (\array_key_exists($target, $container->$kind)) {
+                    $container->$kind[$inner] = $container->$kind[$target];
+                    unset($container->$kind[$target]);
+                }
+            }
+            $container->aliases[$target] = $id;
+            if ($target !== $decorated) {
+                $container->aliases[$decorated] = $id;
+            }
+            $container->definitions[$id]['inner'] = $inner;
         }
 
         return $container;
@@ -118,8 +165,8 @@ final class Container implements ContainerInterface
     }
 
     /**
-     * @param class-string|null    $class     the class built (the id itself by default)
-     * @param array<string, mixed> $arguments by parameter name, '$' or not
+     * @param class-string|null        $class     the class built (the id itself by default)
+     * @param array<int|string, mixed> $arguments by parameter name ('$' or not) or position
      */
     public function define(string $id, ?string $class = null, array $arguments = []): self
     {
@@ -131,6 +178,26 @@ final class Container implements ContainerInterface
         $this->definitions[$id] = ['class' => $class, 'arguments' => $arguments];
 
         return $this;
+    }
+
+    /**
+     * The services a definition tags so, in their order (what `['!tagged_iterator' => $tag]` gives).
+     *
+     * @return list<mixed>
+     */
+    public function tagged(string $tag): array
+    {
+        return array_map($this->get(...), array_values(array_filter($this->tags[$tag] ?? [], $this->has(...))));
+    }
+
+    /**
+     * The ids the container defines or was given (not the classes it would autowire), in their order.
+     *
+     * @return list<string>
+     */
+    public function ids(): array
+    {
+        return array_values(array_unique([...array_keys($this->services), ...array_keys($this->factories), ...array_keys($this->definitions)]));
     }
 
     public function setParameter(string $name, mixed $value): self
@@ -148,9 +215,23 @@ final class Container implements ContainerInterface
     public function getParameter(string $name): mixed
     {
         if (str_starts_with($name, 'env(') && str_ends_with($name, ')')) {
-            $value = getenv(substr($name, 4, -1));
+            $variable = substr($name, 4, -1);
+            $processors = explode(':', $variable);
+            $variable = array_pop($processors);
+            $value = getenv($variable);
+            // The default a host gives an unset variable (Symfony's 'env(NAME)' parameter).
+            $value = false === $value ? ($this->parameters['env('.$variable.')'] ?? null) : $value;
+            foreach (array_reverse($processors) as $processor) {
+                $value = match ($processor) {
+                    'bool' => null === $value ? false : filter_var($value, \FILTER_VALIDATE_BOOL),
+                    'int' => (int) $value,
+                    'float' => (float) $value,
+                    'string' => (string) $value,
+                    default => $value, // default:: (an empty default), resolve: as given
+                };
+            }
 
-            return false === $value ? null : $value;
+            return $value;
         }
         if (!\array_key_exists($name, $this->parameters)) {
             throw new ServiceNotFoundException(sprintf('No parameter "%s" in the container.', $name));
@@ -162,9 +243,14 @@ final class Container implements ContainerInterface
     public function has(string $id): bool
     {
         $id = $this->target($id);
+        if (isset($this->definitions[$id])) {
+            // A class not installed (a suggested package's) is not a service, nor are its contracts.
+            return null !== ($this->definitions[$id]['factory'] ?? null)
+                || (Declarations::loadable($this->definitions[$id]['class']) && (new \ReflectionClass($this->definitions[$id]['class']))->isInstantiable());
+        }
 
-        return isset($this->services[$id]) || isset($this->factories[$id]) || isset($this->definitions[$id])
-            || (class_exists($id) && (new \ReflectionClass($id))->isInstantiable());
+        return isset($this->services[$id]) || isset($this->factories[$id])
+            || (Declarations::loadable($id) && (new \ReflectionClass($id))->isInstantiable());
     }
 
     public function get(string $id): mixed
@@ -181,10 +267,10 @@ final class Container implements ContainerInterface
         try {
             if (isset($this->factories[$id])) {
                 $service = ($this->factories[$id])($this);
-            } elseif (isset($this->definitions[$id])) {
-                $service = $this->build($id, $this->definitions[$id]['class'], $this->definitions[$id]['arguments']);
-            } elseif (class_exists($id) && (new \ReflectionClass($id))->isInstantiable()) {
-                $service = $this->build($id, $id, []);
+            } elseif (isset($this->definitions[$id]) && $this->has($id)) {
+                $service = $this->build($id, $this->definitions[$id]);
+            } elseif (!isset($this->definitions[$id]) && Declarations::loadable($id) && (new \ReflectionClass($id))->isInstantiable()) {
+                $service = $this->build($id, ['class' => $id, 'arguments' => []]);
             } else {
                 throw new ServiceNotFoundException(sprintf('No service "%s" in the container: set(), factory(), alias() or define() it.', $id));
             }
@@ -193,6 +279,70 @@ final class Container implements ContainerInterface
         }
 
         return $this->services[$id] = $service;
+    }
+
+    /**
+     * A value given: '@id' a service, '@?id' (and Symfony's '@??id', '@!id') that service or null where there
+     * is none, '@.inner' the service a decoration wraps, '%name%' a parameter (inside a string, replaced), '@@'
+     * and '%%' escaped; `['!tagged_iterator' => tag]` the services of a tag, `['!service_closure' => '@id']` a
+     * closure returning it, `['!closure' => callable]` the callable as a Closure, `['!new' => ['class' => ...,
+     * 'arguments' => [...]]]` an object built there, `['!iterator' => [...]]` the values; arrays item by item.
+     *
+     * @param list<string|null> $inner the service a decoration wraps, when there is one
+     */
+    public function value(mixed $value, array $inner = []): mixed
+    {
+        if (\is_array($value)) {
+            if (1 === \count($value) && \is_string($key = array_key_first($value)) && str_starts_with($key, '!')) {
+                $given = $value[$key];
+
+                return match ($key) {
+                    '!tagged_iterator' => $this->tagged($given),
+                    '!service_closure' => fn (): mixed => $this->value($given, $inner),
+                    '!closure' => \Closure::fromCallable($this->value($given, $inner)),
+                    '!new' => $this->build($given['class'], ['class' => $given['class'], 'arguments' => $given['arguments'] ?? []]),
+                    '!iterator' => $this->value($given, $inner),
+                    default => throw new ContainerException(sprintf('Unknown value "%s".', $key)),
+                };
+            }
+
+            return array_map(fn (mixed $item): mixed => $this->value($item, $inner), $value);
+        }
+        if (!\is_string($value)) {
+            return $value;
+        }
+        if (str_starts_with($value, '@@')) {
+            return substr($value, 1);
+        }
+        if (str_starts_with($value, '@')) {
+            $optional = str_starts_with($value, '@?') || str_starts_with($value, '@!');
+            $id = ltrim(substr($value, 1), '?!');
+            if ('.inner' === $id) {
+                if (null === $id = $inner[0] ?? null) {
+                    return null;
+                }
+            }
+            if ($optional && !$this->has($id)) {
+                return null;
+            }
+
+            return $this->get($id);
+        }
+        if (preg_match('/^%([^%\s]+)%$/', $value, $match)) {
+            return $this->getParameter($match[1]);
+        }
+
+        return preg_replace_callback('/%%|%([^%\s]+)%/', function (array $match): string {
+            if ('%%' === $match[0]) {
+                return '%';
+            }
+            $parameter = $this->getParameter($match[1]);
+            if (null !== $parameter && !\is_scalar($parameter)) {
+                throw new ContainerException(sprintf('The parameter "%s" is not a scalar: it cannot be written inside a string.', $match[1]));
+            }
+
+            return (string) $parameter;
+        }, $value);
     }
 
     /** The id an alias leads to, followed to the end. */
@@ -210,32 +360,79 @@ final class Container implements ContainerInterface
         return $id;
     }
 
-    /**
-     * @param class-string         $class
-     * @param array<string, mixed> $arguments
-     */
-    private function build(string $id, string $class, array $arguments): object
+    /** @param array{class: class-string, arguments: array<int|string, mixed>, bind?: array<string, mixed>, calls?: list<array<mixed>>, factory?: mixed, inner?: string|null} $definition */
+    private function build(string $id, array $definition): object
     {
-        $reflection = new \ReflectionClass($class);
-        if (!$reflection->isInstantiable()) {
-            throw new ContainerException(sprintf('The service "%s" is a %s, which cannot be instantiated.', $id, $class));
-        }
-        $constructor = $reflection->getConstructor();
-        if (null === $constructor) {
-            return $reflection->newInstance();
+        $class = $definition['class'];
+        $inner = \array_key_exists('inner', $definition) ? [$definition['inner']] : [];
+        $resolve = fn (mixed $value): mixed => $this->value($value, $inner);
+        $arguments = $definition['arguments'];
+        $bind = $definition['bind'] ?? [];
+
+        if (null !== $factory = $definition['factory'] ?? null) {
+            $callable = $resolve($factory);
+            $function = \is_array($callable) ? new \ReflectionMethod($callable[0], $callable[1]) : new \ReflectionFunction(\Closure::fromCallable($callable));
+            $service = $callable(...$this->parameters($id, $class, $function->getParameters(), $arguments, $bind, $resolve));
+        } else {
+            $reflection = new \ReflectionClass($class);
+            if (!$reflection->isInstantiable()) {
+                throw new ContainerException(sprintf('The service "%s" is a %s, which cannot be instantiated.', $id, $class));
+            }
+            $constructor = $reflection->getConstructor();
+            $service = null === $constructor ? $reflection->newInstance() : $reflection->newInstanceArgs($this->parameters($id, $class, $constructor->getParameters(), $arguments, $bind, $resolve));
         }
 
+        foreach ($definition['calls'] ?? [] as $call) {
+            $values = [];
+            foreach ($call[1] ?? [] as $key => $value) {
+                // A service that may be ignored ('@??id', '@!id') and is not there drops the call, as under Symfony.
+                if (\is_string($value) && (str_starts_with($value, '@??') || str_starts_with($value, '@!')) && !$this->has(ltrim(substr($value, 1), '?!'))) {
+                    continue 2;
+                }
+                $values[$key] = $resolve($value);
+            }
+            $result = $service->{$call[0]}(...$values);
+            if (!empty($call[2]) && \is_object($result)) {
+                $service = $result;
+            }
+        }
+
+        return $service;
+    }
+
+    /**
+     * The values of a constructor's (or a factory's) parameters.
+     *
+     * @param list<\ReflectionParameter> $parameters
+     * @param array<int|string, mixed>   $arguments
+     * @param array<string, mixed>       $bind
+     *
+     * @return array<string, mixed>
+     */
+    private function parameters(string $id, string $class, array $parameters, array $arguments, array $bind, \Closure $resolve): array
+    {
         $values = [];
-        foreach ($constructor->getParameters() as $parameter) {
+        foreach ($parameters as $position => $parameter) {
             if ($parameter->isVariadic()) {
                 break;
             }
             $name = $parameter->getName();
-            if (\array_key_exists('$'.$name, $arguments) || \array_key_exists($name, $arguments)) {
-                $values[$name] = $this->resolve(\array_key_exists('$'.$name, $arguments) ? $arguments['$'.$name] : $arguments[$name]);
-                continue;
+            foreach (['$'.$name, $name, $position] as $key) {
+                if (\array_key_exists($key, $arguments)) {
+                    $values[$name] = $resolve($arguments[$key]);
+                    continue 2;
+                }
             }
             [$found, $value] = $this->autowired($parameter);
+            if ($found) {
+                $values[$name] = $value;
+                continue;
+            }
+            if (\array_key_exists('$'.$name, $bind)) {
+                $values[$name] = $resolve($bind['$'.$name]);
+                continue;
+            }
+            [$found, $value] = $this->typed($parameter);
             if ($found) {
                 $values[$name] = $value;
                 continue;
@@ -251,10 +448,10 @@ final class Container implements ContainerInterface
             throw new ContainerException(sprintf('Cannot autowire the service "%s": argument $%s of %s::__construct() (%s) has no service, no parameter given, and no default.', $id, $name, $class, (string) $parameter->getType()));
         }
 
-        return $reflection->newInstanceArgs($values);
+        return $values;
     }
 
-    /** @return array{bool, mixed} whether a value was found for the parameter, and that value */
+    /** @return array{bool, mixed} whether Symfony's #[Autowire] gives the parameter a value, and that value */
     private function autowired(\ReflectionParameter $parameter): array
     {
         foreach ($parameter->getAttributes() as $attribute) {
@@ -262,7 +459,13 @@ final class Container implements ContainerInterface
                 continue;
             }
             $arguments = $attribute->getArguments();
+            // A service Symfony's attribute names that this container does not have (`advanced_router`...): the
+            // parameter is answered by its type instead, as a host without Symfony's ids gives it.
             if (isset($arguments['service'])) {
+                if (!$this->has($arguments['service'])) {
+                    return [false, null];
+                }
+
                 return [true, $this->get($arguments['service'])];
             }
             if (isset($arguments['param'])) {
@@ -272,10 +475,16 @@ final class Container implements ContainerInterface
                 return [true, $this->getParameter('env('.$arguments['env'].')')];
             }
             if (\array_key_exists('value', $arguments) || \array_key_exists(0, $arguments)) {
-                return [true, $this->resolve($arguments['value'] ?? $arguments[0])];
+                return [true, $this->value($arguments['value'] ?? $arguments[0])];
             }
         }
 
+        return [false, null];
+    }
+
+    /** @return array{bool, mixed} whether the parameter's type has a service, and that service */
+    private function typed(\ReflectionParameter $parameter): array
+    {
         $type = $parameter->getType();
         $types = $type instanceof \ReflectionUnionType ? $type->getTypes() : (null === $type ? [] : [$type]);
         $names = [];
@@ -289,7 +498,7 @@ final class Container implements ContainerInterface
         // unless the parameter has a default or allows null (an optional service left out, as Symfony does).
         foreach ($names as $name) {
             $target = $this->target($name);
-            if (isset($this->services[$target]) || isset($this->factories[$target]) || isset($this->definitions[$target])) {
+            if (isset($this->services[$target]) || isset($this->factories[$target]) || (isset($this->definitions[$target]) && $this->has($target))) {
                 return [true, $this->get($name)];
             }
         }
@@ -302,37 +511,5 @@ final class Container implements ContainerInterface
         }
 
         return [false, null];
-    }
-
-    /** A value given: '@id' a service, '%name%' a parameter (inside a string, replaced), '@@' and '%%' escaped; arrays resolved item by item. */
-    private function resolve(mixed $value): mixed
-    {
-        if (\is_array($value)) {
-            return array_map($this->resolve(...), $value);
-        }
-        if (!\is_string($value)) {
-            return $value;
-        }
-        if (str_starts_with($value, '@@')) {
-            return substr($value, 1);
-        }
-        if (str_starts_with($value, '@')) {
-            return $this->get(substr($value, 1));
-        }
-        if (preg_match('/^%([^%\s]+)%$/', $value, $match)) {
-            return $this->getParameter($match[1]);
-        }
-
-        return preg_replace_callback('/%%|%([^%\s]+)%/', function (array $match): string {
-            if ('%%' === $match[0]) {
-                return '%';
-            }
-            $parameter = $this->getParameter($match[1]);
-            if (null !== $parameter && !\is_scalar($parameter)) {
-                throw new ContainerException(sprintf('The parameter "%s" is not a scalar: it cannot be written inside a string.', $match[1]));
-            }
-
-            return (string) $parameter;
-        }, $value);
     }
 }
