@@ -210,6 +210,8 @@ own accessors.
   classes field by field, the naming, the MySQL comparison.
 - [The container](container.md): `Omnibridge\Container`, the plain-PHP autowiring container,
   and the definitions as data that Symfony, Laravel and it read alike.
+- [Options](options.md): `Options\Processor`, a configuration checked against a schema as data, as
+  Symfony's Config component checks the same schema compiled into a tree.
 - [Errors](errors.md): every exception and when it is thrown.
 - [Testing](testing.md): testing code that asks the registry, the package's own suite and its
   Docker harness.

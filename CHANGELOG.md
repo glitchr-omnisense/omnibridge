@@ -4,6 +4,14 @@
 
 ### Added
 
+- **`Options\{Processor, InvalidOption, Placeholders}`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4b):
+  a configuration checked against a schema declared as data - types, defaults, deprecations, bounds, enumerations,
+  sections completed with their defaults, lists and maps of a prototype (key attribute, default children, no deep
+  merging), several configurations merged in their order - with the values, refusals (word for word) and deprecations
+  Symfony's Config component gives the same schema compiled into a tree (omnibridge/symfony's `Options\SchemaTree`);
+  a default's placeholders resolved by the host. omnisense/omnibase's `Base\Options` declares its `base:` options in
+  this format; omnibridge/laravel validates `config/base.php` with it. Docs: docs/options.md.
+
 - **`Container\Declarations`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4a): services declared as
   data, read the way every host reads them - `applies()` (requires, environment), `id()`, `contracts()` (a list item or
   an alias with its options), `position()`, `resolve()` (parents inherited as Symfony resolves a child definition, the
