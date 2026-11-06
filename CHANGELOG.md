@@ -4,6 +4,22 @@
 
 ### Added
 
+- **`Schema\Database\{Statements, MySqlStatements, SqliteStatements, ColumnTypes, SchemaCreator, SchemaNotEmpty,
+  SqliteSchema, Cli}` and `bin/omnibridge-schema-create`** (omnisense/omnibase's plan "omnibase agnostic", step F7a: a
+  new site's schema comes from its description, whatever the persistence): a description's tables created in an empty
+  MySQL or SQLite database through PDO, no ORM - every table with its columns in order, primary key, indexes, unique,
+  fulltext and spatial indexes, foreign keys (on MySQL after every table), join tables, the hierarchies' tables and
+  discriminators as the description holds them; the SQL types, defaults and options DBAL 4 writes, so the database reads
+  back as the one Doctrine's SchemaTool makes (omnisense/omnibase's SchemaDescriptionTest: 0 differences on lesringostars'
+  132 tables on MySQL, on the harness's on SQLite). An application's own column types as data (`ColumnTypes`: aliases,
+  enumerations, sets). `SchemaCreator` refuses a database holding a table of the description (`SchemaNotEmpty`), runs
+  SQLite's statements in one transaction, and on MySQL takes a null collation as the database's own. `SqliteSchema`
+  reads an SQLite database in `MySqlSchema`'s shape. The plain-PHP command (`Cli`): `--schema` (a PHP or JSON file),
+  `--dsn`/`--url`/`DATABASE_URL`, `--database`, `--dump-sql`. omnibridge/symfony and omnibridge/laravel run the same
+  `SchemaCreator` as `omnibridge:schema:create`. Docs: docs/schema.md.
+- **`MySqlSchema::against()`** (and `compare()`): two databases read compared - tables, columns in their order, every
+  column property, primary keys, indexes, foreign keys.
+
 - **`Container\Discovery`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4c): what a host discovers among
   services declared as data, declared as data too - `autoconfigure` (the tags an autoconfigured definition's class gets,
   `tags()`, `autoconfigure()`), `collect` (the tagged services, or those a class names, handed to a collecting service,
@@ -85,6 +101,12 @@
 - **`Contract\Views`** (a view rendered by its name, whatever the view technology) and
   **`Contract\Validation`** (a value checked against constraints, `Contract\Violation` per broken
   one). `Runtime::views()`, `validation()`, `backend()`, `unitOfWork()`. Docs: `docs/contracts.md`.
+
+### Changed
+
+- `MySqlSchema::columnType()`: the serialized arrays (`array`, `simple_array`, `object`) take a text of their length
+  as `text` does (DBAL's CLOB: `tinytext` to `longtext`), and `blob` likewise (`tinyblob` to `longblob`; `longblob`
+  without a length, as before); `enum` and `set` with their `values` are written `enum(...)`, `set(...)`.
 
 ### Fixed
 

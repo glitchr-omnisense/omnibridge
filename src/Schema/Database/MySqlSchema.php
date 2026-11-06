@@ -18,8 +18,13 @@ use Omnibridge\Schema\Table;
  * A column's expected SQL type comes from its portable type (columnType():
  * string(255) is varchar(255), text longtext, boolean tinyint(1), every date
  * and time datetime...); an application's own types are given by name, each a
- * closure from the column to its SQL type (enum('A','B') for an enumeration).
+ * closure from the column to its SQL type (enum('A','B') for an enumeration;
+ * ColumnTypes::mysql() makes them from types kept as data).
  * Collations, character sets and comments are not compared.
+ *
+ * against() compares two schemas read (a database made from a description,
+ * MySqlStatements, with one another persistence made): the same lines, every
+ * column property and the columns' order included.
  */
 final class MySqlSchema
 {
@@ -134,6 +139,58 @@ final class MySqlSchema
         return $differences;
     }
 
+    /**
+     * Every difference between this schema and another read one, one a line ("thread.slug: type "varchar(255)" /
+     * "varchar(191)""): the tables, each table's columns in their order, each column's SQL type, nullable, default and
+     * auto-increment, the primary key, each index and foreign key by name. None when both databases have one schema.
+     *
+     * @return list<string>
+     */
+    public function against(self $other): array
+    {
+        return self::compare($this->tables, $other->tables);
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $expected tables as read() gives them
+     * @param array<string, array<string, mixed>> $actual
+     *
+     * @return list<string>
+     *
+     * @internal MySqlSchema's and SqliteSchema's against()
+     */
+    public static function compare(array $expected, array $actual): array
+    {
+        $differences = [];
+        foreach (array_diff_key($expected, $actual) as $name => $_) {
+            $differences[] = $name.': a table of the first database only';
+        }
+        foreach (array_diff_key($actual, $expected) as $name => $_) {
+            $differences[] = $name.': a table of the second database only';
+        }
+
+        foreach (array_intersect_key($expected, $actual) as $name => $table) {
+            $other = $actual[$name];
+            if (array_keys($table['columns']) !== array_keys($other['columns'])) {
+                $differences[] = $name.': columns '.json_encode(array_keys($table['columns'])).' / '.json_encode(array_keys($other['columns']));
+            }
+            foreach (array_intersect_key($table['columns'], $other['columns']) as $column => $properties) {
+                foreach ($properties as $key => $value) {
+                    if ($value !== ($other['columns'][$column][$key] ?? null)) {
+                        $differences[] = $name.'.'.$column.': '.$key.' '.json_encode($value).' / '.json_encode($other['columns'][$column][$key] ?? null);
+                    }
+                }
+            }
+            if ($table['primaryKey'] !== $other['primaryKey']) {
+                $differences[] = $name.': primary key '.json_encode($table['primaryKey']).' / '.json_encode($other['primaryKey']);
+            }
+            $differences = array_merge($differences, self::named($name, 'index', $table['indexes'], $other['indexes']));
+            $differences = array_merge($differences, self::named($name, 'foreign key', $table['foreignKeys'], $other['foreignKeys']));
+        }
+
+        return $differences;
+    }
+
     /** @return list<string> */
     private function tableDifferences(Table $table, array $actual): array
     {
@@ -226,7 +283,7 @@ final class MySqlSchema
 
         return match ($column->type) {
             'string', 'ascii_string' => ($column->fixed ? 'char(' : 'varchar(').($column->length ?? 255).')',
-            'text' => match (true) {
+            'text', 'array', 'simple_array', 'object' => match (true) {
                 null === $column->length => 'longtext',
                 $column->length <= 255 => 'tinytext',
                 $column->length <= 65535 => 'text',
@@ -246,9 +303,16 @@ final class MySqlSchema
             'json' => 'json',
             'guid' => 'char(36)',
             'binary' => ($column->fixed ? 'binary(' : 'varbinary(').($column->length ?? 255).')',
-            'blob' => 'longblob',
-            'array', 'simple_array', 'object' => 'longtext',
+            'blob' => match (true) {
+                null === $column->length => 'longblob',
+                $column->length <= 255 => 'tinyblob',
+                $column->length <= 65535 => 'blob',
+                $column->length <= 16777215 => 'mediumblob',
+                default => 'longblob',
+            },
             'dateinterval' => 'varchar(255)',
+            'enum' => self::enumeration($column),
+            'set' => self::set($column),
             default => throw new \UnexpectedValueException(\sprintf('No SQL type for "%s" (column %s): give it in $types.', $column->type, $column->name)),
         };
     }

@@ -54,4 +54,9 @@ exception rather than a container error.
 | `\UnexpectedValueException` | `MySqlSchema::columnType()`, so `differences()` | `No SQL type for "<type>" (column <name>): give it in $types.`: an application's own type not given |
 | `\JsonException` | `Description::toJson()`, `fromJson()` | invalid JSON (`JSON_THROW_ON_ERROR`) |
 | `\ReflectionException` | `AttributeReader::read()`, `Builder::build()` | a class name that does not exist |
-| `\PDOException` | `MySqlSchema::read()` | whatever the connection throws in its error mode |
+| `\PDOException` | `MySqlSchema::read()`, `SqliteSchema::read()`, `SchemaCreator::create()` | whatever the connection throws in its error mode (on SQLite, nothing of the statements is left) |
+| `Schema\Database\SchemaNotEmpty` | `SchemaCreator::create()` | `The database already holds <n> table(s) of the description (<names>): omnibridge:schema:create creates a schema in an empty database; ...`: nothing was run (`$tables`) |
+| `\UnexpectedValueException` | `SqliteStatements::sqlType()`, so `create()` | `No SQL type for "<type>" (column <name>): give it in the ColumnTypes.` |
+| `\DomainException` | `SchemaCreator::writer()`, `Cli::fromUrl()` | no writer for that PDO driver or URL scheme (mysql, mariadb and sqlite are written) |
+| `\LogicException` | `MySqlStatements::table()`, `SqliteStatements::table()` | `The table <name> has no column.` |
+| `\InvalidArgumentException`, `\UnexpectedValueException` | `Cli::schema()`, `Cli::connect()` | no schema file, a file returning neither a Description nor an array with `description`, no connection given |

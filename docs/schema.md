@@ -14,7 +14,8 @@ make, with their columns, keys, indexes and foreign keys. Three steps:
 2. **The builder** (`Schema\Builder`): the declarations completed the way Doctrine completes its
    metadata, an application's rules applied, then the tables Doctrine's SchemaTool would create.
 3. **The description** (`Schema\Description`): plain, readonly data - entities and tables - that a
-   persistence bridge maps, a JSON file keeps, and `Schema\Database\MySqlSchema` compares with a
+   persistence bridge maps, a JSON file keeps, `Schema\Database\SchemaCreator` creates in an empty
+   database (MySQL, SQLite), and `Schema\Database\MySqlSchema` and `SqliteSchema` compare with a
    database.
 
 omnibridge/doctrine is the Doctrine side: its `DeclarationDriver` gives Doctrine its metadata from the
@@ -638,3 +639,62 @@ Array
 ```
 
 `int(11)` matched `int` (the display width), the `enum` matched the application's type.
+
+## Creating the tables: `SchemaCreator`
+
+A new application creates its schema from its description, whatever persistence reads the tables
+afterwards; migrations, which evolve an existing database, belong to the persistence chosen (Doctrine
+Migrations, Laravel's). `Schema\Database\SchemaCreator` writes the statements for the PDO
+connection's driver and runs them in an empty database - no ORM, no DBAL:
+
+```php
+use Omnibridge\Schema\Database\ColumnTypes;
+use Omnibridge\Schema\Database\SchemaCreator;
+
+$types = new ColumnTypes(
+    aliases: ['passkey_base64' => 'text'],                      // an own type written as a portable one
+    enumerations: ['thread_state' => ['draft', 'published']],   // ENUM on MySQL, CLOB on SQLite
+    sets: ['user_role' => ['ROLE_USER', 'ROLE_ADMIN']],         // SET on MySQL, CLOB on SQLite
+);
+$creator = new SchemaCreator($pdo, $types, ['charset' => 'utf8mb4', 'collation' => 'utf8mb4_unicode_ci']);
+$creator->statements($description);   // what would run, in order (--dump-sql)
+$creator->create($description);       // runs them; SchemaNotEmpty when a table of the description exists
+```
+
+| Class | What it does |
+|---|---|
+| `Statements` | the interface: `driver()` (`mysql`, `sqlite`), `create(Description): list<string>` |
+| `MySqlStatements` | a `CREATE TABLE` per table (by name) with its columns in order, its indexes, unique, fulltext and spatial indexes and its primary key inside, `DEFAULT CHARACTER SET ... COLLATE ... ENGINE = ...` after; then an `ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY` per foreign key, once every table exists. The SQL types are `MySqlSchema::columnType()`'s but a boolean's (`TINYINT`, as DBAL 4); defaults as DBAL writes them, none on a TEXT or BLOB column; `DEFAULT NULL` on a nullable column without one; names quoted with backticks |
+| `SqliteStatements` | a `CREATE TABLE` per table with its columns, primary key and foreign keys (`NOT DEFERRABLE INITIALLY IMMEDIATE`) inside, then a `CREATE [UNIQUE] INDEX` per index (fulltext and spatial flags mean nothing to SQLite). The types DBAL 4 declares on SQLite: `VARCHAR(n)`, `CHAR(n)`, `CLOB` for every text, JSON, serialized array, enumeration and set, `INTEGER`, `SMALLINT`, `BIGINT`, `BOOLEAN`, `DOUBLE PRECISION`, `REAL`, `NUMERIC(p, s)`, `DATETIME`, `DATE`, `TIME`, `BLOB`; an auto-increment column `INTEGER PRIMARY KEY AUTOINCREMENT` |
+| `ColumnTypes` | an application's own column types as data: `resolve(Column)` (an alias followed, `enum`/`set` with their values), `mysql()` (`MySqlSchema::read()`'s `$types`), `with()`, `toArray()`/`fromArray()` |
+| `SchemaCreator` | `writer(string $driver, ...)`, `statements()`, `existing()` (the description's tables the database holds), `create()`: on SQLite in one transaction (all or nothing), on MySQL statement by statement. MySQL's options: `charset` (utf8mb4), `collation` (utf8mb4_unicode_ci; null: the database's default collation when its character set is the one asked), `engine` (InnoDB) |
+| `SqliteSchema` | an SQLite database read through PDO (`sqlite_master`, the PRAGMAs) in `MySqlSchema`'s shape: `read(\PDO, $ignore, ColumnTypes)`, `of()`, `differences(Description)`, `against(SqliteSchema)`. Types and defaults as written (`'draft'`, `0`, `NULL`); a foreign key's name read from the table's statement |
+| `MySqlSchema::against()` | two databases read compared: tables, each table's columns in their order, every column property, the primary key, each index and foreign key by name |
+
+A database these statements make reads back, column for column, as the one Doctrine's SchemaTool
+makes from the same mapping: omnisense/omnibase's SchemaDescriptionTest compares them on SQLite
+(the omnibase harness) and on MySQL (lesringostars, 132 tables), information_schema read by
+`MySqlSchema` on both sides (its plan "omnibase agnostic", step F7a).
+
+### `omnibridge:schema:create` on every host
+
+| Host | Command |
+|---|---|
+| plain PHP | `vendor/bin/omnibridge-schema-create --schema=<file> [--dsn=<PDO DSN> --user=<user> \| --url=<scheme://user:password@host:port/database>] [--database=<name>] [--dump-sql]` (`Schema\Database\Cli`) |
+| Symfony (omnibridge/symfony, with omnisense/omnibase) | `bin/console omnibridge:schema:create [--dump-sql]` |
+| Laravel (omnibridge/laravel, with omnisense/omnibase) | `php artisan omnibridge:schema:create [--dump-sql]` |
+
+The plain-PHP script reads its schema from `--schema`: a PHP file returning a `Description`, or an
+array with `description` and, if needed, `types` (a `ColumnTypes`) and `options` (MySQL's); or a JSON
+file of `Description::toJson()` with `types` (`ColumnTypes::toArray()`) beside its entities and
+tables. Without `--dsn` nor `--url` it connects to `DATABASE_URL`; the password of `--dsn` is read from
+`OMNIBRIDGE_DATABASE_PASSWORD`, never from the command line. Exit status: 0 done, 1 refused or failed
+(the message on the error output), 2 a wrong command line. omnisense/omnibase ships its schema file,
+`vendor/omnisense/omnibase/src/Resources/schema.php`.
+
+```text
+$ vendor/bin/omnibridge-schema-create --schema=description.json --dsn=sqlite:var/app.db
+1 tables created (1 statements).
+$ vendor/bin/omnibridge-schema-create --schema=description.json --dsn=sqlite:var/app.db
+The database already holds 1 table of the description (page): omnibridge:schema:create creates a schema in an empty database; an existing one is evolved by the persistence's migrations.
+```

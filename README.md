@@ -112,6 +112,11 @@ the same tables), so that Doctrine reads it today and another persistence
 - `Schema\Database\MySqlSchema`: a MySQL schema read from `information_schema`
   (PDO, read-only) and compared with a description, column by column - the
   independent proof that the description is the database.
+- `Schema\Database\SchemaCreator`: the description's tables created in an empty
+  MySQL or SQLite database (`MySqlStatements`, `SqliteStatements`; an
+  application's own column types as data, `ColumnTypes`), no ORM - what
+  `omnibridge:schema:create` runs on every host, `vendor/bin/omnibridge-schema-create`
+  in plain PHP; `SqliteSchema` reads an SQLite database back.
 
 ```php
 use Omnibridge\Schema\Builder;

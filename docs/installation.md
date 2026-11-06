@@ -18,7 +18,9 @@ Nothing else is required: no framework, no ORM, no extension that composer.json 
 optional needs:
 
 - `Schema\Database\MySqlSchema::read()` takes a `\PDO` connected to MySQL (`ext-pdo`, `ext-pdo_mysql`
-  in the application).
+  in the application); `SchemaCreator` and `SqliteSchema` a `\PDO` connected to MySQL or SQLite
+  (`ext-pdo_sqlite` for SQLite). `vendor/bin/omnibridge-schema-create` is installed with the package
+  (composer.json's `bin`).
 - `Schema\CamelCaseNaming` calls `mb_strtolower()`, `mb_substr()` and `mb_strtoupper()`.
 
 ```sh

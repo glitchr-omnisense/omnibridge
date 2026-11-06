@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * omnibridge:schema:create in plain PHP: the tables of a description created in an empty database, no framework, no
+ * ORM (Omnibridge\Schema\Database\Cli; --help for the arguments).
+ */
+
+$autoload = $GLOBALS['_composer_autoload_path'] ?? null;
+foreach ([$autoload, __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $candidate) {
+    if (null !== $candidate && is_file($candidate)) {
+        require $candidate;
+        break;
+    }
+}
+if (!class_exists(Omnibridge\Schema\Database\Cli::class)) {
+    fwrite(STDERR, "Composer's autoloader was not found: run composer install.\n");
+    exit(1);
+}
+
+exit(Omnibridge\Schema\Database\Cli::run(array_slice($argv, 1)));

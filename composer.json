@@ -39,6 +39,9 @@
             "Omnibridge\\Tests\\": "tests/"
         }
     },
+    "bin": [
+        "bin/omnibridge-schema-create"
+    ],
     "extra": {
         "branch-alias": {
             "dev-1.x": "1.x-dev"
