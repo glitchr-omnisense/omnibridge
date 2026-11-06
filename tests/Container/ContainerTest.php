@@ -153,4 +153,54 @@ final class ContainerTest extends TestCase
             putenv('OMNIBRIDGE_CONTAINER_TEST');
         }
     }
+    /**
+     * The registries of what is discovered (Container\Discovery, omnisense/omnibase's step F5e slice 4c): an autoconfigured
+     * definition gets the tags of the interfaces its class implements, after its own (a parent's autoconfiguration
+     * inherited, one whose requirement is not installed ignored); a collection hands the tagged services - and those a
+     * class names, by instanceof - to its collecting service in their order, a service that is none here dropped; a
+     * fallback binds the first candidate defined, else its default; a service given is never replaced.
+     */
+    public function testWhatIsDiscovered(): void
+    {
+        $discovery = [
+            'autoconfigure' => [
+                ['instanceof' => Plugin::class, 'tags' => ['plugins', ['name' => 'listener', 'event' => 'saved']]],
+                ['instanceof' => Plugin::class, 'tags' => ['never'], 'requires' => ['Omnibridge\Tests\Container\NotInstalled']],
+            ],
+            'collect' => [
+                ['service' => 'collector', 'method' => 'add', 'tag' => 'plugins'],
+                ['service' => 'by.class', 'method' => 'add', 'instanceof' => Plugin::class],
+                ['service' => 'nowhere', 'method' => 'add', 'tag' => 'plugins'],
+            ],
+            'fallbacks' => [
+                Linker::class => ['candidates' => ['linker.admin'], 'default' => NullLinker::class],
+                'given' => ['default' => NullLinker::class],
+            ],
+        ];
+        $definitions = [
+            ['class' => Collector::class, 'id' => 'collector'],
+            ['class' => Collector::class, 'id' => 'by.class'],
+            ['class' => FirstPlugin::class, 'autoconfigure' => true, 'tags' => ['own']],
+            ['class' => 'Omnibridge\Tests\Container\NotInstalled', 'id' => 'missing', 'tags' => ['plugins']],
+            ['class' => SecondPlugin::class, 'id' => 'second.base', 'abstract' => true, 'autoconfigure' => true],
+            ['parent' => 'second.base', 'id' => SecondPlugin::class],
+            ['class' => FirstPlugin::class, 'id' => 'first.plain'],
+        ];
+        $resolved = Container\Discovery::autoconfigure(Container\Declarations::resolve($definitions), $discovery['autoconfigure']);
+        self::assertSame(['own', 'plugins', ['name' => 'listener', 'event' => 'saved']], $resolved[FirstPlugin::class]['tags']);
+        self::assertSame(['plugins', ['name' => 'listener', 'event' => 'saved']], $resolved[SecondPlugin::class]['tags'], 'the parent\'s autoconfiguration');
+        self::assertSame([], $resolved['first.plain']['tags'], 'not autoconfigured');
+        self::assertSame([FirstPlugin::class => [['event' => 'saved']], SecondPlugin::class => [['event' => 'saved']]], Container\Discovery::attributes($resolved, 'listener'));
+
+        $container = Container::fromDefinitions($definitions, [], ['given' => new FirstPlugin()], $discovery);
+        self::assertSame([FirstPlugin::class, SecondPlugin::class], array_map(get_class(...), $container->get('collector')->items), 'the tagged ones in their order, the one not installed dropped');
+        self::assertSame([FirstPlugin::class, SecondPlugin::class], array_map(get_class(...), $container->get('by.class')->items));
+        self::assertSame($container->get(FirstPlugin::class), $container->get('collector')->items[0]);
+        self::assertInstanceOf(NullLinker::class, $container->get(Linker::class), 'no candidate: the default');
+        self::assertInstanceOf(FirstPlugin::class, $container->get('given'), 'a service given stays');
+        self::assertFalse($container->has('nowhere'));
+
+        $admin = Container::fromDefinitions([['class' => NullLinker::class, 'id' => 'linker.admin']], [], [], $discovery);
+        self::assertSame($admin->get('linker.admin'), $admin->get(Linker::class), 'the first candidate defined');
+    }
 }

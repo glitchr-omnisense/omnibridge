@@ -77,10 +77,28 @@ Symfony configuration aliases its contracts from it.
 | `decorates` | `id`, `on_invalid` (`ignore`: dropped when the decorated service is not there); the decorator is given it as `'@.inner'` |
 | `tags` | a name, or `['name' => ..., attributes...]`; `['!tagged_iterator' => name]` gives the services of a tag, in order |
 | `contracts` | aliases: a list item, or `alias => ['public' => ..., 'target' => ...]` |
-| `symfony`, `public`, `shared`, `lazy`, `autowire`, `autoconfigure` | read by omnibridge/symfony only |
+| `autoconfigure` | the definition (or its parent) takes the tags a registry's `autoconfigure` gives its class (below) |
+| `symfony`, `public`, `shared`, `lazy`, `autowire` | read by omnibridge/symfony only |
 
 Values: `'@id'`, `'@?id'` (null when absent), `'%name%'` (and inside a string), `'%env(bool:NAME)%'`, `'@@'`/`'%%'`
 escapes, `['!service_closure' => '@id']`, `['!closure' => callable]`, `['!new' => ['class' => ..., 'arguments' => [...]]]`,
 `['!iterator' => [...]]`. No class is loaded while the list is read: a class that does not exist (or is abstract) is not a
 service, which `has()` answers when asked. A service Symfony's `#[Autowire]` names and the container lacks
 (`advanced_router`) leaves the parameter to its type.
+
+## What is discovered
+
+`fromDefinitions()`'s fourth argument is a registry of what a host discovers among the definitions, as data too
+(`Omnibridge\Container\Discovery`; omnisense/omnibase's `Base\Discovery::registries()` is one: omnibridge/symfony
+compiles it in one compiler pass, omnibridge/laravel applies it to what it binds):
+
+| Kind | What it is |
+|---|---|
+| `autoconfigure` | `['instanceof' => class, 'tags' => [...], 'requires' => [...]]`: an autoconfigured definition whose class is one gets these tags after its own (Symfony's `registerForAutoconfiguration()`) |
+| `collect` | `['service' => id, 'method' => name, 'tag' => tag]` (or `'instanceof' => class`): each tagged service, in its order, handed to the collecting service (`$service->add($tagged)`); one that is not a service here is dropped |
+| `fallbacks` | `id => ['candidates' => [...], 'default' => class]`: a service no one binds is the first candidate defined, else the default class |
+| `preferred` | `alias => ['prefer' => id, 'over' => id]`: read by the hosts whose aliases name pools (omnibridge/symfony) |
+
+Any other kind (omnibase's contracts, enumerations, repositories, storages...) is a host's to compile.
+`Discovery::attributes($resolved, $tag)` gives each service's tags of one name with their attributes (an entity
+listener's `event`), for a host that registers them itself.

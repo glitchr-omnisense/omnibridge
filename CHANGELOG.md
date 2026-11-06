@@ -4,6 +4,16 @@
 
 ### Added
 
+- **`Container\Discovery`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4c): what a host discovers among
+  services declared as data, declared as data too - `autoconfigure` (the tags an autoconfigured definition's class gets,
+  `tags()`, `autoconfigure()`), `collect` (the tagged services, or those a class names, handed to a collecting service,
+  `collected()`), `fallbacks` (the first candidate defined, else a default class, `fallback()`), `preferred`; and
+  `attributes()` (each service's tags of one name with their attributes). **`Omnibridge\Container::fromDefinitions()`**
+  takes such a registry (fourth argument): the autoconfigured tags, the collections' calls, the fallbacks.
+  `Declarations::resolve()` gives each definition's `autoconfigure` (its own or its parent's). omnisense/omnibase's
+  `Base\Discovery` is one: omnibridge/symfony compiles it in one compiler pass, omnibridge/laravel applies it.
+  Docs: docs/container.md.
+
 - **`Options\{Processor, InvalidOption, Placeholders}`** (omnisense/omnibase's plan "omnibase agnostic", step F5e slice 4b):
   a configuration checked against a schema declared as data - types, defaults, deprecations, bounds, enumerations,
   sections completed with their defaults, lists and maps of a prototype (key attribute, default children, no deep

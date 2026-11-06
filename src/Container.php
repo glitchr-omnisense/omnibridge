@@ -3,6 +3,7 @@
 namespace Omnibridge;
 
 use Omnibridge\Container\Declarations;
+use Omnibridge\Container\Discovery;
 use Omnibridge\Exception\ContainerException;
 use Omnibridge\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerInterface;
@@ -72,15 +73,27 @@ final class Container implements ContainerInterface
      * service (has() answers false, its class asked only then); what only Symfony reads (a definition's
      * `symfony` part) is not read here.
      *
+     * A registry of what is discovered among them (Container\Discovery: `autoconfigure`, `collect`, `fallbacks`;
+     * omnisense/omnibase's Base\Discovery::registries()) adds the tags autoconfiguration gives, the calls handing each
+     * collection to its collecting service, and the services no one else binds.
+     *
      * @param iterable<array<string, mixed>> $definitions
      * @param array<string, mixed>           $parameters
      * @param array<string, object>          $services    objects given (the host's contracts, a logger...)
+     * @param array<string, mixed>           $discovery   what is discovered among them (Container\Discovery's kinds)
      */
-    public static function fromDefinitions(iterable $definitions, array $parameters = [], array $services = []): self
+    public static function fromDefinitions(iterable $definitions, array $parameters = [], array $services = [], array $discovery = []): self
     {
         $container = new self($parameters);
         $environment = $parameters['kernel.environment'] ?? null;
         $resolved = Declarations::resolve($definitions, \is_string($environment) ? $environment : null);
+        $resolved = Discovery::autoconfigure($resolved, $discovery['autoconfigure'] ?? []);
+        foreach (Discovery::collected($resolved, $discovery['collect'] ?? []) as $id => $calls) {
+            foreach ($calls as [$method, $tagged]) {
+                // A service that is none here (its class not installed) is not handed: '@??' drops the call.
+                $resolved[$id]['calls'][] = [$method, ['@??'.$tagged]];
+            }
+        }
         foreach ($resolved as $id => $definition) {
             $container->definitions[$id] = [
                 'class' => $definition['class'],
@@ -100,6 +113,13 @@ final class Container implements ContainerInterface
         }
         foreach ($services as $id => $service) {
             $container->set($id, $service);
+        }
+        $defined = static fn (string $id): bool => isset($container->definitions[$id]) || isset($container->services[$id]) || isset($container->factories[$id]) || isset($container->aliases[$id]);
+        foreach ($discovery['fallbacks'] ?? [] as $id => $fallback) {
+            if (!$defined($id)) {
+                $bound = Discovery::fallback($fallback, $defined);
+                isset($bound['alias']) ? $container->aliases[$id] = $bound['alias'] : $container->definitions[$id] = ['class' => $bound['class'], 'arguments' => []];
+            }
         }
         // Decorations last, once every service is known: the decorated id answers the decorator, which is given the
         // former service as '@.inner'; a decoration of a service that is not there is dropped (`on_invalid: ignore`)

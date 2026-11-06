@@ -77,7 +77,7 @@ final class Declarations
      *
      * @param iterable<array<string, mixed>> $definitions
      *
-     * @return array<string, array{class: class-string, arguments: array<int|string, mixed>, bind: array<string, mixed>, calls: list<array{0: string, 1?: array<mixed>, 2?: bool}>, factory: mixed, decorates: array<string, mixed>|null, tags: list<string|array<string, mixed>>, contracts: array<string, array<string, mixed>>}>
+     * @return array<string, array{class: class-string, arguments: array<int|string, mixed>, bind: array<string, mixed>, calls: list<array{0: string, 1?: array<mixed>, 2?: bool}>, factory: mixed, decorates: array<string, mixed>|null, tags: list<string|array<string, mixed>>, contracts: array<string, array<string, mixed>>, autoconfigure: bool}>
      */
     public static function resolve(iterable $definitions, ?string $environment = null): array
     {
@@ -105,8 +105,10 @@ final class Declarations
             $bind = [];
             $calls = [];
             $factory = null;
+            $autoconfigure = false;
             foreach ($chain as $link) {
                 $class = $link['class'] ?? $class;
+                $autoconfigure = (bool) ($link['autoconfigure'] ?? $autoconfigure);
                 foreach ($link['arguments'] ?? [] as $key => $value) {
                     $position = self::position($key);
                     $arguments[$position ?? (str_starts_with((string) $key, '$') ? $key : '$'.$key)] = $value;
@@ -131,6 +133,8 @@ final class Declarations
                 'decorates' => $chain[\count($chain) - 1]['decorates'] ?? null,
                 'tags' => $chain[\count($chain) - 1]['tags'] ?? [],
                 'contracts' => self::contracts($chain[\count($chain) - 1]),
+                // Autoconfigured (its own or its parent's, as Symfony resolves a child): what Discovery::autoconfigure() tags.
+                'autoconfigure' => $autoconfigure,
             ];
         }
 

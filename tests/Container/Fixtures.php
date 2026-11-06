@@ -107,3 +107,35 @@ final class Recorders
     {
     }
 }
+
+/** What the registries of discovery are tested with (Container\Discovery). */
+interface Plugin
+{
+}
+
+final class FirstPlugin implements Plugin
+{
+}
+
+final class SecondPlugin implements Plugin
+{
+}
+
+final class Collector
+{
+    /** @var list<object> */
+    public array $items = [];
+
+    public function add(object $item): void
+    {
+        $this->items[] = $item;
+    }
+}
+
+interface Linker
+{
+}
+
+final class NullLinker implements Linker
+{
+}
