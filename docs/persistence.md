@@ -58,6 +58,13 @@ these, whichever backend runs.
 An entity's event (`EntityEvent`) carries `entity` and `unitOfWork`, and `recompute()`; a flush's
 (`FlushEvent`) carries `unitOfWork`.
 
+A package that follows the writes (a search index, an audit log) declares a service tagged
+`omnibridge.lifecycle_listener` (`Lifecycle\Listeners::TAG`): a callable `(object $event): void`, handed every event the
+persistence chosen dispatches, after omnibase's behaviours. Each host compiles the tag into the persistence's
+`listeners` (omnibridge/symfony from its container, omnibridge/laravel from `$app->tagged()`); `Listeners::chain()` makes
+them at the first event. omnibridge/eloquent dispatches these events; Doctrine dispatches its own, so such a package
+keeps its Doctrine listener beside (glitchr/typesense-bundle's indexer has both).
+
 ## Scope
 
 A condition every query of some entities carries while it is enabled: the trashed rows left out,

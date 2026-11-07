@@ -4,6 +4,7 @@ namespace Omnibridge\Tests\Persistence;
 
 use Omnibridge\Persistence\Lifecycle\EntityEvent;
 use Omnibridge\Persistence\Lifecycle\FlushEvent;
+use Omnibridge\Persistence\Lifecycle\Listeners;
 use Omnibridge\Persistence\Lifecycle\OnFlush;
 use Omnibridge\Persistence\Lifecycle\PostFlush;
 use Omnibridge\Persistence\Lifecycle\PostLoad;
@@ -60,5 +61,34 @@ final class LifecycleTest extends TestCase
 
         $this->expectExceptionMessage('did not change');
         $event->setNewValue('title', 'A title');
+    }
+
+    public function testTheListenersAPackageDeclaresAreMadeAtTheFirstEventThenCalledInTheirOrder(): void
+    {
+        self::assertSame('omnibridge.lifecycle_listener', Listeners::TAG);
+        $made = 0;
+        $calls = [];
+        $chain = Listeners::chain(static function () use (&$made, &$calls): iterable {
+            ++$made;
+            yield static function (object $event) use (&$calls): void { $calls[] = ['first', $event::class]; };
+            yield static function (object $event) use (&$calls): void { $calls[] = ['second', $event::class]; };
+        });
+        self::assertSame(0, $made, 'nothing made before an event');
+
+        $unitOfWork = $this->createStub(UnitOfWork::class);
+        $chain(new PostPersist(new \stdClass(), $unitOfWork));
+        $chain(new PostFlush($unitOfWork));
+
+        self::assertSame(1, $made);
+        self::assertSame([['first', PostPersist::class], ['second', PostPersist::class], ['first', PostFlush::class], ['second', PostFlush::class]], $calls);
+    }
+
+    public function testAListenerThatIsNoCallableIsRefusedAloud(): void
+    {
+        $chain = Listeners::chain([new \stdClass()]);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('omnibridge.lifecycle_listener');
+        $chain(new PostFlush($this->createStub(UnitOfWork::class)));
     }
 }

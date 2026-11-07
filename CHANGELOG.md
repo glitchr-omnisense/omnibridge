@@ -10,6 +10,10 @@
   `EntityNotFound`) or the new fifth argument of `register()`; compared by name, nothing loaded. omnibase's catches of
   Doctrine's exception ask it, so a reference Eloquent cannot load is caught as Doctrine's was. Docs:
   docs/persistence.md.
+- **`Persistence\Lifecycle\Listeners`** (step B2): the tag `omnibridge.lifecycle_listener` a package's services carry to
+  hear the persistence's Lifecycle events on every host (omnibridge/symfony compiles the tagged services,
+  omnibridge/laravel `$app->tagged()`, into omnibridge/eloquent's `listeners`), and `chain()`, the listeners made at the
+  first event then called in their order. glitchr/typesense-bundle's indexer follows Eloquent's writes this way.
 
 ### Fixed
 
