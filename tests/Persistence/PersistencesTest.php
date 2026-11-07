@@ -50,6 +50,11 @@ final class MarkerDefinitions
  * installed is used, several need the host's option - refused aloud without it -, an option naming one that is not
  * installed or does not exist is refused; Omnibridge\Container adds the chosen one's definitions.
  */
+/** A registered persistence's exception of an entity whose row is gone. */
+class GoneRow extends \RuntimeException
+{
+}
+
 final class PersistencesTest extends TestCase
 {
     /**
@@ -81,6 +86,24 @@ final class PersistencesTest extends TestCase
         self::assertSame([], Persistences::installed());
         self::assertNull(Persistences::choose(null));
         self::assertNull(Persistences::choose(''));
+    }
+
+    public function testAnEntityWhoseRowIsGoneIsSaidByEachPersistencesException(): void
+    {
+        self::assertSame('Doctrine\ORM\EntityNotFoundException', Persistences::KNOWN['doctrine']['not_found']);
+        self::assertSame('Omnibridge\Eloquent\EntityNotFound', Persistences::KNOWN['eloquent']['not_found']);
+        self::assertFalse(Persistences::isNotFound(new \RuntimeException('another failure')));
+        self::assertFalse(Persistences::isNotFound(new GoneRow()));
+        // Where a bridge is installed (an application's suite), its exception is recognised, hidden by setUp() or not.
+        foreach (['Doctrine\ORM\EntityNotFoundException' => 'gone', 'Omnibridge\Eloquent\EntityNotFound' => 'gone'] as $class => $message) {
+            if (class_exists($class)) {
+                self::assertTrue(Persistences::isNotFound(new $class($message)), $class);
+            }
+        }
+
+        Persistences::register('first', 'acme/first', MarkerUnitOfWork::class, null, GoneRow::class);
+        self::assertTrue(Persistences::isNotFound(new GoneRow()));
+        self::assertTrue(Persistences::isNotFound(new class() extends GoneRow {}), 'a subclass');
     }
 
     public function testTheOnlyPersistenceInstalledIsChosen(): void

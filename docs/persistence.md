@@ -123,6 +123,22 @@ $container = Omnibridge\Container::fromDefinitions(Base\Services::definitions(),
 $articles = $container->get(Base\Database\Repository\Repositories::class)->of(App\Entity\Article::class)->findAll();
 ```
 
+An entity whose row is gone - a lazy reference or association read after its row was deleted, or left out by a scope
+such as the trash - is said by each persistence with its own exception: Doctrine's `EntityNotFoundException`,
+omnibridge/eloquent's `EntityNotFound`. Each is declared as data (`not_found` in `Persistences::KNOWN`, the fifth
+argument of `register()`), and `Persistences::isNotFound($throwable)` answers for all of them by name, nothing loaded:
+
+```php
+try {
+    $email = $subscriber->getEmail();          // a reference whose row the trash scope leaves out
+} catch (\Throwable $e) {
+    if (!Omnibridge\Persistence\Persistences::isNotFound($e)) {
+        throw $e;
+    }
+    $subscriber = null;
+}
+```
+
 ## What stays with omnibase
 
 The finder language (`findOneByEmailAndUsername()`...) is omnibase's: its parser reads a name into a

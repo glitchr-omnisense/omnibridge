@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- **`Persistences::isNotFound(\Throwable)`** (omnisense/omnibase's plan "omnibase agnostic", step B6): whether a
+  throwable says an entity's row is gone, whichever persistence threw it. Each persistence declares its exception as
+  data, `not_found` in `Persistences::KNOWN` (Doctrine's `EntityNotFoundException`, omnibridge/eloquent's
+  `EntityNotFound`) or the new fifth argument of `register()`; compared by name, nothing loaded. omnibase's catches of
+  Doctrine's exception ask it, so a reference Eloquent cannot load is caught as Doctrine's was. Docs:
+  docs/persistence.md.
+
 ### Fixed
 
 - `ContainerTest` hides the known persistences behind absent markers, as `PersistencesTest` does: its containers name

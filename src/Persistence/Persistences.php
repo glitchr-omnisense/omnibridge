@@ -27,23 +27,51 @@ final class Persistences
     /** The environment variable naming the persistence where several are installed and the host's option names none. */
     public const ENVIRONMENT = 'OMNIBRIDGE_PERSISTENCE';
 
-    /** @var array<string, array{package: string, marker: class-string, definitions?: string}> */
+    /**
+     * Each persistence as data: its package, its marker class, its container definitions, and `not_found`, the
+     * exception its lazy entities (a proxy, a ghost) throw when their row is gone - deleted since, or left out by a
+     * scope (isNotFound()).
+     *
+     * @var array<string, array{package: string, marker: class-string, definitions?: string, not_found?: string}>
+     */
     public const KNOWN = [
-        self::DOCTRINE => ['package' => 'omnibridge/doctrine', 'marker' => 'Omnibridge\Doctrine\EntityManagers'],
-        self::ELOQUENT => ['package' => 'omnibridge/eloquent', 'marker' => 'Omnibridge\Eloquent\EloquentUnitOfWork', 'definitions' => 'Omnibridge\Eloquent\Container::definitions'],
+        self::DOCTRINE => ['package' => 'omnibridge/doctrine', 'marker' => 'Omnibridge\Doctrine\EntityManagers', 'not_found' => 'Doctrine\ORM\EntityNotFoundException'],
+        self::ELOQUENT => ['package' => 'omnibridge/eloquent', 'marker' => 'Omnibridge\Eloquent\EloquentUnitOfWork', 'definitions' => 'Omnibridge\Eloquent\Container::definitions', 'not_found' => 'Omnibridge\Eloquent\EntityNotFound'],
     ];
 
-    /** @var array<string, array{package: string, marker: string, definitions?: string}> another persistence's, by name */
+    /** @var array<string, array{package: string, marker: string, definitions?: string, not_found?: string}> another persistence's, by name */
     private static array $registered = [];
 
     /**
-     * A persistence of another package (its name, the package, the marker class, its container definitions).
+     * A persistence of another package (its name, the package, the marker class, its container definitions, the
+     * exception of an entity whose row is gone).
      *
      * @param string|null $definitions `Class::method`, a static method returning services declared as data
+     * @param string|null $notFound    the class of the exception its lazy entities throw when their row is gone
      */
-    public static function register(string $name, string $package, string $marker, ?string $definitions = null): void
+    public static function register(string $name, string $package, string $marker, ?string $definitions = null, ?string $notFound = null): void
     {
-        self::$registered[$name] = ['package' => $package, 'marker' => $marker] + (null !== $definitions ? ['definitions' => $definitions] : []);
+        self::$registered[$name] = ['package' => $package, 'marker' => $marker]
+            + (null !== $definitions ? ['definitions' => $definitions] : [])
+            + (null !== $notFound ? ['not_found' => $notFound] : []);
+    }
+
+    /**
+     * Whether the throwable says an entity's row is gone (deleted since it was referenced, or left out by a scope:
+     * the trash), whichever persistence threw it - Doctrine's EntityNotFoundException, omnibridge/eloquent's
+     * EntityNotFound, a registered persistence's (omnisense/omnibase's plan "omnibase agnostic", step B6). The classes
+     * are compared by name: nothing of a persistence is loaded to ask it; every persistence's is asked, installed or
+     * not, registered over a known one or not (an exception says what it is, whichever bridge is chosen).
+     */
+    public static function isNotFound(\Throwable $throwable): bool
+    {
+        foreach ([...array_values(self::KNOWN), ...array_values(self::$registered)] as $persistence) {
+            if (isset($persistence['not_found']) && is_a($throwable, $persistence['not_found'])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /** A persistence registered by register() forgotten (a test's). */
@@ -52,7 +80,7 @@ final class Persistences
         unset(self::$registered[$name]);
     }
 
-    /** @return array<string, array{package: string, marker: string, definitions?: string}> every persistence known, by name */
+    /** @return array<string, array{package: string, marker: string, definitions?: string, not_found?: string}> every persistence known, by name */
     public static function known(): array
     {
         return self::$registered + self::KNOWN;
