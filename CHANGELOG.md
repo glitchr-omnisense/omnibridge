@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- `ContainerTest` hides the known persistences behind absent markers, as `PersistencesTest` does: its containers name
+  no persistence, which an application's suite with omnibridge/doctrine and omnibridge/eloquent both installed refused
+  (omnisense/omnibase's plan "omnibase agnostic", step F7d-3).
+
 ### Added
 
 - **`Persistence\Persistences` and `Exception\PersistenceException`** (omnisense/omnibase's plan "omnibase agnostic",

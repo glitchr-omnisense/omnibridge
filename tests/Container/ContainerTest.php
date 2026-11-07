@@ -5,6 +5,7 @@ namespace Omnibridge\Tests\Container;
 use Omnibridge\Container;
 use Omnibridge\Exception\ContainerException;
 use Omnibridge\Exception\ServiceNotFoundException;
+use Omnibridge\Persistence\Persistences;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -13,6 +14,23 @@ require_once __DIR__.'/Fixtures.php';
 
 final class ContainerTest extends TestCase
 {
+    /**
+     * The known persistences hidden behind markers that do not exist, as PersistencesTest hides them: these cases build
+     * containers that name no persistence, which an application's suite with omnibridge/doctrine and omnibridge/eloquent
+     * both installed refused (omnisense/omnibase's plan "omnibase agnostic", step F7d-3; R8 is PersistencesTest's).
+     */
+    protected function setUp(): void
+    {
+        Persistences::register('doctrine', 'omnibridge/doctrine', 'Omnibridge\Tests\Persistence\Absent\Doctrine');
+        Persistences::register('eloquent', 'omnibridge/eloquent', 'Omnibridge\Tests\Persistence\Absent\Eloquent');
+    }
+
+    protected function tearDown(): void
+    {
+        Persistences::unregister('doctrine');
+        Persistences::unregister('eloquent');
+    }
+
     public function testAServiceIsAutowiredFromItsConstructor(): void
     {
         $attributeLoaded = class_exists(Container::AUTOWIRE_ATTRIBUTE, false);
