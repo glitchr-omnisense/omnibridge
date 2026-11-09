@@ -1,6 +1,630 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 3
+			path: src/Container.php
+
+		-
+			message: '#^Binary operation "\." between ''env\('' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access offset ''arguments'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access offset ''class'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot access offset ''on_invalid'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Method Omnibridge\\Container\:\:build\(\) should return object but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{0\: non\-falsy\-string, 1\?\: non\-empty\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$callback of static method Closure\:\:fromCallable\(\) expects callable\(\)\: mixed, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$fallback of static method Omnibridge\\Container\\Discovery\:\:fallback\(\) expects array\{candidates\?\: list\<string\>, default\: string\}, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$id of closure expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Omnibridge\\Container\:\:build\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Omnibridge\\Container\:\:get\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Omnibridge\\Container\:\:has\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Omnibridge\\Container\:\:target\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Omnibridge\\Container\:\:getParameter\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrMethod of class ReflectionMethod constructor expects object\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#1 \$tag of method Omnibridge\\Container\:\:tagged\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#2 \$autoconfigure of static method Omnibridge\\Container\\Discovery\:\:autoconfigure\(\) expects list\<array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#2 \$collect of static method Omnibridge\\Container\\Discovery\:\:collected\(\) expects list\<array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#2 \$definition of method Omnibridge\\Container\:\:build\(\) expects array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}, array\{class\: mixed, arguments\: mixed\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#2 \$definition of method Omnibridge\\Container\:\:build\(\) expects array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}, array\{class\: string, arguments\: array\{\}\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Parameter \#2 \$method of class ReflectionMethod constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 5
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$aliases \(array\<string, string\>\) does not accept array\<int\|string, string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$aliases \(array\<string, string\>\) does not accept array\<string\>\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$definitions \(array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\) does not accept array\<string, mixed\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$definitions \(array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$definitions \(array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\) does not accept non\-empty\-array\<array\{class\: string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$definitions \(array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\) does not accept non\-empty\-array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: mixed\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$definitions \(array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\?\: array\<string, mixed\>, calls\?\: list\<array\<mixed\>\>, factory\?\: mixed, inner\?\: string\|null\}\>\) does not accept non\-empty\-array\<string, array\{class\: mixed, arguments\: mixed, bind\?\: mixed, calls\?\: mixed, factory\?\: mixed, inner\?\: string\|null\}\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$factories \(array\<string, Closure\(Omnibridge\\Container\)\: mixed\>\) does not accept array\<string, mixed\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$factories \(array\<string, Closure\(Omnibridge\\Container\)\: mixed\>\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$services \(array\<string, mixed\>\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Property Omnibridge\\Container\:\:\$tags \(array\<string, list\<string\>\>\) does not accept non\-empty\-array\<list\<string\>\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Trying to invoke mixed but it''s not a callable\.$#'
+			identifier: callable.nonCallable
+			count: 1
+			path: src/Container.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 3
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Binary operation "\+" between mixed and array results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Binary operation "\." between ''\$'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Method Omnibridge\\Container\\Declarations\:\:contracts\(\) should return array\<string, array\{public\?\: bool, target\?\: string\}\> but returns array\<array\<mixed\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Method Omnibridge\\Container\\Declarations\:\:id\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Method Omnibridge\\Container\\Declarations\:\:resolve\(\) should return array\<string, array\{class\: class\-string, arguments\: array\<int\|string, mixed\>, bind\: array\<string, mixed\>, calls\: list\<array\{0\: string, 1\?\: array\<mixed\>, 2\?\: bool\}\>, factory\: mixed, decorates\: array\<string, mixed\>\|null, tags\: list\<array\<string, mixed\>\|string\>, contracts\: array\<string, array\<string, mixed\>\>, \.\.\.\}\> but returns array\<string, array\{class\: mixed, arguments\: array\<mixed\>, bind\: array, calls\: list\<mixed\>, factory\: mixed, decorates\: mixed, tags\: mixed, contracts\: array\<string, array\{public\?\: bool, target\?\: string\}\>, \.\.\.\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given in argument \#2\.$#'
+			identifier: argument.unpackNonIterable
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Parameter \#1 \$class of function class_exists expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Parameter \#1 \$interface of function interface_exists expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Parameter \#1 \$key of static method Omnibridge\\Container\\Declarations\:\:position\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 7
+			path: src/Container/Declarations.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Method Omnibridge\\Container\\Discovery\:\:attributes\(\) should return array\<string, list\<array\<string, mixed\>\>\> but returns array\<string, non\-empty\-list\<array\<mixed\>\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Method Omnibridge\\Container\\Discovery\:\:collected\(\) should return array\<string, list\<array\{string, string\}\>\> but returns array\<non\-empty\-list\<array\{mixed, string\}\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given\.$#'
+			identifier: arrayUnpacking.nonIterable
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_diff_key expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#1 \$autoconfigure of static method Omnibridge\\Container\\Discovery\:\:tags\(\) expects list\<array\{instanceof\: string, tags\: list\<array\<string, mixed\>\|string\>, requires\?\: list\<string\>\}\>, list\<array\<string, mixed\>\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#1 \$id of closure expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#1 \$resolved of static method Omnibridge\\Container\\Declarations\:\:tagged\(\) expects array\<string, array\{tags\: list\<array\<string, mixed\>\|string\>\}\>, array\<string, array\<string, mixed\>\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#2 \$class of function is_subclass_of expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#2 \$class of static method Omnibridge\\Container\\Discovery\:\:tags\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Parameter \#2 \$tag of static method Omnibridge\\Container\\Declarations\:\:tagged\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: src/Container/Discovery.php
+
+		-
+			message: '#^Method Omnibridge\\Event\\Events\:\:dispatch\(\) should return T of object but returns object\.$#'
+			identifier: return.type
+			count: 2
+			path: src/Event/Events.php
+
+		-
+			message: '#^Method Psr\\EventDispatcher\\EventDispatcherInterface\:\:dispatch\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Event/Events.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{0\: non\-falsy\-string, 1\?\: non\-empty\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: src/Options/Placeholders.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 6
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Binary operation "\." between "\\nHint\: " and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 8
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset ''deprecated'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset ''message'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset ''package'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset ''since'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 9
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Method Omnibridge\\Options\\Processor\:\:process\(\) should return array\<string, mixed\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_is_list expects array\<mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method Omnibridge\\Options\\Processor\:\:default\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method Omnibridge\\Options\\Processor\:\:finalize\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method Omnibridge\\Options\\Processor\:\:hasDefault\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method Omnibridge\\Options\\Processor\:\:merge\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$node of static method Omnibridge\\Options\\Processor\:\:normalize\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$str of function strtr expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_key_exists expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of function in_array expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#2 \$value of static method Omnibridge\\Options\\Processor\:\:normalizeItems\(\) expects array\<mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Parameter \#4 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 13
+			path: src/Options/Processor.php
+
+		-
+			message: '#^Call to function is_callable\(\) with callable\(object\)\: void will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Persistence/Lifecycle/Listeners.php
+
+		-
+			message: '#^Method Omnibridge\\Persistence\\Persistences\:\:definitions\(\) should return list\<array\<string, mixed\>\> but returns list\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Persistence/Persistences.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given\.$#'
+			identifier: arrayUnpacking.nonIterable
+			count: 1
+			path: src/Persistence/Persistences.php
+
+		-
+			message: '#^PHPDoc tag @var for constant Omnibridge\\Persistence\\Persistences\:\:KNOWN with type array\<string, array\{package\: string, marker\: class\-string, definitions\?\: string, not_found\?\: string\}\> is incompatible with value array\{doctrine\: array\{package\: ''omnibridge/doctrine'', marker\: ''Omnibridge\\\\Doctrine…'', not_found\: ''Doctrine\\\\ORM…''\}, eloquent\: array\{package\: ''omnibridge/eloquent'', marker\: ''Omnibridge\\\\Eloquent…'', definitions\: ''Omnibridge\\\\Eloquent…'', not_found\: ''Omnibridge\\\\Eloquent…''\}\}\.$#'
+			identifier: classConstant.phpDocType
+			count: 1
+			path: src/Persistence/Persistences.php
+
+		-
 			message: '#^Cannot call method get\(\) on Psr\\Container\\ContainerInterface\|null\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -961,6 +1585,114 @@ parameters:
 			path: src/Schema/Column.php
 
 		-
+			message: '#^Binary operation "\." between ''dbname\='' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Cannot access offset ''options'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Cannot access offset ''types'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\Cli\:\:schema\(\) should return array\{Omnibridge\\Schema\\Description, Omnibridge\\Schema\\Database\\ColumnTypes, array\<string, mixed\>\} but returns array\{Omnibridge\\Schema\\Description, Omnibridge\\Schema\\Database\\ColumnTypes, array\<mixed, mixed\>\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\Cli\:\:schema\(\) should return array\{Omnibridge\\Schema\\Description, Omnibridge\\Schema\\Database\\ColumnTypes, array\<string, mixed\>\} but returns array\{Omnibridge\\Schema\\Description, Omnibridge\\Schema\\Database\\ColumnTypes, mixed\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Database\\ColumnTypes\:\:fromArray\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Database\\ColumnTypes\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Description\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#2 \$database of static method Omnibridge\\Schema\\Database\\Cli\:\:fromUrl\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#2 \$username of class PDO constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/Cli.php
+
+		-
+			message: '#^Parameter \#1 \$aliases of class Omnibridge\\Schema\\Database\\ColumnTypes constructor expects array\<string, string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/ColumnTypes.php
+
+		-
+			message: '#^Parameter \#1 \$array \(list\<string\>\) of array_values is already a list, call has no effect\.$#'
+			identifier: arrayValues.list
+			count: 2
+			path: src/Schema/Database/ColumnTypes.php
+
+		-
+			message: '#^Parameter \#2 \$enumerations of class Omnibridge\\Schema\\Database\\ColumnTypes constructor expects array\<string, list\<string\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/ColumnTypes.php
+
+		-
+			message: '#^Parameter \#3 \$sets of class Omnibridge\\Schema\\Database\\ColumnTypes constructor expects array\<string, list\<string\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/ColumnTypes.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
 			message: '#^Cannot access an offset on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 3
@@ -1075,6 +1807,18 @@ parameters:
 			path: src/Schema/Database/MySqlSchema.php
 
 		-
+			message: '#^Cannot access offset \(int\|string\) on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
 			message: '#^Cannot access offset string on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 3
@@ -1105,7 +1849,19 @@ parameters:
 			path: src/Schema/Database/MySqlSchema.php
 
 		-
+			message: '#^Parameter \#1 \$array of function array_intersect_key expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
 			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#1 \$expected of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:compare\(\) expects array\<string, array\<string, mixed\>\>, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Schema/Database/MySqlSchema.php
@@ -1125,13 +1881,19 @@ parameters:
 		-
 			message: '#^Parameter \#2 \.\.\.\$arrays of function array_intersect_key expects array, mixed given\.$#'
 			identifier: argument.type
-			count: 1
+			count: 2
+			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Parameter \#3 \$expected of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:named\(\) expects array\<string, array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 2
 			path: src/Schema/Database/MySqlSchema.php
 
 		-
 			message: '#^Parameter \#4 \$actual of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:named\(\) expects array\<string, array\<string, mixed\>\>, mixed given\.$#'
 			identifier: argument.type
-			count: 2
+			count: 4
 			path: src/Schema/Database/MySqlSchema.php
 
 		-
@@ -1145,6 +1907,246 @@ parameters:
 			identifier: assign.propertyType
 			count: 1
 			path: src/Schema/Database/MySqlSchema.php
+
+		-
+			message: '#^Cannot call method fetch\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Cannot call method fetchAll\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Cannot use array destructuring on list\<mixed\>\|false\.$#'
+			identifier: offsetAccess.nonArray
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\SchemaCreator\:\:writer\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, ''strval'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Parameter \#2 \$charset of class Omnibridge\\Schema\\Database\\MySqlStatements constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Parameter \#3 \$collation of class Omnibridge\\Schema\\Database\\MySqlStatements constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Parameter \#4 \$engine of class Omnibridge\\Schema\\Database\\MySqlStatements constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SchemaCreator.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''dflt_value'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''from'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 7
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''notnull'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''on_delete'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''on_update'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''origin'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''pk'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''seq'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''seqno'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''sql'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''table'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''to'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset ''unique'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot access offset int on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot call method fetchAll\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 8
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 10
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Empty array passed to foreach\.$#'
+			identifier: foreach.emptyArray
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Method Omnibridge\\Schema\\Database\\SqliteSchema\:\:__construct\(\) has parameter \$tables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_column expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#1 \$expected of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:compare\(\) expects array\<string, array\<string, mixed\>\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#1 \$rule of static method Omnibridge\\Schema\\Database\\SqliteSchema\:\:rule\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#2 \$actual of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:compare\(\) expects array\<string, array\<string, mixed\>\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Parameter \#2 \$name of static method Omnibridge\\Schema\\Database\\SqliteSchema\:\:table\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
+
+		-
+			message: '#^Property Omnibridge\\Schema\\Database\\SqliteSchema\:\:\$tables \(array\<string, array\{columns\: array\<string, array\{type\: string, nullable\: bool, default\: string\|null, autoincrement\: bool\}\>, primaryKey\: list\<string\>, indexes\: array\<string, array\{columns\: list\<string\>, unique\: bool, flags\: list\<string\>\}\>, foreignKeys\: array\<string, array\{columns\: list\<string\>, table\: string, referencedColumns\: list\<string\>, onDelete\: string\|null, onUpdate\: string\|null\}\>\}\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Schema/Database/SqliteSchema.php
 
 		-
 			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Declaration\\Attribute\:\:fromArray\(\) expects array\{name\: string, arguments\?\: array\<string, mixed\>\}, mixed given\.$#'
@@ -1543,6 +2545,114 @@ parameters:
 			path: src/Schema/Table.php
 
 		-
+			message: '#^Method Omnibridge\\Validation\\AttributeConstraints\:\:read\(\) should return list\<Omnibridge\\Validation\\Constraint\\Constraint\> but returns list\<object\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Method Omnibridge\\Validation\\AttributeConstraints\:\:unique\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Parameter \$entityClass of class Omnibridge\\Validation\\Constraint\\Unique constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Parameter \$errorPath of class Omnibridge\\Validation\\Constraint\\Unique constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Parameter \$fields of class Omnibridge\\Validation\\Constraint\\Unique constructor expects list\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Parameter \$groups of class Omnibridge\\Validation\\Constraint\\Unique constructor expects list\<string\>\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Parameter \$message of class Omnibridge\\Validation\\Constraint\\Unique constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/AttributeConstraints.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Method Omnibridge\\Validation\\Validator\:\:check\(\) has parameter \$groups with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Method Omnibridge\\Validation\\Validator\:\:properties\(\) has parameter \$class with generic class ReflectionClass but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Method Omnibridge\\Validation\\Validator\:\:validateObject\(\) has parameter \$groups with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Parameter \#1 \$groups of method Omnibridge\\Validation\\Constraint\\Constraint\:\:appliesTo\(\) expects list\<string\>\|null, array\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Parameter \#1 \$object_or_class of function method_exists expects object\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Parameter \#1 \$size of method Omnibridge\\Validation\\Validator\:\:sizes\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Parameter \#2 \$message of class Omnibridge\\Contract\\Violation constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Property Omnibridge\\Validation\\Validator\:\:\$exists \(\(Closure\(string, array\<string, mixed\>, object\|null\)\: bool\)\|null\) does not accept \(Closure\(\)\: mixed\)\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
+			message: '#^Property Omnibridge\\Validation\\Validator\:\:\$translate \(\(Closure\(string, array\<string, mixed\>\)\: string\)\|null\) does not accept \(Closure\(\)\: mixed\)\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Validation/Validator.php
+
+		-
 			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -1565,6 +2675,120 @@ parameters:
 			identifier: argument.type
 			count: 2
 			path: tests/BareTest.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$calls on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$clock on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$greeting on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$items on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$later on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$missing on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$place on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Cannot access property \$recorders on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(object\=\)\: class\-string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Trying to invoke mixed but it''s not a callable\.$#'
+			identifier: callable.nonCallable
+			count: 1
+			path: tests/Container/ContainerTest.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\DependencyInjection\\Attribute\\Autowire does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Container/Fixtures.php
+
+		-
+			message: '#^Method Omnibridge\\Tests\\Container\\Mailer\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Container/Fixtures.php
+
+		-
+			message: '#^Call to an undefined method object\:\:dispatch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Event/EventsTest.php
+
+		-
+			message: '#^Method Psr\\EventDispatcher\\EventDispatcherInterface@anonymous/tests/Event/EventsTest\.php\:24\:\:dispatch\(\) should return object but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: tests/Event/EventsTest.php
+
+		-
+			message: '#^Property Psr\\EventDispatcher\\EventDispatcherInterface@anonymous/tests/Event/EventsTest\.php\:44\:\:\$seen type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Event/EventsTest.php
+
+		-
+			message: '#^Property class@anonymous/tests/Event/EventsTest\.php\:14\:\:\$seen type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Event/EventsTest.php
 
 		-
 			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
@@ -1831,6 +3055,42 @@ parameters:
 			path: tests/Fixtures/bare.php
 
 		-
+			message: '#^Cannot access offset ''roles'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Options/ProcessorTest.php
+
+		-
+			message: '#^Cannot access offset ''tags'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Options/ProcessorTest.php
+
+		-
+			message: '#^Parameter \#1 \$listeners of static method Omnibridge\\Persistence\\Lifecycle\\Listeners\:\:chain\(\) expects \(Closure\(\)\: iterable\<callable\(object\)\: void\>\)\|iterable\<callable\(object\)\: void\>, array\{stdClass\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Persistence/LifecycleTest.php
+
+		-
+			message: '#^Call to function class_exists\(\) with ''Doctrine\\\\ORM…''\|''Omnibridge\\\\Eloquent…'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: tests/Persistence/PersistencesTest.php
+
+		-
+			message: '#^Cannot access property \$persistence on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/Persistence/PersistencesTest.php
+
+		-
+			message: '#^Parameter \#1 \$throwable of static method Omnibridge\\Persistence\\Persistences\:\:isNotFound\(\) expects Throwable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Persistence/PersistencesTest.php
+
+		-
 			message: '#^Access to an undefined property Psr\\Container\\ContainerInterface\:\:\$gets\.$#'
 			identifier: property.notFound
 			count: 3
@@ -2059,6 +3319,42 @@ parameters:
 			path: tests/Schema/BuilderTest.php
 
 		-
+			message: '#^Parameter \#1 \$arguments of static method Omnibridge\\Schema\\Database\\Cli\:\:run\(\) expects list\<string\>, array\<int\<0, max\>\|string, string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/CliTest.php
+
+		-
+			message: '#^Parameter \#1 \$process of function proc_close expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/CliTest.php
+
+		-
+			message: '#^Parameter \#1 \$stream of function rewind expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Schema/CliTest.php
+
+		-
+			message: '#^Parameter \#1 \$stream of function stream_get_contents expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Schema/CliTest.php
+
+		-
+			message: '#^Parameter \#2 \$output of static method Omnibridge\\Schema\\Database\\Cli\:\:run\(\) expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/CliTest.php
+
+		-
+			message: '#^Parameter \#3 \$errors of static method Omnibridge\\Schema\\Database\\Cli\:\:run\(\) expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/CliTest.php
+
+		-
 			message: '#^Cannot access offset ''FK_T'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
@@ -2123,3 +3419,69 @@ parameters:
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 3
 			path: tests/Schema/MySqlSchemaTest.php
+
+		-
+			message: '#^Cannot call method fetchAll\(\) on PDOStatement\|false\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: tests/Schema/SchemaStatementsTest.php
+
+		-
+			message: '#^Parameter \#1 \$classNames of method Omnibridge\\Schema\\Builder\:\:build\(\) expects iterable\<string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/SchemaStatementsTest.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Omnibridge\\Schema\\Database\\ColumnTypes\:\:fromArray\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/SchemaStatementsTest.php
+
+		-
+			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Schema/SchemaStatementsTest.php
+
+		-
+			message: '#^Attribute class Omnibridge\\Tests\\Validation\\HostUnique does not have a constructor and must be instantiated without any parameters\.$#'
+			identifier: attribute.noConstructor
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Validator\\Constraints\\Count does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Validator\\Constraints\\Email does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Validator\\Constraints\\Length does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Validator\\Constraints\\NotCompromisedPassword does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Property Omnibridge\\Tests\\Validation\\Rules\:\:\$destinations type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Validation/AttributeConstraintsTest.php
+
+		-
+			message: '#^Method Omnibridge\\Tests\\Validation\\ValidatorTest\:\:messages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Validation/ValidatorTest.php
