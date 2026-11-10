@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-10
+
 ### Added
 
 - **`Persistences::isNotFound(\Throwable)`** (omnisense/omnibase's plan "omnibase agnostic", step B6): whether a
