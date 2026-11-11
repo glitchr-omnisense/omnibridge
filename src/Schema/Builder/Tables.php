@@ -163,7 +163,7 @@ final class Tables
             ksort($indexes);
             $foreignKeys = [];
             foreach ($table['foreignKeys'] as $foreignKeyName => $foreignKey) {
-                $foreignKeys[$foreignKeyName] = new ForeignKey($foreignKeyName, $foreignKey['columns'], $foreignKey['foreignTable'], $foreignKey['foreignColumns'], null === $foreignKey['onDelete'] ? null : strtoupper($foreignKey['onDelete']));
+                $foreignKeys[$foreignKeyName] = new ForeignKey($foreignKeyName, $foreignKey['columns'], $foreignKey['foreignTable'], $foreignKey['foreignColumns'], ForeignKey::action($foreignKey['onDelete']));
             }
             ksort($foreignKeys);
             $tables[$name] = new Table($name, array_map(static fn (array $column) => new Column(...$column), $table['columns']), $primaryKey, $indexes, $foreignKeys);

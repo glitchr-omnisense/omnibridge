@@ -21,6 +21,15 @@ final class ForeignKey
     ) {
     }
 
+    /**
+     * A referential action (ON DELETE, ON UPDATE) as Doctrine DBAL keeps it in its ForeignKeyConstraint: in upper
+     * case, and null for RESTRICT and NO ACTION, which it reads as no action at all (the option dropped).
+     */
+    public static function action(?string $action): ?string
+    {
+        return null === $action || \in_array(strtoupper($action), ['RESTRICT', 'NO ACTION'], true) ? null : strtoupper($action);
+    }
+
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {

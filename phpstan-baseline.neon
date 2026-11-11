@@ -1363,7 +1363,7 @@ parameters:
 			path: src/Schema/Builder/Tables.php
 
 		-
-			message: '#^Parameter \#1 \$string of function strtoupper expects string, mixed given\.$#'
+			message: '#^Parameter \#1 \$action of static method Omnibridge\\Schema\\ForeignKey\:\:action\(\) expects string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Schema/Builder/Tables.php
@@ -1867,7 +1867,7 @@ parameters:
 			path: src/Schema/Database/MySqlSchema.php
 
 		-
-			message: '#^Parameter \#1 \$rule of static method Omnibridge\\Schema\\Database\\MySqlSchema\:\:rule\(\) expects string\|null, mixed given\.$#'
+			message: '#^Parameter \#1 \$action of static method Omnibridge\\Schema\\ForeignKey\:\:action\(\) expects string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
 			path: src/Schema/Database/MySqlSchema.php
@@ -2113,7 +2113,7 @@ parameters:
 			path: src/Schema/Database/SqliteSchema.php
 
 		-
-			message: '#^Parameter \#1 \$rule of static method Omnibridge\\Schema\\Database\\SqliteSchema\:\:rule\(\) expects string\|null, mixed given\.$#'
+			message: '#^Parameter \#1 \$action of static method Omnibridge\\Schema\\ForeignKey\:\:action\(\) expects string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
 			path: src/Schema/Database/SqliteSchema.php
@@ -3041,6 +3041,66 @@ parameters:
 			identifier: attribute.notFound
 			count: 1
 			path: tests/Fixtures/Schema/Entity/User.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\JoinColumn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 6
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\ManyToOne does not exist\.$#'
+			identifier: attribute.notFound
+			count: 7
+			path: tests/Fixtures/Schema/Referential/Holding.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Column does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Owner.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Entity does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Owner.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\GeneratedValue does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Owner.php
+
+		-
+			message: '#^Attribute class Doctrine\\ORM\\Mapping\\Id does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Fixtures/Schema/Referential/Owner.php
 
 		-
 			message: '#^Cannot call method getPathname\(\) on mixed\.$#'

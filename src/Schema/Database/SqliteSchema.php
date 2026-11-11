@@ -3,6 +3,7 @@
 namespace Omnibridge\Schema\Database;
 
 use Omnibridge\Schema\Description;
+use Omnibridge\Schema\ForeignKey;
 use Omnibridge\Schema\Table;
 
 /**
@@ -96,7 +97,7 @@ final class SqliteSchema
         $keys = [];
         foreach ($pdo->query('PRAGMA foreign_key_list('.$quoted.')')->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $key = &$keys[(int) $row['id']];
-            $key ??= ['columns' => [], 'table' => (string) $row['table'], 'referencedColumns' => [], 'onDelete' => self::rule($row['on_delete'] ?? null), 'onUpdate' => self::rule($row['on_update'] ?? null), 'seq' => []];
+            $key ??= ['columns' => [], 'table' => (string) $row['table'], 'referencedColumns' => [], 'onDelete' => ForeignKey::action($row['on_delete'] ?? null), 'onUpdate' => ForeignKey::action($row['on_update'] ?? null), 'seq' => []];
             $key['seq'][(int) $row['seq']] = [(string) $row['from'], (string) $row['to']];
             unset($key);
         }
@@ -165,7 +166,7 @@ final class SqliteSchema
 
         $foreignKeys = [];
         foreach ($table->foreignKeys as $foreignKey) {
-            $foreignKeys[$foreignKey->name] = ['columns' => $foreignKey->columns, 'table' => $foreignKey->table, 'referencedColumns' => $foreignKey->referencedColumns, 'onDelete' => self::rule($foreignKey->onDelete), 'onUpdate' => self::rule($foreignKey->onUpdate)];
+            $foreignKeys[$foreignKey->name] = ['columns' => $foreignKey->columns, 'table' => $foreignKey->table, 'referencedColumns' => $foreignKey->referencedColumns, 'onDelete' => ForeignKey::action($foreignKey->onDelete), 'onUpdate' => ForeignKey::action($foreignKey->onUpdate)];
         }
         ksort($foreignKeys);
 
@@ -175,10 +176,5 @@ final class SqliteSchema
     private static function unquoted(string $columns): string
     {
         return implode(',', array_map(static fn (string $column) => trim($column, " \t\n\"`[]"), explode(',', $columns)));
-    }
-
-    private static function rule(?string $rule): ?string
-    {
-        return null === $rule || \in_array(strtoupper($rule), ['RESTRICT', 'NO ACTION'], true) ? null : strtoupper($rule);
     }
 }

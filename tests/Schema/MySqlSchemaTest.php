@@ -83,6 +83,20 @@ final class MySqlSchemaTest extends TestCase
         self::assertFalse(MySqlSchema::sameType('varchar(255)', 'varchar(191)'));
     }
 
+    /** RESTRICT and NO ACTION, which information_schema reports and read() keeps as no action, are none in the description either. */
+    public function testARestrictOrNoActionKeyIsNoDifference(): void
+    {
+        $database = self::database();
+        $database['thread_tags']['foreignKeys'] = ['FK_T' => ['columns' => ['thread_id'], 'table' => 'thread', 'referencedColumns' => ['id'], 'onDelete' => null, 'onUpdate' => null]];
+        $tables = self::description()->tables;
+
+        foreach (['RESTRICT', 'restrict', 'NO ACTION', 'no action'] as $action) {
+            $tables['thread_tags'] = new Table('thread_tags', $tables['thread_tags']->columns, ['thread_id', 'tag_id'], $tables['thread_tags']->indexes, ['FK_T' => new ForeignKey('FK_T', ['thread_id'], 'thread', ['id'], $action, $action)]);
+
+            self::assertSame([], MySqlSchema::of($database, self::types())->differences(new Description([], $tables)), $action);
+        }
+    }
+
     public function testEveryDifferenceIsNamed(): void
     {
         $database = self::database();

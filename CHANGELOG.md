@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **A foreign key declared `onDelete: 'RESTRICT'` or `'NO ACTION'`** is described as Doctrine DBAL describes it: its
+  `ForeignKeyConstraint` reads both, in any case, as no action and drops the option, and the builder's
+  `Schema\Builder\Tables` kept it, so the description built without Doctrine differed from Doctrine's (the table's key
+  carried an `onDelete` Doctrine's has not; omnibase's `SchemaDescriptionTest`). The normalisation is now
+  `ForeignKey::action()` (upper case, null for RESTRICT and NO ACTION), shared by the builder, `MySqlSchema` and
+  `SqliteSchema`, whose private copies it replaces; `MySqlSchema::differences()` applies it to the description's side
+  as `SqliteSchema` already did. An entity's join column keeps its `onDelete` as declared, as Doctrine's mapping does.
+  The database `SchemaCreator` makes from such a key has no `ON DELETE` clause, where Doctrine's SchemaTool writes
+  `ON DELETE RESTRICT`: the same on MySQL (InnoDB enforces NO ACTION as RESTRICT); on SQLite the key is checked at the
+  end of the statement rather than at once, still refusing the deletion.
+
 ## [1.0.0] - 2026-11-10
 
 ### Added

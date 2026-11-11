@@ -4,6 +4,7 @@ namespace Omnibridge\Schema\Database;
 
 use Omnibridge\Schema\Column;
 use Omnibridge\Schema\Description;
+use Omnibridge\Schema\ForeignKey;
 use Omnibridge\Schema\Table;
 
 /**
@@ -98,7 +99,7 @@ final class MySqlSchema
 
         $rules = [];
         foreach ($query('SELECT CONSTRAINT_NAME, TABLE_NAME, DELETE_RULE, UPDATE_RULE FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = ?') as $row) {
-            $rules[$row['TABLE_NAME']][$row['CONSTRAINT_NAME']] = [self::rule($row['DELETE_RULE']), self::rule($row['UPDATE_RULE'])];
+            $rules[$row['TABLE_NAME']][$row['CONSTRAINT_NAME']] = [ForeignKey::action($row['DELETE_RULE']), ForeignKey::action($row['UPDATE_RULE'])];
         }
 
         foreach ($query('SELECT TABLE_NAME, CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = ? AND REFERENCED_TABLE_NAME IS NOT NULL ORDER BY TABLE_NAME, CONSTRAINT_NAME, ORDINAL_POSITION') as $row) {
@@ -232,7 +233,7 @@ final class MySqlSchema
 
         $foreignKeys = [];
         foreach ($table->foreignKeys as $foreignKey) {
-            $foreignKeys[$foreignKey->name] = ['columns' => $foreignKey->columns, 'table' => $foreignKey->table, 'referencedColumns' => $foreignKey->referencedColumns, 'onDelete' => $foreignKey->onDelete, 'onUpdate' => $foreignKey->onUpdate];
+            $foreignKeys[$foreignKey->name] = ['columns' => $foreignKey->columns, 'table' => $foreignKey->table, 'referencedColumns' => $foreignKey->referencedColumns, 'onDelete' => ForeignKey::action($foreignKey->onDelete), 'onUpdate' => ForeignKey::action($foreignKey->onUpdate)];
         }
 
         return array_merge($differences, self::named($name, 'foreign key', $foreignKeys, $actual['foreignKeys']));
@@ -342,10 +343,5 @@ final class MySqlSchema
             \is_bool($column->default) => $column->default ? '1' : '0',
             default => (string) $column->default,
         };
-    }
-
-    private static function rule(?string $rule): ?string
-    {
-        return null === $rule || \in_array(strtoupper($rule), ['RESTRICT', 'NO ACTION'], true) ? null : strtoupper($rule);
     }
 }
