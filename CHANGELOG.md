@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-13
+
 ### Fixed
 
 - **A foreign key declared `onDelete: 'RESTRICT'` or `'NO ACTION'`** is described as Doctrine DBAL describes it: its
