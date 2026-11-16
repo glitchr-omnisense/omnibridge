@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+The CI green again: the attribute reader of Symfony's `IsTrue` keeps a message that is no string and groups that
+are no list out of `Choice` (the default message, no groups); the tests' fixtures and assertions typed for PHPStan,
+and `AttributeConstraintsTest::testAConstraintObjectIsReadFromItsOptions` back in the test class, where it runs.
+
 ## 2.0.0
 
 omnisense/omnibridge: the generic contracts omnibase's bridges implement and omnisense/omnibase re-exposes under

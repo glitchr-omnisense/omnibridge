@@ -77,11 +77,15 @@ final class AttributeReaderTest extends TestCase
     {
         require_once __DIR__.'/../Fixtures/Schema/Vocabulary/BaseTag.php';
         $reader = new AttributeReader();
-        $doctrine = $reader->read(Tag::class)->toArray();
-        $base = $reader->read(BaseTag::class)->toArray();
+        $tag = $reader->read(Tag::class);
+        $baseTag = $reader->read(BaseTag::class);
+        self::assertNotNull($tag);
+        self::assertNotNull($baseTag);
+        $doctrine = $tag->toArray();
+        $base = $baseTag->toArray();
 
         self::assertFalse(class_exists('Base\\Mapping\\Column'), 'read by name: the core is not installed here');
-        self::assertSame('Entity', $reader->read(BaseTag::class)->kind());
+        self::assertSame('Entity', $baseTag->kind());
         self::assertSame(
             json_encode($doctrine, \JSON_THROW_ON_ERROR),
             str_replace(addslashes(BaseTag::class), addslashes(Tag::class), json_encode($base, \JSON_THROW_ON_ERROR)),

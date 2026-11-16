@@ -122,9 +122,26 @@ final class AttributeConstraints
             $symfony.'Range' => self::keep(Range::class, ['min', 'max', 'notInRangeMessage', 'minMessage', 'maxMessage', 'invalidMessage', 'groups']),
             $symfony.'Count' => self::keep(Count::class, ['min', 'max', 'minMessage', 'maxMessage', 'groups']),
             // A box that must be ticked (a consent): true the only choice.
-            $symfony.'IsTrue' => static fn (array $arguments): Constraint => new Choice(choices: [true], message: (string) ($arguments['message'] ?? $arguments[0] ?? 'This value should be true.'), groups: $arguments['groups'] ?? null),
+            $symfony.'IsTrue' => static fn (array $arguments): Constraint => self::isTrue($arguments),
             'Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity' => static fn (array $arguments): Constraint => self::unique($arguments),
         ];
+    }
+
+    /**
+     * Symfony's IsTrue as a Choice whose only choice is true, its message and groups kept.
+     *
+     * @param array<array-key, mixed> $arguments
+     */
+    private static function isTrue(array $arguments): Choice
+    {
+        $message = $arguments['message'] ?? $arguments[0] ?? 'This value should be true.';
+        $groups = $arguments['groups'] ?? null;
+
+        return new Choice(
+            choices: [true],
+            message: \is_scalar($message) || $message instanceof \Stringable ? (string) $message : 'This value should be true.',
+            groups: \is_array($groups) ? array_values(array_filter($groups, \is_string(...))) : null,
+        );
     }
 
     /**

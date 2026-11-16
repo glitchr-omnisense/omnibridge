@@ -11,3 +11,10 @@ parameters:
         - src
         - tests
     reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # BaseTag writes omnibase's mapping vocabulary (Base\Mapping) by name, its classes absent on purpose:
+        # omnisense/omnibase is no dependency of this package, and AttributeReaderTest asserts that the
+        # attributes are read without them (as the Doctrine fixtures beside it are read without doctrine/orm).
+        -
+            identifier: attribute.notFound
+            path: tests/Fixtures/Schema/Vocabulary/*
