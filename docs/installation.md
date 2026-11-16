@@ -24,10 +24,10 @@ optional needs:
 - `Schema\CamelCaseNaming` calls `mb_strtolower()`, `mb_substr()` and `mb_strtoupper()`.
 
 ```sh
-composer require omnisense/omnibridge:1.x-dev
+composer require omnisense/omnibridge:^2.0
 ```
 
-The branch `1.x` is published as `1.x-dev` (`extra.branch-alias`). The package `replace`s
+The branch `2.x` is published as `2.x-dev` (`extra.branch-alias`). The package `replace`s
 `omniscient/omnibridge`, its former name.
 
 ## Plain PHP

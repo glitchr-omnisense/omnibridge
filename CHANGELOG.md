@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased (1.0.0)
+## 2.0.0
 
 omnisense/omnibridge: the generic contracts omnibase's bridges implement and omnisense/omnibase re-exposes under
 `Base\Contract\*` - the persistence (`UnitOfWork` with `clear()` and `isOpen()`, `Schedule`, `Backend`, the neutral

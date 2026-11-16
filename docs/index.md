@@ -6,7 +6,7 @@ ORM, no template engine: the package requires PHP and three PSR interfaces (cont
 dispatcher), and its `BareTest` proves that every class loads with nothing else.
 
 ```sh
-composer require omnisense/omnibridge:1.x-dev
+composer require omnisense/omnibridge:^2.0
 ```
 
 The bridges, `omnibridge/<host>`, answer these contracts with their host's services and fill the
