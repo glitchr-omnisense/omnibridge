@@ -69,6 +69,21 @@ final class AttributeConstraints
     }
 
     /**
+     * A validator's constraint object (a form field's `constraints`: `new Length(max: 120)`) as its kept constraint,
+     * read as its attribute would be, from its public options; null when no reader knows its class.
+     */
+    public static function ofObject(object $constraint): ?Constraint
+    {
+        if ($constraint instanceof Constraint) {
+            return $constraint;
+        }
+        self::defaults();
+        $reader = self::$readers[$constraint::class] ?? null;
+
+        return null !== $reader ? $reader(array_filter(get_object_vars($constraint), static fn (mixed $value): bool => null !== $value)) : null;
+    }
+
+    /**
      * @param list<\ReflectionAttribute<object>> $attributes
      *
      * @return list<Constraint>
@@ -106,6 +121,8 @@ final class AttributeConstraints
             $symfony.'Choice' => self::keep(Choice::class, ['choices', 'multiple', 'min', 'max', 'message', 'multipleMessage', 'minMessage', 'maxMessage', 'groups'], 'choices'),
             $symfony.'Range' => self::keep(Range::class, ['min', 'max', 'notInRangeMessage', 'minMessage', 'maxMessage', 'invalidMessage', 'groups']),
             $symfony.'Count' => self::keep(Count::class, ['min', 'max', 'minMessage', 'maxMessage', 'groups']),
+            // A box that must be ticked (a consent): true the only choice.
+            $symfony.'IsTrue' => static fn (array $arguments): Constraint => new Choice(choices: [true], message: (string) ($arguments['message'] ?? $arguments[0] ?? 'This value should be true.'), groups: $arguments['groups'] ?? null),
             'Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity' => static fn (array $arguments): Constraint => self::unique($arguments),
         ];
     }

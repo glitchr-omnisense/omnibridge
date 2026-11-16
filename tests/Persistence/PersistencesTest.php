@@ -15,6 +15,15 @@ final class MarkerUnitOfWork implements UnitOfWork
     {
     }
 
+    public function clear(): void
+    {
+    }
+
+    public function isOpen(): bool
+    {
+        return true;
+    }
+
     public function persist(object $entity): void {}
     public function remove(object $entity): void {}
     public function flush(): void {}

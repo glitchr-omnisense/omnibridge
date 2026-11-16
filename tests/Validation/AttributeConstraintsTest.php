@@ -96,4 +96,26 @@ final class Rules
 
     #[Assert\Count(min: 1, minMessage: 'newsletter.destinations.required')]
     public array $destinations = [];
+
+    /** A constraint given as an object (a form field's `constraints`) is read as its attribute would be, from its options. */
+    public function testAConstraintObjectIsReadFromItsOptions(): void
+    {
+        AttributeConstraints::register(LengthRule::class, AttributeConstraints::keep(Length::class, ['max', 'maxMessage', 'groups'], 'max'));
+
+        $kept = AttributeConstraints::ofObject(new LengthRule(5, 'Too long.'));
+        self::assertInstanceOf(Length::class, $kept);
+        self::assertSame(5, $kept->max);
+        self::assertSame('Too long.', $kept->maxMessage);
+        $own = new Email();
+        self::assertSame($own, AttributeConstraints::ofObject($own));
+        self::assertNull(AttributeConstraints::ofObject(new \stdClass()));
+    }
+}
+
+/** A validator's constraint object as a form field gives it (Symfony's Length: public options). */
+final class LengthRule
+{
+    public function __construct(public ?int $max = null, public ?string $maxMessage = null, public ?array $groups = null)
+    {
+    }
 }

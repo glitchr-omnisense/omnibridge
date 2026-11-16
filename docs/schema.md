@@ -24,14 +24,14 @@ same declarations, its `MetadataDescription` reads an entity manager's metadata 
 
 ## A complete example
 
-Two entities, a many-to-one and a many-to-many relation, described with no ORM installed (the
-`Doctrine\ORM\Mapping` attribute classes need not exist):
+Two entities, a many-to-one and a many-to-many relation, described with no ORM installed (written in
+omnibase's vocabulary, `Base\Mapping`; its classes need not exist here either):
 
 ```php
 <?php
 
 namespace App\Entity {
-    use Doctrine\ORM\Mapping as ORM;
+    use Base\Mapping as ORM;
 
     #[ORM\Entity]
     class Thread
@@ -54,7 +54,7 @@ namespace App\Entity {
 }
 
 namespace App\Entity\Thread {
-    use Doctrine\ORM\Mapping as ORM;
+    use Base\Mapping as ORM;
 
     #[ORM\Entity]
     class Tag
@@ -140,8 +140,10 @@ $declaration = (new AttributeReader())->read(App\Entity\Thread::class);   // ?Cl
 attribute's name and arguments (`ReflectionAttribute::getArguments()`), never `newInstance()`, so the
 attribute classes need not exist and doctrine/orm need not be installed.
 
-- Only the attributes of the vocabulary are read (`Doctrine\ORM\Mapping\*` with a name listed in
-  `Vocabulary::PARAMETERS`); every other attribute is ignored.
+- Only the attributes of the vocabulary are read (`Base\Mapping\*` or `Doctrine\ORM\Mapping\*` with a
+  name listed in `Vocabulary::PARAMETERS`: the declaration holds the short name, whichever namespace
+  wrote it); every other attribute is ignored. A nested attribute (`new ORM\JoinColumn(...)` in a
+  `JoinTable`) is built by PHP when the arguments are read: its class must exist.
 - The properties are read in the order reflection lists them, inherited ones included, each with
   the class that declares it; a property without a mapping attribute is left out. Of the methods,
   only public ones that carry a mapping attribute (the lifecycle callbacks).
@@ -213,12 +215,14 @@ Where the builder and omnibridge/doctrine's `DeclarationDriver` get the declarat
 
 | Constant or method | Meaning |
 |---|---|
-| `NAMESPACE` | `Doctrine\ORM\Mapping\` - the namespace whose attributes are read |
+| `NAMESPACES` | `['Base\Mapping\', 'Doctrine\ORM\Mapping\']` - the namespaces whose attributes are read: omnibase's own (the core's `src/Mapping`), then Doctrine's |
+| `NAMESPACE` | `Doctrine\ORM\Mapping\` - where omnibridge/doctrine's driver finds the classes it builds from a declaration |
 | `PARAMETERS` | attribute => parameter => default, in constructor order; `REQUIRED` for a parameter without a default |
 | `REPEATABLE` | `Index`, `InverseJoinColumn`, `JoinColumn`, `UniqueConstraint` |
 | `CALLBACKS` | the lifecycle attributes by the event they name: `PrePersist` => `prePersist`, `PostPersist`, `PreUpdate`, `PostUpdate`, `PreRemove`, `PostRemove`, `PostLoad`, `PreFlush` |
 | `REQUIRED` | the marker `"\0required"` |
-| `nameOf(string $className): ?string` | `Doctrine\ORM\Mapping\Column` => `Column`, null outside the vocabulary |
+| `nameOf(string $className): ?string` | `Base\Mapping\Column`, `Doctrine\ORM\Mapping\Column` => `Column`, null outside the vocabulary |
+| `classNames(string $name): list<string>` | the attribute's class in each namespace |
 | `parameters(string $name): list<string>` | the parameters in constructor order |
 | `defaults(string $name): array` | the optional parameters and their defaults |
 | `defaultOf(string $name, string $parameter): mixed` | one default, null for a required parameter |

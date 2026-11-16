@@ -3,20 +3,34 @@
 namespace Omnibridge\Schema\Declaration;
 
 /**
- * The mapping attributes the entities are written with - those of the
- * Doctrine\ORM\Mapping namespace, the vocabulary omnibase's entities and their
- * applications' carry - as plain data: each attribute's parameters in the
- * order of its constructor, with their defaults, and whether it may be
- * written more than once. With it a declaration is read without the
- * attributes' classes (a positional argument gets its parameter's name, a
- * left-out one its default), so without the ORM installed.
+ * The mapping attributes the entities are written with, as plain data: each
+ * attribute's parameters in the order of its constructor, with their
+ * defaults, and whether it may be written more than once. With it a
+ * declaration is read without the attributes' classes (a positional argument
+ * gets its parameter's name, a left-out one its default), so without the ORM
+ * installed.
+ *
+ * One vocabulary, written under two namespaces (NAMESPACES): Base\Mapping,
+ * omnibase's own (the core's src/Mapping: what omnibase's entities and their
+ * applications carry, naming no ORM), and Doctrine\ORM\Mapping, whose
+ * attributes it repeats name for name. A declaration holds the short names
+ * (Column, ManyToOne...) whichever namespace wrote them.
  *
  * Kept equal to doctrine/orm 3's constructors: omnibridge/doctrine's
- * VocabularyTest compares the two, parameter by parameter.
+ * VocabularyTest compares the two, parameter by parameter, and omnisense/
+ * omnibase's MappingVocabularyTest compares Base\Mapping with this data.
  */
 final class Vocabulary
 {
-    /** The namespace whose attributes are read. */
+    /**
+     * The namespaces whose attributes are read, the first one first: omnibase's own vocabulary, then Doctrine's.
+     */
+    public const NAMESPACES = ['Base\\Mapping\\', 'Doctrine\\ORM\\Mapping\\'];
+
+    /**
+     * Doctrine's: where omnibridge/doctrine's driver finds the attribute classes it builds from a declaration (a
+     * declaration's short name prefixed with it), whatever namespace the class was written with.
+     */
     public const NAMESPACE = 'Doctrine\\ORM\\Mapping\\';
 
     /** @var array<string, array<string, mixed>> attribute => parameter => default (REQUIRED for a parameter without one) */
@@ -82,16 +96,28 @@ final class Vocabulary
     /** The default of a required parameter: there is none. */
     public const REQUIRED = "\0required";
 
-    /** The attribute's name in the vocabulary of a class name (Doctrine\ORM\Mapping\Column: Column), null outside it. */
+    /**
+     * The attribute's name in the vocabulary of a class name (Base\Mapping\Column, Doctrine\ORM\Mapping\Column:
+     * Column), null outside it.
+     */
     public static function nameOf(string $className): ?string
     {
-        if (!str_starts_with($className, self::NAMESPACE)) {
-            return null;
+        $className = ltrim($className, '\\');
+        foreach (self::NAMESPACES as $namespace) {
+            if (str_starts_with($className, $namespace)) {
+                $name = substr($className, \strlen($namespace));
+
+                return isset(self::PARAMETERS[$name]) ? $name : null;
+            }
         }
 
-        $name = substr($className, \strlen(self::NAMESPACE));
+        return null;
+    }
 
-        return isset(self::PARAMETERS[$name]) ? $name : null;
+    /** @return list<string> the attribute's class names, one per namespace of the vocabulary (Table: Base\Mapping\Table, Doctrine\ORM\Mapping\Table) */
+    public static function classNames(string $name): array
+    {
+        return array_map(static fn (string $namespace) => $namespace.$name, self::NAMESPACES);
     }
 
     /** @return list<string> the attribute's parameters, in its constructor's order */

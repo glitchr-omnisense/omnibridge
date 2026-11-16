@@ -81,8 +81,8 @@ the same tables), so that Doctrine reads it today and another persistence
 
 - `Schema\Declaration\*`: what the entity classes declare, read from their
   attributes by reflection and **without instantiating them** - the attributes
-  are `Doctrine\ORM\Mapping`'s, the vocabulary omnibase's entities are written
-  in, but their classes need not exist: `Vocabulary` holds each attribute's
+  are omnibase's own vocabulary, `Base\Mapping` (or the same attributes under
+  `Doctrine\ORM\Mapping`), but their classes need not exist: `Vocabulary` holds each attribute's
   parameters and defaults as data (omnibridge/doctrine's `VocabularyTest` keeps
   it equal to doctrine/orm's constructors). `AttributeReader` reads a class into
   a `ClassDeclaration` (its attributes, its properties with the class that

@@ -40,7 +40,13 @@ class CamelCaseNaming implements Naming
 
         // A #[Table(name: ...)] says it: the last one written that names one.
         if (class_exists($className)) {
-            foreach (array_reverse((new \ReflectionClass($className))->getAttributes(Vocabulary::NAMESPACE.'Table')) as $attribute) {
+            $attributes = [];
+            foreach ((new \ReflectionClass($className))->getAttributes() as $attribute) {
+                if ('Table' === Vocabulary::nameOf($attribute->getName())) {
+                    $attributes[] = $attribute;
+                }
+            }
+            foreach (array_reverse($attributes) as $attribute) {
                 $arguments = $attribute->getArguments();
                 $name = $arguments['name'] ?? $arguments[0] ?? null;
                 if (!empty($name)) {

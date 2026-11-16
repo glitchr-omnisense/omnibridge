@@ -8,10 +8,12 @@ namespace Omnibridge\Schema\Declaration;
  * arguments (ReflectionAttribute::getArguments()), so its class need not
  * exist - the ORM need not be installed to read what the entities declare.
  *
- * Only the attributes of the vocabulary (Vocabulary::NAMESPACE) are read; a
+ * Only the attributes of the vocabulary are read, under either of its
+ * namespaces (Vocabulary::NAMESPACES: Base\Mapping, Doctrine\ORM\Mapping); a
  * property or a method that carries none is left out. A constant written as
  * an argument (UtcDateTimeImmutableType::NAME) is evaluated by PHP, so its
- * class must load.
+ * class must load; so must a nested attribute's (new JoinColumn(...) in a
+ * JoinTable), built by PHP when the arguments are read.
  */
 final class AttributeReader implements Declarations
 {

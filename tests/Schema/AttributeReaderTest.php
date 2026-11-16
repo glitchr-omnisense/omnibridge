@@ -2,6 +2,7 @@
 
 namespace Omnibridge\Tests\Schema;
 
+use Omnibridge\Schema\CamelCaseNaming;
 use Omnibridge\Schema\Declaration\Attribute;
 use Omnibridge\Schema\Declaration\AttributeReader;
 use Omnibridge\Schema\Declaration\Vocabulary;
@@ -11,6 +12,7 @@ use Omnibridge\Tests\Fixtures\Schema\Entity\Tag;
 use Omnibridge\Tests\Fixtures\Schema\Entity\Thread;
 use Omnibridge\Tests\Fixtures\Schema\Entity\Timestamps;
 use Omnibridge\Tests\Fixtures\Schema\State;
+use Omnibridge\Tests\Fixtures\Schema\Vocabulary\BaseTag;
 use PHPUnit\Framework\TestCase;
 
 /** The mapping attributes read as data, their classes absent: doctrine/orm is not installed here. */
@@ -71,9 +73,30 @@ final class AttributeReaderTest extends TestCase
         self::assertSame([], $article->methods, 'no method carries a lifecycle attribute');
     }
 
+    public function testOmnibasesOwnVocabularyIsReadAsTheSameDeclaration(): void
+    {
+        require_once __DIR__.'/../Fixtures/Schema/Vocabulary/BaseTag.php';
+        $reader = new AttributeReader();
+        $doctrine = $reader->read(Tag::class)->toArray();
+        $base = $reader->read(BaseTag::class)->toArray();
+
+        self::assertFalse(class_exists('Base\\Mapping\\Column'), 'read by name: the core is not installed here');
+        self::assertSame('Entity', $reader->read(BaseTag::class)->kind());
+        self::assertSame(
+            json_encode($doctrine, \JSON_THROW_ON_ERROR),
+            str_replace(addslashes(BaseTag::class), addslashes(Tag::class), json_encode($base, \JSON_THROW_ON_ERROR)),
+            'the same attributes, arguments and members, whichever namespace wrote them'
+        );
+        self::assertSame('threadTag', (new CamelCaseNaming())->classToTableName(BaseTag::class), 'its #[Table] names the table');
+    }
+
     public function testTheVocabularyAnswersForEveryAttributeOfTheMapping(): void
     {
         self::assertSame('Column', Vocabulary::nameOf('Doctrine\\ORM\\Mapping\\Column'));
+        self::assertSame('Column', Vocabulary::nameOf('Base\\Mapping\\Column'));
+        self::assertSame('Column', Vocabulary::nameOf('\\Base\\Mapping\\Column'));
+        self::assertNull(Vocabulary::nameOf('Base\\Mapping\\MappingAttribute'), 'only the attributes of the vocabulary');
+        self::assertSame(['Base\\Mapping\\Table', 'Doctrine\\ORM\\Mapping\\Table'], Vocabulary::classNames('Table'));
         self::assertNull(Vocabulary::nameOf('Doctrine\\ORM\\Mapping\\Nothing'));
         self::assertNull(Vocabulary::nameOf('App\\Attribute\\Column'));
         self::assertSame(['name', 'type', 'length', 'precision', 'scale', 'unique', 'nullable', 'insertable', 'updatable', 'enumType', 'options', 'columnDefinition', 'generated', 'index'], Vocabulary::parameters('Column'), 'in the constructor\'s order');

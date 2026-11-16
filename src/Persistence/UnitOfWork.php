@@ -71,4 +71,10 @@ interface UnitOfWork
 
     /** The entity's changes computed again: for a listener that changed it during a flush (OnFlush, PreUpdate). */
     public function recompute(object $entity): void;
+
+    /** Forgets every entity loaded or scheduled: the next reads make new objects (a long import, a test). */
+    public function clear(): void;
+
+    /** Whether it can still write: false once a failed flush closed it (a long command then stops or starts anew). */
+    public function isOpen(): bool;
 }
